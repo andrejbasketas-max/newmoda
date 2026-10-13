@@ -10,7 +10,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="assets/vendor/gsap.min.js" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="assets/vendor/SplitText.min.js" defer></script>
+  <script src="assets/vendor/lenis.min.js" defer></script>
   <script src="assets/main.js" defer></script>
+  <script src="assets/motion.js" defer></script>
+  <script src="assets/scene.js" type="module"></script>
 </head>
 <body>
   <!-- Shared bottle drawing. Each <use> sets --liquid and --cap. -->
@@ -60,6 +67,17 @@
 
   <a class="skip-link" href="#main">Skip to content</a>
 
+  <div class="preloader" aria-hidden="true" data-preloader>
+    <div class="preloader-inner">
+      <p class="preloader-brand">New<span>moda</span></p>
+      <div class="preloader-bar"><span data-preloader-bar></span></div>
+      <p class="preloader-sub">Maison de Parfum</p>
+    </div>
+  </div>
+
+  <canvas class="stage" aria-hidden="true" data-stage></canvas>
+  <div class="cursor" aria-hidden="true" data-cursor><span class="cursor-dot"></span><span class="cursor-ring"></span></div>
+
   <header class="site-header" data-header>
     <nav class="nav container" aria-label="Primary">
       <a class="brand" href="#top" aria-label="Newmoda, home">New<span>moda</span></a>
@@ -100,7 +118,7 @@
             <div><dt>Volume</dt><dd>100 ml</dd></div>
           </dl>
         </div>
-        <div class="hero-visual" aria-hidden="true">
+        <div class="hero-visual" aria-hidden="true" data-3d-anchor="hero">
           <div class="halo"></div>
           <div class="mist"><span></span><span></span><span></span></div>
           <svg class="hero-bottle" viewBox="0 0 200 320" style="--liquid:#B4651E"><use href="#bottle"/></svg>
@@ -134,7 +152,7 @@
 
         <ul class="products" role="list">
           <li class="product reveal" style="--liquid:#B4651E; --tint:#F3E3CF">
-            <div class="product-stage"><svg viewBox="0 0 200 320" aria-hidden="true"><use href="#bottle"/></svg></div>
+            <div class="product-stage"><span class="glare" aria-hidden="true"></span><svg viewBox="0 0 200 320" aria-hidden="true"><use href="#bottle"/></svg></div>
             <div class="product-body">
               <p class="product-hour">00:40 — Midnight</p>
               <h3>Nuit d’Ambre</h3>
@@ -146,7 +164,7 @@
             </div>
           </li>
           <li class="product reveal" style="--liquid:#7FA3B8; --tint:#E3ECF0">
-            <div class="product-stage"><svg viewBox="0 0 200 320" aria-hidden="true"><use href="#bottle"/></svg></div>
+            <div class="product-stage"><span class="glare" aria-hidden="true"></span><svg viewBox="0 0 200 320" aria-hidden="true"><use href="#bottle"/></svg></div>
             <div class="product-body">
               <p class="product-hour">06:15 — First light</p>
               <h3>Fleur de Sel</h3>
@@ -158,7 +176,7 @@
             </div>
           </li>
           <li class="product reveal" style="--liquid:#7A1E35; --tint:#F0DDE1">
-            <div class="product-stage"><svg viewBox="0 0 200 320" aria-hidden="true"><use href="#bottle"/></svg></div>
+            <div class="product-stage"><span class="glare" aria-hidden="true"></span><svg viewBox="0 0 200 320" aria-hidden="true"><use href="#bottle"/></svg></div>
             <div class="product-body">
               <p class="product-hour">21:00 — Evening</p>
               <h3>Rose Noire</h3>
@@ -170,7 +188,7 @@
             </div>
           </li>
           <li class="product reveal" style="--liquid:#5E7350; --tint:#E3E8DC">
-            <div class="product-stage"><svg viewBox="0 0 200 320" aria-hidden="true"><use href="#bottle"/></svg></div>
+            <div class="product-stage"><span class="glare" aria-hidden="true"></span><svg viewBox="0 0 200 320" aria-hidden="true"><use href="#bottle"/></svg></div>
             <div class="product-body">
               <p class="product-hour">14:30 — Afternoon</p>
               <h3>Vert Silence</h3>
@@ -189,7 +207,7 @@
     <section class="notes" id="notes" aria-labelledby="notes-title" data-notes>
       <div class="container notes-grid">
         <div class="notes-visual" aria-hidden="true">
-          <div class="notes-sticky">
+          <div class="notes-sticky" data-3d-anchor="notes">
             <div class="notes-ring"></div>
             <svg class="notes-bottle" viewBox="0 0 200 320"><use href="#bottle"/></svg>
             <ol class="notes-progress">
@@ -225,8 +243,56 @@
       </div>
     </section>
 
+    <!-- INGREDIENTS: horizontal journey -->
+    <section class="origins" id="origins" aria-labelledby="origins-title" data-origins>
+      <div class="origins-pin">
+        <header class="container origins-head">
+          <p class="eyebrow eyebrow-dark">Sourced, not synthesised</p>
+          <h2 id="origins-title">Where our <em>notes</em> are grown.</h2>
+        </header>
+        <ol class="origins-track" role="list" data-origins-track>
+          <li class="origin" style="--o1:#F2C14E; --o2:#E07A1F">
+            <span class="origin-orb" aria-hidden="true"></span>
+            <p class="origin-num">01</p>
+            <h3>Bergamot</h3>
+            <p class="origin-place">Reggio Calabria, Italy</p>
+            <p>Cold-pressed from the peel in December, when the fruit is still green and sharp.</p>
+          </li>
+          <li class="origin" style="--o1:#C9B6E4; --o2:#7D5BA6">
+            <span class="origin-orb" aria-hidden="true"></span>
+            <p class="origin-num">02</p>
+            <h3>Iris</h3>
+            <p class="origin-place">Florence, Italy</p>
+            <p>The root is dried for three years before it gives up its powdery, violet-like butter.</p>
+          </li>
+          <li class="origin" style="--o1:#E58FA2; --o2:#7A1E35">
+            <span class="origin-orb" aria-hidden="true"></span>
+            <p class="origin-num">03</p>
+            <h3>Rose</h3>
+            <p class="origin-place">Grasse, France</p>
+            <p>Picked by hand at dawn in May, before the sun burns off the scent.</p>
+          </li>
+          <li class="origin" style="--o1:#C98A4B; --o2:#4A2A14">
+            <span class="origin-orb" aria-hidden="true"></span>
+            <p class="origin-num">04</p>
+            <h3>Oud</h3>
+            <p class="origin-place">Assam, India</p>
+            <p>Resinous heartwood from agar trees, distilled slowly over several days.</p>
+          </li>
+          <li class="origin" style="--o1:#F3E2B3; --o2:#A3762E">
+            <span class="origin-orb" aria-hidden="true"></span>
+            <p class="origin-num">05</p>
+            <h3>Vanilla</h3>
+            <p class="origin-place">Sava, Madagascar</p>
+            <p>Pods are cured in the sun for months until they turn dark, soft and sweet.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
     <!-- ATELIER -->
     <section class="section atelier" id="atelier" aria-labelledby="atelier-title">
+      <p class="ghost-word" aria-hidden="true" data-ghost>Fait à la main</p>
       <div class="container atelier-grid">
         <div class="atelier-copy">
           <p class="eyebrow eyebrow-dark reveal">The Atelier</p>

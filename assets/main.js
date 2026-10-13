@@ -27,6 +27,8 @@
   const reveals = document.querySelectorAll('.reveal');
   if (reduceMotion || !('IntersectionObserver' in window)) {
     reveals.forEach((el) => el.classList.add('is-in'));
+  } else if (window.gsap && window.ScrollTrigger) {
+    // motion.js owns reveals.
   } else {
     const groups = new Map();
     reveals.forEach((el) => {
@@ -58,6 +60,7 @@
       bottle.style.setProperty('--liquid', ch.dataset.liquid);
       ring.style.setProperty('--liquid', ch.dataset.liquid);
       notes.style.setProperty('--bg', ch.dataset.bg);
+      window.dispatchEvent(new CustomEvent('newmoda:liquid', { detail: ch.dataset.liquid }));
     };
     activate(chapters[0]);
     if ('IntersectionObserver' in window) {
