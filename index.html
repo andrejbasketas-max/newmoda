@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Newmoda — Maison de Parfum</title>
+  <meta name="description" content="Newmoda is an independent perfume house. Four eaux de parfum, hand-poured in small batches.">
+  <meta name="theme-color" content="#0F0D0B">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="assets/main.js" defer></script>
+</head>
+<body>
+  <!-- Shared bottle drawing. Each <use> sets --liquid and --cap. -->
+  <svg width="0" height="0" class="sr-only" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="gold" x1="0" x2="1">
+        <stop offset="0" stop-color="#8A5A12"/>
+        <stop offset=".45" stop-color="#F1D18A"/>
+        <stop offset=".6" stop-color="#C99A3B"/>
+        <stop offset="1" stop-color="#7A4E0E"/>
+      </linearGradient>
+      <linearGradient id="shade" x1="0" x2="1">
+        <stop offset="0" stop-color="#000" stop-opacity=".35"/>
+        <stop offset=".35" stop-color="#000" stop-opacity="0"/>
+        <stop offset=".75" stop-color="#fff" stop-opacity=".08"/>
+        <stop offset="1" stop-color="#000" stop-opacity=".45"/>
+      </linearGradient>
+      <linearGradient id="depth" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity=".22"/>
+        <stop offset="1" stop-color="#000" stop-opacity=".18"/>
+      </linearGradient>
+      <linearGradient id="capSheen" x1="0" x2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+        <stop offset=".3" stop-color="#fff" stop-opacity=".22"/>
+        <stop offset=".45" stop-color="#fff" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <symbol id="bottle" viewBox="0 0 200 320">
+      <ellipse cx="100" cy="312" rx="86" ry="7" fill="#000" opacity=".22"/>
+      <rect x="66" y="8" width="68" height="74" rx="5" style="fill: var(--cap, #15120F)"/>
+      <rect x="66" y="8" width="68" height="74" rx="5" fill="url(#capSheen)"/>
+      <rect x="66" y="66" width="68" height="3" fill="url(#gold)"/>
+      <rect x="78" y="82" width="44" height="18" fill="url(#gold)"/>
+      <rect x="22" y="98" width="156" height="210" rx="20" fill="#fff" fill-opacity=".14" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
+      <rect x="34" y="128" width="132" height="168" rx="10" style="fill: var(--liquid, #B4651E)"/>
+      <rect x="34" y="128" width="132" height="168" rx="10" fill="url(#shade)"/>
+      <rect x="34" y="128" width="132" height="168" rx="10" fill="url(#depth)"/>
+      <rect x="34" y="128" width="132" height="5" rx="2" fill="#fff" opacity=".25"/>
+      <rect x="42" y="110" width="9" height="184" rx="4.5" fill="#fff" opacity=".42"/>
+      <rect x="57" y="116" width="3" height="170" rx="1.5" fill="#fff" opacity=".22"/>
+      <rect x="64" y="196" width="72" height="50" rx="2" fill="#F7F2EA" opacity=".93"/>
+      <rect x="68" y="200" width="64" height="42" fill="none" stroke="#A16207" stroke-width=".8"/>
+      <text x="100" y="228" text-anchor="middle" font-family="Cormorant, Georgia, serif" font-size="20" font-style="italic" fill="#1C1917">N</text>
+      <rect x="160" y="112" width="5" height="180" rx="2.5" fill="#fff" opacity=".12"/>
+    </symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-header>
+    <nav class="nav container" aria-label="Primary">
+      <a class="brand" href="#top" aria-label="Newmoda, home">New<span>moda</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#collection">Collection</a></li>
+        <li><a href="#notes">The Notes</a></li>
+        <li><a href="#atelier">Atelier</a></li>
+        <li><a href="#finder">Scent Finder</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="bag-btn" type="button" aria-label="Shopping bag, 0 items" data-bag-btn>
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 7h12l1 14H5L6 7Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9 9V6a3 3 0 0 1 6 0v3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <span class="bag-count" data-bag-count>0</span>
+        </button>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu" data-menu-btn>
+          <span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow reveal">Eau de Parfum · No. 01</p>
+          <h1 id="hero-title" class="reveal">Nuit <em>d’Ambre</em></h1>
+          <p class="hero-lede reveal">Warm amber resin, smoked oud and a slow trail of Madagascan vanilla. Made for the hour after midnight.</p>
+          <div class="hero-cta reveal">
+            <a class="btn btn-gold" href="#collection">Discover the collection</a>
+            <a class="btn btn-ghost" href="#notes">Explore the notes</a>
+          </div>
+          <dl class="hero-meta reveal">
+            <div><dt>Concentration</dt><dd>22% oils</dd></div>
+            <div><dt>Longevity</dt><dd>10–12 hrs</dd></div>
+            <div><dt>Volume</dt><dd>100 ml</dd></div>
+          </dl>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="halo"></div>
+          <div class="mist"><span></span><span></span><span></span></div>
+          <svg class="hero-bottle" viewBox="0 0 200 320" style="--liquid:#B4651E"><use href="#bottle"/></svg>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#marquee" aria-label="Scroll to next section"><span></span></a>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" id="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Hand-poured in small batches</span><i>✦</i>
+        <span>Naturally sourced absolutes</span><i>✦</i>
+        <span>Matured for 8 weeks</span><i>✦</i>
+        <span>Refillable glass</span><i>✦</i>
+        <span>Hand-poured in small batches</span><i>✦</i>
+        <span>Naturally sourced absolutes</span><i>✦</i>
+        <span>Matured for 8 weeks</span><i>✦</i>
+        <span>Refillable glass</span><i>✦</i>
+      </div>
+    </div>
+
+    <!-- COLLECTION -->
+    <section class="section collection" id="collection" aria-labelledby="collection-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow eyebrow-dark reveal">The Collection</p>
+          <h2 id="collection-title" class="reveal">Four hours of the day,<br><em>bottled.</em></h2>
+          <p class="section-lede reveal">Each scent is built around one moment and one raw material, then left to rest until it is ready.</p>
+        </header>
+
+        <ul class="products" role="list">
+          <li class="product reveal" style="--liquid:#B4651E; --tint:#F3E3CF">
+            <div class="product-stage"><svg viewBox="0 0 200 320" aria-hidden="true"><use href="#bottle"/></svg></div>
+            <div class="product-body">
+              <p class="product-hour">00:40 — Midnight</p>
+              <h3>Nuit d’Ambre</h3>
+              <p class="product-notes">Amber · Oud · Vanilla</p>
+              <div class="product-foot">
+                <span class="price">€185</span>
+                <button class="btn-add" type="button" data-add="Nuit d’Ambre">Add to bag</button>
+              </div>
+            </div>
+          </li>
+          <li class="product reveal" style="--liquid:#7FA3B8; --tint:#E3ECF0">
+            <div class="product-stage"><svg viewBox="0 0 200 320" aria-hidden="true"><use href="#bottle"/></svg></div>
+            <div class="product-body">
+              <p class="product-hour">06:15 — First light</p>
+              <h3>Fleur de Sel</h3>
+              <p class="product-notes">Sea salt · Iris · White musk</p>
+              <div class="product-foot">
+                <span class="price">€165</span>
+                <button class="btn-add" type="button" data-add="Fleur de Sel">Add to bag</button>
+              </div>
+            </div>
+          </li>
+          <li class="product reveal" style="--liquid:#7A1E35; --tint:#F0DDE1">
+            <div class="product-stage"><svg viewBox="0 0 200 320" aria-hidden="true"><use href="#bottle"/></svg></div>
+            <div class="product-body">
+              <p class="product-hour">21:00 — Evening</p>
+              <h3>Rose Noire</h3>
+              <p class="product-notes">Black rose · Saffron · Patchouli</p>
+              <div class="product-foot">
+                <span class="price">€195</span>
+                <button class="btn-add" type="button" data-add="Rose Noire">Add to bag</button>
+              </div>
+            </div>
+          </li>
+          <li class="product reveal" style="--liquid:#5E7350; --tint:#E3E8DC">
+            <div class="product-stage"><svg viewBox="0 0 200 320" aria-hidden="true"><use href="#bottle"/></svg></div>
+            <div class="product-body">
+              <p class="product-hour">14:30 — Afternoon</p>
+              <h3>Vert Silence</h3>
+              <p class="product-notes">Fig leaf · Vetiver · Cedar</p>
+              <div class="product-foot">
+                <span class="price">€170</span>
+                <button class="btn-add" type="button" data-add="Vert Silence">Add to bag</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- NOTES: scroll storytelling -->
+    <section class="notes" id="notes" aria-labelledby="notes-title" data-notes>
+      <div class="container notes-grid">
+        <div class="notes-visual" aria-hidden="true">
+          <div class="notes-sticky">
+            <div class="notes-ring"></div>
+            <svg class="notes-bottle" viewBox="0 0 200 320"><use href="#bottle"/></svg>
+            <ol class="notes-progress">
+              <li class="is-active"></li><li></li><li></li>
+            </ol>
+          </div>
+        </div>
+        <div class="notes-chapters">
+          <header class="notes-intro">
+            <p class="eyebrow">Anatomy of Nuit d’Ambre</p>
+            <h2 id="notes-title">A scent unfolds<br>in <em>three acts.</em></h2>
+          </header>
+          <article class="chapter" data-chapter="0" data-liquid="#D08A3E" data-bg="#1A1410">
+            <p class="chapter-num">I — Top notes</p>
+            <h3>The opening</h3>
+            <p>Bergamot from Calabria and pink pepper, bright for the first fifteen minutes. A spark before the warmth.</p>
+            <ul class="chips" role="list"><li>Bergamot</li><li>Pink pepper</li><li>Cardamom</li></ul>
+          </article>
+          <article class="chapter" data-chapter="1" data-liquid="#B4651E" data-bg="#22150C">
+            <p class="chapter-num">II — Heart notes</p>
+            <h3>The heart</h3>
+            <p>Labdanum and amber resin settle in. Smoked oud adds depth without heaviness. This is the scent people will remember.</p>
+            <ul class="chips" role="list"><li>Amber resin</li><li>Labdanum</li><li>Oud</li></ul>
+          </article>
+          <article class="chapter" data-chapter="2" data-liquid="#7A3E12" data-bg="#120C08">
+            <p class="chapter-num">III — Base notes</p>
+            <h3>The trail</h3>
+            <p>Madagascan vanilla, tonka and soft sandalwood stay close to the skin until morning.</p>
+            <ul class="chips" role="list"><li>Vanilla</li><li>Tonka bean</li><li>Sandalwood</li></ul>
+            <a class="btn btn-gold" href="#collection" data-add-link>Shop Nuit d’Ambre — €185</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ATELIER -->
+    <section class="section atelier" id="atelier" aria-labelledby="atelier-title">
+      <div class="container atelier-grid">
+        <div class="atelier-copy">
+          <p class="eyebrow eyebrow-dark reveal">The Atelier</p>
+          <h2 id="atelier-title" class="reveal">Slow perfumery, <em>on purpose.</em></h2>
+          <p class="reveal">We make fewer bottles than we could. Every formula is mixed by hand and left to mature for eight weeks before it is filtered, chilled and poured. Nothing is rushed, because good perfume can’t be.</p>
+          <a class="link-arrow reveal" href="#finder">Find your signature <span aria-hidden="true">→</span></a>
+        </div>
+        <dl class="stats">
+          <div class="stat reveal"><dt>Weeks of maturation</dt><dd data-count="8">8</dd></div>
+          <div class="stat reveal"><dt>Ingredients per formula</dt><dd data-count="40" data-suffix="+">40+</dd></div>
+          <div class="stat reveal"><dt>Bottles per batch</dt><dd data-count="300">300</dd></div>
+          <div class="stat reveal"><dt>Refills, same bottle</dt><dd>∞</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- SCENT FINDER -->
+    <section class="section finder" id="finder" aria-labelledby="finder-title">
+      <div class="container finder-inner">
+        <header class="section-head">
+          <p class="eyebrow eyebrow-dark reveal">Scent Finder</p>
+          <h2 id="finder-title" class="reveal">Three questions.<br><em>One signature.</em></h2>
+        </header>
+        <form class="finder-form reveal" data-finder novalidate>
+          <fieldset>
+            <legend><span>01</span> When do you wear perfume most?</legend>
+            <div class="options">
+              <label><input type="radio" name="time" value="fleur" required><span>Mornings</span></label>
+              <label><input type="radio" name="time" value="vert"><span>All day</span></label>
+              <label><input type="radio" name="time" value="rose"><span>Evenings</span></label>
+              <label><input type="radio" name="time" value="nuit"><span>Late nights</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend><span>02</span> Pick a place.</legend>
+            <div class="options">
+              <label><input type="radio" name="place" value="fleur" required><span>A windy coast</span></label>
+              <label><input type="radio" name="place" value="vert"><span>A fig orchard</span></label>
+              <label><input type="radio" name="place" value="rose"><span>An opera house</span></label>
+              <label><input type="radio" name="place" value="nuit"><span>A candlelit library</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend><span>03</span> How should it feel?</legend>
+            <div class="options">
+              <label><input type="radio" name="feel" value="fleur" required><span>Clean</span></label>
+              <label><input type="radio" name="feel" value="vert"><span>Calm</span></label>
+              <label><input type="radio" name="feel" value="rose"><span>Daring</span></label>
+              <label><input type="radio" name="feel" value="nuit"><span>Enveloping</span></label>
+            </div>
+          </fieldset>
+          <p class="form-error" data-finder-error role="alert"></p>
+          <button class="btn btn-dark" type="submit">Reveal my scent</button>
+        </form>
+        <div class="finder-result" data-finder-result tabindex="-1" hidden>
+          <svg viewBox="0 0 200 320" aria-hidden="true"><use href="#bottle"/></svg>
+          <div>
+            <p class="eyebrow eyebrow-dark">Your signature</p>
+            <h3 data-result-name></h3>
+            <p data-result-desc></p>
+            <div class="finder-actions">
+              <button class="btn btn-dark" type="button" data-result-add>Add to bag</button>
+              <button class="btn-text" type="button" data-finder-reset>Start again</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIMAX CTA -->
+    <section class="discovery" aria-labelledby="discovery-title">
+      <div class="container discovery-grid">
+        <div class="discovery-bottles" aria-hidden="true">
+          <svg viewBox="0 0 200 320" style="--liquid:#7FA3B8"><use href="#bottle"/></svg>
+          <svg viewBox="0 0 200 320" style="--liquid:#B4651E"><use href="#bottle"/></svg>
+          <svg viewBox="0 0 200 320" style="--liquid:#7A1E35"><use href="#bottle"/></svg>
+          <svg viewBox="0 0 200 320" style="--liquid:#5E7350"><use href="#bottle"/></svg>
+        </div>
+        <div class="discovery-copy">
+          <p class="eyebrow reveal">The Discovery Set</p>
+          <h2 id="discovery-title" class="reveal">Try all four.<br><em>Keep the one.</em></h2>
+          <p class="reveal">Four 2 ml vials for €28, fully credited against your first full bottle.</p>
+          <button class="btn btn-gold reveal" type="button" data-add="Discovery Set">Order the set — €28</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="section letter" aria-labelledby="letter-title">
+      <div class="container letter-inner">
+        <h2 id="letter-title" class="reveal">Letters from the <em>atelier</em></h2>
+        <p class="reveal">New batches, refill days and the occasional story. Once a month, no more.</p>
+        <form class="letter-form reveal" data-letter novalidate>
+          <div class="field">
+            <label for="email">Email address</label>
+            <div class="field-row">
+              <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" aria-describedby="email-error" required>
+              <button class="btn btn-dark" type="submit">Subscribe</button>
+            </div>
+            <p class="field-error" id="email-error" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand" href="#top">New<span>moda</span></a>
+        <p>Maison de Parfum. Independent since 2026.</p>
+      </div>
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="#collection">Collection</a></li>
+          <li><a href="#notes">The Notes</a></li>
+          <li><a href="#atelier">Atelier</a></li>
+          <li><a href="#finder">Scent Finder</a></li>
+        </ul>
+      </nav>
+      <p class="footer-small">© <span data-year>2026</span> Newmoda. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div class="toast" role="status" aria-live="polite" data-toast></div>
+</body>
+</html>
