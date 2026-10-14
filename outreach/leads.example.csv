@@ -1,0 +1,6 @@
+# Jedan profil po redu. Sa Meta tokenom dovoljna je samo kolona username,
+# bez tokena popuni i website/bio (prepiši sa profila).
+username,website,bio,note
+@kafic_primer,,Specialty kafa i domaći kolači · Dorćol · 8-22h,
+@salon_primer,linktr.ee/salonprimer,Frizerski salon · zakazivanje u DM,traže zakazivanje preko poruka
+@butik_primer,https://butikprimer.rs,Ženska garderoba,

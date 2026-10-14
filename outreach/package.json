@@ -1,0 +1,12 @@
+{
+  "name": "newmoda-outreach",
+  "private": true,
+  "type": "module",
+  "description": "Finds Instagram business profiles without a website and drafts personalized DMs for manual review.",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env agent.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0"
+  }
+}
