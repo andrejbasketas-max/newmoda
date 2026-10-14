@@ -119,8 +119,8 @@ const BENEFIT = {
   health: "pacijentima pokazuju usluge, radno vreme i kako da zakažu pregled",
   shop: "kupcima pokazuju ponudu, radno vreme i adresu",
   stay: "donose direktne rezervacije, bez provizije Bookinga",
-  trade: "vas dovode do ljudi koji baš sada traže nekoga kao vi",
-  default: "vam donose nove klijente sa Google-a",
+  trade: "dovode ljude koji baš sada traže nekoga kao vi",
+  default: "donose nove klijente sa Google-a",
 };
 const GROUP = {
   kafić: "food", bar: "food", pab: "food", restoran: "food", pekara: "food", poslastičarnica: "food",
@@ -131,16 +131,39 @@ const GROUP = {
   servis: "trade", firma: "trade", radionica: "trade", agencija: "trade", kancelarija: "trade",
 };
 
+// Several wordings per part, so messages sent one after another don't look
+// identical (Facebook blocks repeated identical messages as spam).
+const GREETING = ["Dobar dan,", "Pozdrav,", "Zdravo,", "Poštovani,"];
+const OPENING = [
+  "Vidim da {name} ima {page}, ali nemate sajt, a većina novih klijenata vas prvo traži na Google-u.",
+  "Pregledam lokalne biznise i zapao mi je za oko {name}. Jedino što nedostaje je sajt, a tu vas ljudi danas najčešće prvo traže.",
+  "{name} ima {page}, ali kad vas neko potraži na Google-u, ne pronađe sajt, a tu se danas odlučuje gde se ide.",
+  "Javljam se kratko u vezi sa sajtom za {name}. Primećujem da ga još nemate, a većina ljudi prvo pogleda Google pre nego što se odluči.",
+];
+const OFFER_LINE = [
+  "Pravim moderne sajtove koji {benefit}. Gotovi su za nekoliko dana, bez ikakvog posla sa vaše strane.",
+  "Moji sajtovi {benefit}, a vi ne morate ništa tehnički da radite. Sve završavam za nekoliko dana.",
+  "Radim sajtove za male lokalne biznise. Brzi su, lepo izgledaju na telefonu i {benefit}.",
+];
+const CLOSING = [
+  "Mogu besplatno da vam napravim probnu verziju, pa odlučite kad je vidite. Da vam je pošaljem?",
+  "Ako želite, besplatno vam pripremim probnu verziju, bez ikakve obaveze. Da li bi vas zanimalo?",
+  "Rado vam napravim besplatan predlog kako bi vaš sajt izgledao. Javite mi ako želite da ga vidite.",
+  "Prvu verziju pravim besplatno, pa tek ako vam se dopadne pričamo dalje. Da je napravim?",
+];
+
 function draft(lead) {
   const network = ONLY || (lead.instagram ? "instagram" : lead.facebook ? "facebook" : "tiktok");
   const page = network === "facebook" ? "odličnu Facebook stranicu" : `odličan ${network === "instagram" ? "Instagram" : "TikTok"} profil`;
-  const benefit = BENEFIT[GROUP[lead.kind] || "default"];
+  const fill = (t) => t.replace("{name}", lead.name).replace("{page}", page).replace("{benefit}", BENEFIT[GROUP[lead.kind] || "default"]);
+  // Pick each part from the name, so the same business always gets the same message.
+  const h = [...lead.name].reduce((sum, c) => sum + c.codePointAt(0), 0);
   return [
-    "Dobar dan,",
-    `Vidim da ${lead.name} ima ${page}, ali nemate sajt, a većina novih klijenata vas prvo traži na Google-u.`,
-    `Pravim moderne sajtove koji ${benefit}. Gotovi su za nekoliko dana, bez ikakvog posla sa vaše strane.`,
+    GREETING[h % 4],
+    fill(OPENING[Math.floor(h / 4) % 4]),
+    fill(OFFER_LINE[Math.floor(h / 16) % 3]),
     ...(ME.portfolio ? [`Primer: ${ME.portfolio}`] : []),
-    "Mogu besplatno da vam napravim probnu verziju, pa odlučite kad je vidite. Da vam je pošaljem?",
+    CLOSING[Math.floor(h / 48) % 4],
     [ME.name, ME.studio].filter(Boolean).join(", "),
   ].filter(Boolean).join("\n\n");
 }
