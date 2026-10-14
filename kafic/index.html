@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Zrno — kafa &amp; kutak</title>
+  <meta name="description" content="Zrno je mali kafić sa sveže prženom kafom, domaćim kolačima i mirnim kutkom za jutro.">
+  <meta name="theme-color" content="#1b1310">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#meni">Preskoči na meni</a>
+
+  <header class="nav" id="nav">
+    <a class="logo" href="#top" aria-label="Zrno — početak">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="16" rx="10" ry="13" transform="rotate(28 16 16)"/><path d="M10 26c4-5 8-14 12-20" /></svg>
+      <span>Zrno</span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Glavna navigacija">
+      <a href="#prica">Priča</a>
+      <a href="#meni">Meni</a>
+      <a href="#atmosfera">Atmosfera</a>
+      <a href="#posetite">Posetite nas</a>
+    </nav>
+    <a class="btn btn-sm nav-cta" href="#posetite">Rezerviši sto</a>
+    <button class="burger" id="burger" aria-label="Otvori meni" aria-expanded="false" aria-controls="navLinks"><span></span><span></span></button>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-text">
+        <p class="eyebrow reveal">Specialty kafa · od 2019.</p>
+        <h1 class="hero-title">
+          <span class="line"><span>Jutro počinje</span></span>
+          <span class="line"><span>uz <em>dobru</em> šoljicu.</span></span>
+        </h1>
+        <p class="lead reveal" style="--d:.5s">Sveže prženo zrno, domaći kolači i kutak u kom vreme sporije prolazi. Svrati, sedi, ostani.</p>
+        <div class="hero-actions reveal" style="--d:.65s">
+          <a class="btn" href="#meni">Pogledaj meni</a>
+          <a class="btn btn-ghost" href="#posetite">Gde smo?</a>
+        </div>
+        <p class="open-now reveal" style="--d:.8s"><span class="dot" id="openDot"></span><span id="openText">Otvoreno danas 07:30 – 23:00</span></p>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="badge">
+          <svg viewBox="0 0 120 120">
+            <defs><path id="circle" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs>
+            <text textLength="286" lengthAdjust="spacing"><textPath href="#circle" textLength="286" lengthAdjust="spacing">sveže prženo · svaki dan · zrno · </textPath></text>
+          </svg>
+          <span class="badge-bean"></span>
+        </div>
+        <svg class="cup" viewBox="0 0 300 300">
+          <g class="steam">
+            <path d="M120 95c-14-18 14-28 0-48" />
+            <path d="M150 90c-14-18 14-28 0-52" />
+            <path d="M180 95c-14-18 14-28 0-48" />
+          </g>
+          <ellipse class="saucer" cx="150" cy="240" rx="118" ry="22"/>
+          <ellipse class="saucer-in" cx="150" cy="236" rx="80" ry="12"/>
+          <path class="cup-body" d="M68 128h164v18c0 52-36 88-82 88s-82-36-82-88z"/>
+          <path class="cup-handle" d="M230 148c34-6 44 34 8 46"/>
+          <ellipse class="cup-rim" cx="150" cy="128" rx="82" ry="16"/>
+          <ellipse class="coffee" cx="150" cy="130" rx="72" ry="11"/>
+          <path class="latte-art" d="M150 123c-10 0-16 4-10 7 6 3 14 3 20 0 6-3 0-7-10-7z"/>
+        </svg>
+        <span class="bean b1"></span><span class="bean b2"></span><span class="bean b3"></span>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Espresso</span><i>✦</i><span>Flat white</span><i>✦</i><span>Cold brew</span><i>✦</i><span>Domaći kolači</span><i>✦</i><span>Matcha</span><i>✦</i><span>V60</span><i>✦</i>
+        <span>Espresso</span><i>✦</i><span>Flat white</span><i>✦</i><span>Cold brew</span><i>✦</i><span>Domaći kolači</span><i>✦</i><span>Matcha</span><i>✦</i><span>V60</span><i>✦</i>
+      </div>
+    </div>
+
+    <!-- PRIČA -->
+    <section class="section story" id="prica">
+      <div class="story-text">
+        <p class="eyebrow reveal">Naša priča</p>
+        <h2 class="reveal">Mali kafić,<br><em>velika</em> pažnja.</h2>
+        <p class="reveal">Počeli smo sa jednom mašinom i jednom idejom: da svaka šoljica bude baš kakva treba. Zrno biramo direktno od malih farmi, pržimo ga u malim serijama i služimo dok je još puno ukusa.</p>
+        <p class="reveal">Bez žurbe, bez buke — samo dobra kafa, prijatan razgovor i miris koji se pamti.</p>
+      </div>
+      <ul class="stats">
+        <li class="reveal"><strong data-count="12">0</strong><span>vrsta zrna</span></li>
+        <li class="reveal" style="--d:.1s"><strong data-count="48">0</strong><span>sati od prženja</span></li>
+        <li class="reveal" style="--d:.2s"><strong data-count="350" data-suffix="+">0</strong><span>šoljica dnevno</span></li>
+      </ul>
+    </section>
+
+    <!-- MENI -->
+    <section class="section menu" id="meni">
+      <div class="section-head">
+        <p class="eyebrow reveal">Meni</p>
+        <h2 class="reveal">Šta ćeš danas?</h2>
+      </div>
+
+      <div class="tabs reveal" role="tablist" aria-label="Kategorije menija">
+        <button role="tab" aria-selected="true" aria-controls="tab-topla" id="t-topla" data-tab="topla">Topli napici</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-hladna" id="t-hladna" data-tab="hladna" tabindex="-1">Hladno</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-slatko" id="t-slatko" data-tab="slatko" tabindex="-1">Slatko</button>
+        <span class="tab-pill" aria-hidden="true"></span>
+      </div>
+
+      <div class="panels">
+        <ul class="menu-list is-active" role="tabpanel" id="tab-topla" aria-labelledby="t-topla">
+          <li><div><h3>Espresso</h3><p>Kratak, gust, sa lešnik notama</p></div><span class="price">160</span></li>
+          <li><div><h3>Cappuccino</h3><p>Espresso, svilenkasta mlečna pena</p></div><span class="price">240</span></li>
+          <li><div><h3>Flat white <small>omiljeno</small></h3><p>Dupli ristretto i tanak sloj mleka</p></div><span class="price">280</span></li>
+          <li><div><h3>V60 filter</h3><p>Etiopija Yirgacheffe, voćne note</p></div><span class="price">320</span></li>
+          <li><div><h3>Matcha latte</h3><p>Ceremonijalna matcha, ovseno mleko</p></div><span class="price">340</span></li>
+        </ul>
+        <ul class="menu-list" role="tabpanel" id="tab-hladna" aria-labelledby="t-hladna" hidden>
+          <li><div><h3>Cold brew</h3><p>Hladna ekstrakcija 18 sati</p></div><span class="price">300</span></li>
+          <li><div><h3>Iced latte</h3><p>Espresso, hladno mleko, led</p></div><span class="price">290</span></li>
+          <li><div><h3>Espresso tonic <small>novo</small></h3><p>Tonik, narandža, espresso</p></div><span class="price">330</span></li>
+          <li><div><h3>Domaća limunada</h3><p>Limun, mente, med</p></div><span class="price">260</span></li>
+        </ul>
+        <ul class="menu-list" role="tabpanel" id="tab-slatko" aria-labelledby="t-slatko" hidden>
+          <li><div><h3>Kroasan sa puterom</h3><p>Pečen svako jutro</p></div><span class="price">220</span></li>
+          <li><div><h3>Cimet rolnica <small>omiljeno</small></h3><p>Topla, sa krem glazurom</p></div><span class="price">260</span></li>
+          <li><div><h3>Banana hleb</h3><p>Orasi, tamna čokolada</p></div><span class="price">240</span></li>
+          <li><div><h3>Čizkejk</h3><p>Baskijski, sezonsko voće</p></div><span class="price">380</span></li>
+        </ul>
+      </div>
+      <p class="menu-note reveal">Cene su u dinarima. Biljno mleko bez doplate.</p>
+    </section>
+
+    <!-- ATMOSFERA -->
+    <section class="section vibe" id="atmosfera">
+      <div class="section-head">
+        <p class="eyebrow reveal">Atmosfera</p>
+        <h2 class="reveal">Mesto za <em>tvoj</em> ritam.</h2>
+      </div>
+      <div class="cards">
+        <article class="card c1 reveal">
+          <div class="card-icon" aria-hidden="true">☀︎</div>
+          <h3>Jutarnja tišina</h3>
+          <p>Prvi espresso, sveže novine i sunce kroz izlog.</p>
+        </article>
+        <article class="card c2 reveal" style="--d:.1s">
+          <div class="card-icon" aria-hidden="true">⌨︎</div>
+          <h3>Rad uz kafu</h3>
+          <p>Brz Wi‑Fi, utičnice pored svakog stola i dovoljno mira.</p>
+        </article>
+        <article class="card c3 reveal" style="--d:.2s">
+          <div class="card-icon" aria-hidden="true">♫</div>
+          <h3>Večernji vinil</h3>
+          <p>Petkom puštamo ploče — lagano, toplo, opušteno.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- CITAT -->
+    <section class="quote">
+      <blockquote class="reveal">
+        <p>„Najbolji flat white u gradu, a osoblje te pamti po imenu.“</p>
+        <cite>— Marija, stalni gost</cite>
+      </blockquote>
+    </section>
+
+    <!-- POSETITE -->
+    <section class="section visit" id="posetite">
+      <div class="visit-card reveal">
+        <p class="eyebrow">Posetite nas</p>
+        <h2>Vidimo se uz kafu.</h2>
+        <dl class="hours">
+          <div><dt>Pon – Pet</dt><dd>07:30 – 23:00</dd></div>
+          <div><dt>Subota</dt><dd>08:30 – 00:00</dd></div>
+          <div><dt>Nedelja</dt><dd>09:00 – 22:00</dd></div>
+        </dl>
+        <address>
+          Ulica Kafe 12, Beograd<br>
+          <a href="tel:+381601234567">+381 60 123 4567</a>
+        </address>
+        <div class="hero-actions">
+          <a class="btn" href="tel:+381601234567">Pozovi</a>
+          <a class="btn btn-ghost" href="https://maps.google.com/?q=Beograd" target="_blank" rel="noopener">Mapa ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="16" rx="10" ry="13" transform="rotate(28 16 16)"/><path d="M10 26c4-5 8-14 12-20" /></svg>
+      <span>Zrno</span>
+    </a>
+    <p>© <span id="year"></span> Zrno · kafa &amp; kutak</p>
+    <p class="socials"><a href="#">Instagram</a> · <a href="#">TikTok</a></p>
+  </footer>
+
+  <a class="fab" href="tel:+381601234567" aria-label="Pozovi kafić">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>
+  </a>
+
+  <script src="main.js" defer></script>
+</body>
+</html>

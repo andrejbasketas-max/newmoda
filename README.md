@@ -16,3 +16,7 @@ npm install
 npm run build    # bundles src/scene.js into assets/scene.js
 npm run vendor   # re-copies GSAP/Lenis into assets/vendor
 ```
+
+## Kafić „Zrno“ (`kafic/`)
+
+Odvojen, samostalan sajt za kafić — otvori `kafic/index.html`. Bez zavisnosti (čist HTML/CSS/JS), prilagođen telefonu: animirana šoljica sa parom, rotirajući bedž, traka sa napicima, meni sa tabovima, kartice koje se prevlače, status „otvoreno/zatvoreno“ i dugme za poziv. Animacije se gase uz `prefers-reduced-motion`.
