@@ -45,13 +45,20 @@
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
       if (!e.isIntersecting) return;
-      e.target.classList.add('in');
+      e.target.classList.remove('pending');
       const n = $('[data-count]', e.target);
       if (n) countUp(n);
       io.unobserve(e.target);
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-  $$('.reveal').forEach((el) => io.observe(el));
+  // Only elements below the first screen animate in; everything else is visible at rest
+  if (!reduce) {
+    $$('.reveal').forEach((el) => {
+      if (el.closest('.hero') || el.getBoundingClientRect().top < innerHeight) return;
+      el.classList.add('pending');
+      io.observe(el);
+    });
+  }
 
   // Menu tabs with sliding pill
   const tabs = $$('[role="tab"]');
