@@ -152,6 +152,14 @@ const CLOSING = [
   "Prvu verziju pravim besplatno, pa tek ako vam se dopadne pričamo dalje. Da je napravim?",
 ];
 
+// How quickly each kind of business tends to answer DMs: salons and gyms book
+// appointments there, cafés and shops take orders; offices rarely check.
+const REPLY = { beauty: 3, food: 2, shop: 2, stay: 1 };
+function replyScore(lead) {
+  return (REPLY[GROUP[lead.kind]] || 0) + (lead.phone ? 1 : 0);
+}
+const replyLabel = (score) => (score >= 3 ? "brzo" : score >= 2 ? "srednje" : "sporije");
+
 function draft(lead) {
   const network = ONLY || (lead.instagram ? "instagram" : lead.facebook ? "facebook" : "tiktok");
   const page = network === "facebook" ? "odličnu Facebook stranicu" : `odličan ${network === "instagram" ? "Instagram" : "TikTok"} profil`;
@@ -174,7 +182,7 @@ const csvCell = (s) => `"${String(s ?? "").replace(/"/g, '""')}"`;
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
 function writeCsv(leads) {
-  const cols = ["name", "kind", "address", "instagram", "facebook", "tiktok", "phone", "email", "osm", "message"];
+  const cols = ["reply", "name", "kind", "address", "instagram", "facebook", "tiktok", "phone", "email", "osm", "message"];
   const text = [cols.join(","), ...leads.map((l) => cols.map((c) => csvCell(l[c])).join(","))].join("\n");
   fs.writeFileSync(path.join(OUT_DIR, `social-leads${SUFFIX}.csv`), "﻿" + text);
 }
@@ -183,7 +191,7 @@ function writeHtml(leads) {
   const link = (url, label) => (url ? `<a class="btn" href="${esc(url)}" target="_blank" rel="noopener">${label}</a>` : "");
   const cards = leads.map((l, i) => `
   <article data-i="${i}">
-    <header><h2>${esc(l.name)}</h2><span>${esc(l.kind)}${l.address ? " · " + esc(l.address) : ""}</span></header>
+    <header><h2>${esc(l.name)}</h2><b class="reply ${l.reply}">odgovara ${l.reply}</b><span>${esc(l.kind)}${l.address ? " · " + esc(l.address) : ""}</span></header>
     <p class="meta">${[l.phone, l.email].filter(Boolean).map(esc).join(" · ")}${l.phone || l.email ? " · " : ""}<a href="${l.osm}" target="_blank">mapa</a></p>
     <textarea rows="9">${esc(l.message)}</textarea>
     <div class="row">
@@ -205,7 +213,9 @@ function writeHtml(leads) {
   article { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:14px; }
   article.sent { opacity:.45; }
   header { display:flex; flex-wrap:wrap; gap:4px 10px; align-items:baseline; }
-  h2 { font-size:17px; margin:0; } header span, .meta { color:var(--mute); font-size:13px; }
+  h2 { font-size:17px; margin:0; }
+  .reply { font-size:12px; font-weight:600; padding:2px 8px; border-radius:99px; background:var(--line); }
+  .reply.brzo { background:#1f9d55; color:#fff; } .reply.srednje { background:#e0a800; color:#1b1b1b; } header span, .meta { color:var(--mute); font-size:13px; }
   .meta { margin:4px 0 10px; } a { color:var(--acc); }
   textarea { width:100%; box-sizing:border-box; background:transparent; color:inherit; border:1px solid var(--line);
     border-radius:8px; padding:8px 10px; font:inherit; margin-bottom:8px; resize:vertical; }
@@ -214,8 +224,8 @@ function writeHtml(leads) {
   .btn { background:var(--acc); color:#fff; } label { color:var(--mute); font-size:13px; margin-left:auto; }
 </style>
 <main>
-  <h1>${leads.length} biznisa bez sajta, sa društvenim mrežama</h1>
-  <p>Klikni „Kopiraj“, otvori profil i pošalji poruku ručno. Do 20–30 dnevno, da ti nalog ne bude ograničen.</p>
+  <h1>${leads.length} biznisa bez sajta${ONLY ? ", sa " + ONLY[0].toUpperCase() + ONLY.slice(1) + "-om" : ", sa društvenim mrežama"}</h1>
+  <p>Poređano po tome ko verovatno brže odgovara (saloni i lokali prvo). Klikni „Kopiraj“, otvori profil i pošalji poruku ručno, 10–15 dnevno, da ti nalog ne bude ograničen.</p>
   ${cards}
 </main>
 <script>
@@ -245,9 +255,10 @@ for (const el of elements) {
   const lead = toLead(el);
   const id = ONLY ? lead[ONLY] : lead.instagram || lead.facebook || lead.tiktok;
   if (!id || lead.hasSite || byProfile.has(id.toLowerCase())) continue;
-  byProfile.set(id.toLowerCase(), { ...lead, message: draft(lead) });
+  const score = replyScore(lead);
+  byProfile.set(id.toLowerCase(), { ...lead, score, reply: replyLabel(score), message: draft(lead) });
 }
-const leads = [...byProfile.values()].sort((a, b) => a.kind.localeCompare(b.kind, "sr") || a.name.localeCompare(b.name, "sr"));
+const leads = [...byProfile.values()].sort((a, b) => b.score - a.score || a.kind.localeCompare(b.kind, "sr") || a.name.localeCompare(b.name, "sr"));
 
 fs.mkdirSync(OUT_DIR, { recursive: true });
 writeCsv(leads);
