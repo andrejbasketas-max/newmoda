@@ -1,0 +1,29 @@
+name: Social leads
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/youthful-keller-0ldnnd]
+    paths: [.github/workflows/social-leads.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Find businesses without a website
+        working-directory: outreach
+        run: node social-leads.mjs
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f outreach/out/social.html outreach/out/social-leads.csv
+          git commit -m "Update social leads" || exit 0
+          git push
