@@ -1,10 +1,11 @@
 import { chromium } from 'playwright';
 import fs from 'fs';
+const brand = process.env.BRAND || 'claude';
 const frames = process.argv.slice(2).map(Number);
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--allow-file-access-from-files'] }).catch(() => chromium.launch({ args: ['--allow-file-access-from-files'] }));
 const p = await b.newPage({ viewport: { width: 1920, height: 1080 } });
 p.on('pageerror', e => console.log('ERR', e.message)); p.on('console', m => console.log('LOG', m.text()));
-await p.goto('file://' + process.cwd() + '/reel.html');
+await p.goto('file://' + process.cwd() + '/reel.html?brand=' + brand);
 await p.evaluate(() => window.ready);
 fs.mkdirSync('prev', { recursive: true });
 for (const f of frames) {

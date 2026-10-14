@@ -1,4 +1,4 @@
-// CLAUDE — Motion Reel 26
+// Brand-configurable motion reel. Pick the brand with reel.html?brand=<key>.
 // Everything is drawn with Canvas 2D from a single pure function of time.
 // Music runs at 128 BPM: 1 bar = 1.875 s, 8 bars = exactly 15 s.
 'use strict';
@@ -10,6 +10,21 @@ const COL = {
   cobalt: '#2438F5', yellow: '#FFD12A', white: '#FFFFFF',
 };
 const DISPLAY = 'D', MONO = 'M';
+
+// All on-screen copy lives here. TYPED must stay 18 characters (one click per letter in music.py).
+const BRANDS = {
+  claude: {
+    hud: 'CLAUDE / MOTION REEL 26', typed: 'MOTION REEL — 2026', marquee: 'MOTION — DESIGN — ',
+    particles: 'CODE', name: 'CLAUDE', role: 'MOTION DESIGNER', scene: 'CLAUDE',
+    specs: '0 IMAGES · 0 SAMPLES · 100% CODE', tech: 'SHOWREEL 2026  ·  CANVAS + NUMPY  ·  0 ASSETS',
+  },
+  pulsar: {
+    hud: 'PULSAR STUDIO / REEL 26', typed: 'PULSAR STUDIO 2026', marquee: 'PULSAR — STUDIO — ',
+    particles: 'IDEAS', name: 'PULSAR', role: 'CREATIVE STUDIO', scene: 'PULSAR',
+    specs: 'BRANDING · MOTION · WEB · 3D', tech: 'BRANDING  ·  MOTION  ·  WEB  ·  BELGRADE',
+  },
+};
+const BRAND = BRANDS[new URLSearchParams(location.search).get('brand')] || BRANDS.claude;
 
 // ---------- utilities ----------
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
@@ -55,7 +70,7 @@ function spacedText(ctx, str, x, y, tracking, align = 'center') {
 }
 
 // ---------- scene 0 · intro: dot → line → iris ----------
-const TYPE_TXT = 'MOTION REEL — 2026';
+const TYPE_TXT = BRAND.typed;
 const TYPE_START = 0.62, TYPE_STEP = 0.034;
 function sIntro(ctx, lt) {
   ctx.fillStyle = COL.ink; ctx.fillRect(0, 0, W, H);
@@ -120,7 +135,7 @@ function sType(ctx, lt) {
 
   // outlined marquee rows
   ctx.font = font(900, 150); ctx.textBaseline = 'middle';
-  const row = 'MOTION — DESIGN — MOTION — DESIGN — MOTION — DESIGN — ';
+  const row = BRAND.marquee.repeat(3);
   const rowW = ctx.measureText(row).width;
   for (let i = -4; i <= 4; i++) {
     if (i === 0) continue;
@@ -276,7 +291,7 @@ function initParticles() {
   const oc = document.createElement('canvas'); oc.width = W; oc.height = H;
   const o = oc.getContext('2d');
   o.font = font(900, 470); o.textAlign = 'center'; o.textBaseline = 'middle'; o.fillStyle = '#000';
-  spacedText(o, 'CODE', W / 2, H / 2 + 10, -8);
+  spacedText(o, BRAND.particles, W / 2, H / 2 + 10, -8);
   const d = o.getImageData(0, 0, W, H).data;
   const pts = [];
   for (let y = 0; y < H; y += 7) for (let x = 0; x < W; x += 7) if (d[(y * W + x) * 4 + 3] > 128) pts.push([x, y]);
@@ -489,7 +504,7 @@ function sMontage(ctx, lt, frameNo) {
     spacedText(ctx, String(frameNo).padStart(4, '0'), 150, fy, -10, 'left');
     ctx.restore();
     ctx.font = font(400, 30, MONO);
-    const lines = ['FRAME / 900', '1920 × 1080 · 60 FPS', '0 IMAGES · 0 SAMPLES · 100% CODE'];
+    const lines = ['FRAME / 900', '1920 × 1080 · 60 FPS', BRAND.specs];
     lines.forEach((l, i) => {
       const a = E.outExpo(prog(t, 0.04 + i * 0.05, 0.3 + i * 0.05));
       ctx.globalAlpha = a; spacedText(ctx, l, 160 + (1 - a) * 60, 800 + i * 48, 4, 'left');
@@ -530,7 +545,7 @@ function sOutro(ctx, lt) {
   ctx.save(); ctx.translate(cx, cy - 40); ctx.scale(drift, drift);
   // name: letters rise out of a mask
   ctx.font = font(900, 250); ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
-  const name = 'CLAUDE';
+  const name = BRAND.name;
   const ws = [...name].map(ch => ctx.measureText(ch).width);
   const track = lerp(60, -6, E.outExpo(prog(lt, 0, 0.9)));
   const total = ws.reduce((a, b) => a + b, 0) + track * 5;
@@ -560,7 +575,7 @@ function sOutro(ctx, lt) {
   if (barOut > 0 && end < 1) {
     ctx.save(); ctx.beginPath(); ctx.rect(-subW / 2 + barOut * subW - subW, 60, subW, 80); ctx.clip();
     ctx.globalAlpha = 1 - end;
-    spacedText(ctx, 'MOTION DESIGNER', 0, 118, 18);
+    spacedText(ctx, BRAND.role, 0, 118, 18);
     ctx.restore();
   }
   if (barIn > 0 && barOut < 1) {
@@ -572,7 +587,7 @@ function sOutro(ctx, lt) {
   ctx.font = font(400, 22, MONO); ctx.fillStyle = 'rgba(242,236,225,0.6)';
   const ml = E.outExpo(prog(lt, 0.7, 1.1));
   ctx.globalAlpha = ml * (1 - end);
-  spacedText(ctx, 'SHOWREEL 2026  ·  CANVAS + NUMPY  ·  0 ASSETS', 0, 210, 4);
+  spacedText(ctx, BRAND.tech, 0, 210, 4);
   ctx.globalAlpha = 1;
   ctx.restore();
   // white impact flash
@@ -581,7 +596,7 @@ function sOutro(ctx, lt) {
 }
 
 // ---------- HUD layer (drawn after motion blur, stays crisp) ----------
-const SCENE_NAMES = ['INTRO', 'KINETIC TYPE', 'SHAPE MORPH', 'PARTICLES', '3D / CUBES', 'LIQUID', 'MONTAGE', 'CLAUDE'];
+const SCENE_NAMES = ['INTRO', 'KINETIC TYPE', 'SHAPE MORPH', 'PARTICLES', '3D / CUBES', 'LIQUID', 'MONTAGE', BRAND.scene];
 function hud(ctx, t, frameNo) {
   const bar = Math.min(7, Math.floor(t / BAR));
   const a = clamp(prog(t, 0.35, 0.7)) * (1 - prog(t, 14.25, 14.6));
@@ -595,7 +610,7 @@ function hud(ctx, t, frameNo) {
     ctx.beginPath(); ctx.moveTo(x, y + sy * L); ctx.lineTo(x, y); ctx.lineTo(x + sx * L, y); ctx.stroke();
   });
   ctx.font = font(400, 19, MONO); ctx.textBaseline = 'middle';
-  spacedText(ctx, 'CLAUDE / MOTION REEL 26', m + 52, m + 6, 2, 'left');
+  spacedText(ctx, BRAND.hud, m + 52, m + 6, 2, 'left');
   spacedText(ctx, `${String(bar).padStart(2, '0')} — ${SCENE_NAMES[bar]}`, W - m - 52, m + 6, 2, 'right');
   const s = Math.floor(t), ff = frameNo % 60;
   spacedText(ctx, `TC 00:00:${String(s).padStart(2, '0')}:${String(ff).padStart(2, '0')}`, m + 52, H - m - 6, 2, 'left');

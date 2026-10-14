@@ -82,3 +82,17 @@ Every visual hit has a matching sound, and every sound has a matching visual. Th
 ## 6. Total time
 
 About **12 minutes** of wall-clock time from the first command (00:47 UTC) to the verified video (00:59 UTC). That includes writing the code (~3 min of visuals and ~1 min of audio as text), two visual iterations, two audio iterations, and the final render (137 s).
+
+---
+
+## 7. Company version (PULSAR STUDIO)
+
+All on-screen copy now lives in one `BRANDS` object at the top of `reel.js`. Animation, timing and music are unchanged. `node render.mjs pulsar` → `showreel-pulsar.mp4`.
+
+- **Brand:** PULSAR STUDIO is a fictional creative studio from Belgrade. Its name has 6 letters, like CLAUDE, so the end card keeps the same proportions.
+- **Copy changes:**
+  - The intro now types "PULSAR STUDIO 2026". It is still 18 characters, so each letter still lands on a typing click in the music.
+  - The marquee reads "PULSAR — STUDIO".
+  - The particles form **IDEAS**.
+  - The end card reads **PULSAR. / CREATIVE STUDIO / BRANDING · MOTION · WEB · BELGRADE**.
+- **To add a new company:** add an entry to `BRANDS` and run `node render.mjs <key>`. A render takes about 2 minutes.
