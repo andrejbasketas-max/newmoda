@@ -112,14 +112,38 @@ function toLead(el) {
 
 // ---------- message ----------
 
+// What a site does for each kind of business — the reason in the message.
+const BENEFIT = {
+  food: "da gosti odmah vide meni, radno vreme i kako da vas nađu, i da vas izaberu umesto mesta pored",
+  beauty: "da klijenti vide usluge i cene i zakažu termin, a da vi ne odgovarate na iste poruke po ceo dan",
+  health: "da pacijenti lako nađu usluge, radno vreme i broj za zakazivanje, i da vam više veruju",
+  shop: "da kupci vide ponudu, radno vreme i adresu, i da vas nađu kad traže to što prodajete",
+  stay: "da vas gosti nađu na Google-u i rezervišu direktno kod vas, bez provizije Bookinga",
+  trade: "da vas ljudi iz kraja nađu na Google-u kad im baš sad treba neko kao vi",
+  default: "da vas novi klijenti lakše nađu na Google-u i odmah vide ozbiljan biznis",
+};
+const GROUP = {
+  kafić: "food", bar: "food", pab: "food", restoran: "food", pekara: "food", poslastičarnica: "food",
+  salon: "beauty", teretana: "beauty", "plesni studio": "beauty", "sportski centar": "beauty", studio: "beauty",
+  ordinacija: "health", ambulanta: "health",
+  butik: "shop", radnja: "shop", zlatara: "shop", cvećara: "shop", "salon automobila": "shop",
+  hotel: "stay", hostel: "stay", smeštaj: "stay",
+  servis: "trade", firma: "trade", radionica: "trade", agencija: "trade", kancelarija: "trade",
+};
+
 function draft(lead) {
-  const what = lead.kind === "biznis" ? "vaš biznis" : `vaš ${lead.kind}`;
+  const network = ONLY || (lead.instagram ? "instagram" : lead.facebook ? "facebook" : "tiktok");
+  const page = network === "facebook" ? "Facebook stranicu" : network === "instagram" ? "Instagram profil" : "TikTok profil";
+  const benefit = BENEFIT[GROUP[lead.kind] || "default"];
   return [
-    `Zdravo! Vidim da ${lead.name} nema svoj sajt, samo profil ovde.`,
-    `Pravim jednostavne, moderne sajtove za male biznise: radno vreme, ${lead.kind === "restoran" || lead.kind === "kafić" ? "meni" : "cenovnik"}, mapa i dugme za poziv, sve prilagođeno telefonu. ` +
-      "Ljudi koji vas traže na Google-u bi vas lakše našli.",
-    ...(ME.portfolio ? [`Primer: ${ME.portfolio}`] : []),
-    `Ako želite, besplatno napravim probnu početnu stranu za ${what} da vidite kako bi izgledalo, bez obaveze. Ako vas ne zanima, slobodno ignorišite 🙂`,
+    `Zdravo! 👋`,
+    `Gledam ${page} „${lead.name}“ i baš lepo izgleda, ali vidim da nemate svoj sajt. ` +
+      `Danas većina ljudi prvo potraži na Google-u pre nego što dođe, a sajt vam pomaže ${benefit}.`,
+    "Pravim moderne sajtove za male biznise: brzi su, lepo izgledaju na telefonu, " +
+      "a vi ne morate ništa tehnički da znate ni da radite.",
+    ...(ME.portfolio ? [`Primer mog rada: ${ME.portfolio}`] : []),
+    "Mogu besplatno da vam napravim probnu verziju sajta. Ako vam se svidi, dogovorimo se, a ako ne, ništa ne dugujete.",
+    "Da vam pošaljem kako bi izgledao? 🙂",
     [ME.name, ME.studio].filter(Boolean).join(", "),
   ].filter(Boolean).join("\n\n");
 }
