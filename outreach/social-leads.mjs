@@ -5,11 +5,15 @@
 //
 // Usage: npm run social               (Beograd)
 //        npm run social -- Q55630     (another city, by Wikidata ID — Novi Sad)
+//        npm run social -- --only=facebook   (only businesses with that network)
 
 import fs from "node:fs";
 import path from "node:path";
 
-const CITY = process.argv[2] || "Q3711"; // Wikidata ID for Beograd
+const args = process.argv.slice(2);
+const CITY = args.find((a) => !a.startsWith("--")) || "Q3711"; // Wikidata ID for Beograd
+const ONLY = (args.find((a) => a.startsWith("--only=")) || "").slice(7); // instagram | facebook | tiktok
+const SUFFIX = ONLY ? "-" + ONLY : "";
 const OUT_DIR = "out";
 const OVERPASS = process.env.OVERPASS_URL || "https://overpass-api.de/api/interpreter";
 
@@ -121,7 +125,7 @@ const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<
 function writeCsv(leads) {
   const cols = ["name", "kind", "address", "instagram", "facebook", "tiktok", "phone", "email", "osm", "message"];
   const text = [cols.join(","), ...leads.map((l) => cols.map((c) => csvCell(l[c])).join(","))].join("\n");
-  fs.writeFileSync(path.join(OUT_DIR, "social-leads.csv"), "﻿" + text);
+  fs.writeFileSync(path.join(OUT_DIR, `social-leads${SUFFIX}.csv`), "﻿" + text);
 }
 
 function writeHtml(leads) {
@@ -138,7 +142,7 @@ function writeHtml(leads) {
     </div>
   </article>`).join("");
 
-  fs.writeFileSync(path.join(OUT_DIR, "social.html"), `<!doctype html>
+  fs.writeFileSync(path.join(OUT_DIR, `social${SUFFIX}.html`), `<!doctype html>
 <html lang="sr"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Poruke za društvene mreže</title>
 <style>
@@ -188,7 +192,7 @@ const elements = await fetchBusinesses();
 const byProfile = new Map();
 for (const el of elements) {
   const lead = toLead(el);
-  const id = lead.instagram || lead.facebook || lead.tiktok;
+  const id = ONLY ? lead[ONLY] : lead.instagram || lead.facebook || lead.tiktok;
   if (!id || lead.hasSite || byProfile.has(id.toLowerCase())) continue;
   byProfile.set(id.toLowerCase(), { ...lead, message: draft(lead) });
 }
@@ -198,4 +202,4 @@ fs.mkdirSync(OUT_DIR, { recursive: true });
 writeCsv(leads);
 writeHtml(leads);
 console.log(`Pronađeno ${elements.length} biznisa sa društvenim mrežama, ${leads.length} bez sajta.`);
-console.log(`→ ${OUT_DIR}/social.html (pregled i slanje)\n→ ${OUT_DIR}/social-leads.csv (za Excel)`);
+console.log(`→ ${OUT_DIR}/social${SUFFIX}.html (pregled i slanje)\n→ ${OUT_DIR}/social-leads${SUFFIX}.csv (za Excel)`);

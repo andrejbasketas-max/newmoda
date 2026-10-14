@@ -77,6 +77,7 @@ i za svaki napiše kratku DM poruku. Ne treba API ključ.
 ```bash
 npm run social               # Beograd
 npm run social -- Q55630     # Novi Sad (ili drugi grad po Wikidata ID-ju)
+npm run social -- --only=facebook   # samo firme sa Facebookom → out/social-facebook.html
 ```
 
 - `out/social.html`: kartica po firmi sa dugmićima **Instagram / Facebook / TikTok** (otvaraju profil),

@@ -19,11 +19,13 @@ jobs:
           node-version: 22
       - name: Find businesses without a website
         working-directory: outreach
-        run: node social-leads.mjs
+        run: |
+          node social-leads.mjs
+          node social-leads.mjs --only=facebook
       - name: Commit results
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f outreach/out/social.html outreach/out/social-leads.csv
+          git add -f outreach/out/social*.html outreach/out/social-leads*.csv
           git commit -m "Update social leads" || exit 0
           git push
