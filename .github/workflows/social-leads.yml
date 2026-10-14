@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [claude/youthful-keller-0ldnnd]
-    paths: [.github/workflows/social-leads.yml]
+    paths: [.github/workflows/social-leads.yml, outreach/social-leads.mjs]
 
 permissions:
   contents: write

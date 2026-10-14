@@ -54,11 +54,18 @@ out center tags;
 
 async function fetchBusinesses() {
   console.log("Preuzimam podatke iz OpenStreetMap-a (može da potraje 1–2 min)…");
-  const res = await fetch(OVERPASS, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded", "User-Agent": "newmoda-outreach" },
-    body: "data=" + encodeURIComponent(query),
-  });
+  let res;
+  // Overpass answers 429/504 when it is busy; wait and try again a few times.
+  for (let attempt = 1; attempt <= 5; attempt++) {
+    res = await fetch(OVERPASS, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded", "User-Agent": "newmoda-outreach" },
+      body: "data=" + encodeURIComponent(query),
+    });
+    if (res.ok || ![429, 502, 503, 504].includes(res.status) || attempt === 5) break;
+    console.log(`Server je zauzet (${res.status}), pokušavam ponovo za ${attempt * 20} s…`);
+    await new Promise((r) => setTimeout(r, attempt * 20000));
+  }
   if (!res.ok) throw new Error(`Overpass ${res.status}: ${(await res.text()).slice(0, 200)}`);
   return (await res.json()).elements;
 }
