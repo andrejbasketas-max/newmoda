@@ -68,3 +68,20 @@ OSM ne pokriva sve firme. Za više firmi pretraži Google Maps po kategoriji i k
 
 Mejlove šalji ručno, 20–30 dnevno, sa svog pravog mejla. Masovno slanje ti brzo pošalje adresu u spam.
 Poruka već sadrži rečenicu „ako vas ne zanima, neću vam više pisati“. Ispoštuj je.
+
+## Društvene mreže firmi bez sajta (`social-leads.mjs`)
+
+Iz OpenStreetMap-a izvlači sve biznise u gradu koji imaju Instagram, Facebook ili TikTok, a nemaju pravi sajt,
+i za svaki napiše kratku DM poruku. Ne treba API ključ.
+
+```bash
+npm run social               # Beograd
+npm run social -- Q55630     # Novi Sad (ili drugi grad po Wikidata ID-ju)
+npm run social -- --only=facebook   # samo firme sa Facebookom → out/social-facebook.html
+```
+
+- `out/social.html`: kartica po firmi sa dugmićima **Instagram / Facebook / TikTok** (otvaraju profil),
+  **Kopiraj** za poruku i oznakom „poslato“.
+- `out/social-leads.csv`: ime, vrsta, adresa, linkovi profila, telefon, mejl i poruka, za Excel.
+
+Isti profil se pojavljuje samo jednom. Poruke šalji ručno, do 20–30 dnevno.
