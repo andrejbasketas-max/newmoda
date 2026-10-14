@@ -48,3 +48,23 @@ U `.env`: `STUDIO_NAME`, `OFFER` (šta nudiš), `PORTFOLIO_URL` (npr. link ka de
 Lista domena koji se ne računaju kao sajt je `NOT_A_SITE`.
 
 Model: `claude-opus-5-5`, sa uključenim server-side fallbackom (`fallbacks: "default"`) za slučaj odbijenog zahteva.
+
+## Mejlovi firmama bez sajta (`email-leads.mjs`)
+
+Iz OpenStreetMap-a izvlači sve biznise u Beogradu koji imaju javni mejl, a nemaju sajt
+(Facebook/Instagram link se ne računa kao sajt), i za svaki napiše poruku. Ne treba API ključ.
+
+```bash
+npm run emails               # Beograd
+npm run emails -- Q55630     # drugi grad po Wikidata ID-ju (Q55630 = Novi Sad)
+```
+
+- `out/emails.html`: kartica po firmi, poruka koju možeš da izmeniš, dugme **Otvori mejl** (otvara
+  tvoj mejl program sa popunjenim primaocem, naslovom i tekstom) i oznaka „poslato“.
+- `out/email-leads.csv`: ista lista za Excel ili mail-merge.
+
+Ime, telefon, `STUDIO_NAME` i `PORTFOLIO_URL` iz `.env` ulaze u potpis i poruku.
+OSM ne pokriva sve firme. Za više firmi pretraži Google Maps po kategoriji i kraju i ručno dodaj one bez sajta.
+
+Mejlove šalji ručno, 20–30 dnevno, sa svog pravog mejla. Masovno slanje ti brzo pošalje adresu u spam.
+Poruka već sadrži rečenicu „ako vas ne zanima, neću vam više pisati“. Ispoštuj je.
