@@ -24,3 +24,13 @@ Odvojen, samostalan sajt za kafić — otvori `kafic/index.html`. Bez zavisnosti
 ## Outreach agent (`outreach/`)
 
 Pronalazi Instagram biznis profile bez sajta i priprema personalizovane poruke za ručno slanje. Vidi `outreach/README.md`.
+
+## Med „Gladni Medved“ (`med/`)
+
+Online prodavnica meda — otvori `med/index.html`. Vizuelno prati Hungry Tiger stil sa [Refero Styles](https://styles.refero.design/style/47f15da7-8905-45b3-bcab-06a4277c6168): rđasto-braon platno (`#823513`), jedan zlatni akcenat (`#faae33`), ogromni naslovi, pilule umesto dugmića, tačkaste zlatne linije, bez senki. Struktura stranice prati njihov sajt: hero → tegla koja putuje kroz tri ekrana → „Šta je unutra“ → prodavnica (6 sorti, izbor veličine, oznaka jačine) → tradicija → „Zašto je tegla važna“ → recepti (sa detaljima) → newsletter → footer, plus korpa, mini-igra „Uhvati 50 kapi“ i plutajuća dugmad.
+
+- `data.js` — proizvodi, cene, recepti i SVG tegle/ilustracije (cene i sorte menjaš ovde).
+- `main.js` — korpa (čuva se u `localStorage`), porudžbina, recepti, meni, efekat „punjenja medom“ na naslovima.
+- `game.js` — mini-igra.
+
+Porudžbina i newsletter nemaju backend: forma samo potvrđuje lokalno. Brend, adresa, telefon i e-mail su izmišljeni (placeholder).
