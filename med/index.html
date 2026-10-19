@@ -6,10 +6,14 @@
   <title>Gladni Medved — Pravi med iz naših košnica</title>
   <meta name="description" content="Gladni Medved: sirovi, hladno vrcani med iz Šumadije. Bagremov, livadski, lipov, kestenov, šumski i med u saću — poruči online.">
   <meta name="theme-color" content="#823513">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    // Hide the hero for a moment so Motion can play its intro without a flash (never longer than 2.5 s)
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('mo-wait');
+      setTimeout(() => document.documentElement.classList.remove('mo-wait'), 2500);
+    }
+  </script>
 </head>
 <body>
   <a class="skip" href="#medovi">Preskoči na medove</a>
@@ -50,7 +54,7 @@
     <section class="hero botanical">
       <hr class="rule">
       <p class="eyebrow">Sirovi med iz Šumadije</p>
-      <h1 class="hero-title">Zlatni ukus</h1>
+      <h1 class="hero-title">Zlatni <em>ukus</em></h1>
       <hr class="rule">
       <p class="hero-product">Livadski med</p>
       <div class="hero-jar jar" data-jar="livadski" data-mode="hero"></div>
@@ -67,12 +71,12 @@
       </div>
 
       <section class="j-sec j-a">
-        <h2 class="display fill">Novi ugao<br>slatkoće</h2>
+        <h2 class="display fill">Novi ugao<br><em>slatkoće</em></h2>
         <p class="micro">Otkrij kako hladno vrcan med čuva svaku notu cveta iz kog je nastao.</p>
       </section>
 
       <section class="j-sec j-b">
-        <h2 class="display fill">Otvori<br>teglu</h2>
+        <h2 class="display fill">Otvori<br><em>teglu</em></h2>
         <ul class="icon-row" aria-label="Šta oseća nos">
           <li><span class="ico"><svg viewBox="0 0 24 24"><use href="#i-flower"/></svg></span><span class="sr">Cvet</span></li>
           <li><span class="ico"><svg viewBox="0 0 24 24"><use href="#i-bee"/></svg></span><span class="sr">Pčela</span></li>
@@ -86,14 +90,14 @@
       </section>
 
       <section class="j-sec j-c">
-        <h2 class="display fill">Nova<br>perspektiva<br>ukusa</h2>
+        <h2 class="display fill">Nova<br>perspektiva<br><em>ukusa</em></h2>
       </section>
     </div>
 
     <!-- ŠTA JE UNUTRA -->
     <section class="inside">
       <div class="inside-text">
-        <h2 class="display-md fill">Šta je<br>unutra</h2>
+        <h2 class="display-md fill">Šta je<br><em>unutra</em></h2>
         <hr class="rule">
         <p class="micro">Naš med je samo med. Bez ičega drugog.</p>
         <ul class="facts">
@@ -114,7 +118,7 @@
     <section class="shop" id="medovi">
       <hr class="rule">
       <div class="shop-head">
-        <h2 class="display fill">Naši<br>medovi</h2>
+        <h2 class="display fill">Naši<br><em>medovi</em></h2>
         <p class="micro">Šest sorti, jedno pravilo: ništa osim meda. Jačina ukusa je označena na svakoj tegli.</p>
       </div>
       <ul class="products" id="products"></ul>
@@ -124,7 +128,7 @@
     <!-- TRADICIJA -->
     <section class="gold tradition" id="tradicija">
       <div class="tradition-head">
-        <h2 class="display fill dark">Tradicija<br>&amp; pčele</h2>
+        <h2 class="display fill dark">Tradicija<br>&amp; <em>pčele</em></h2>
         <p class="micro">Od ručno pravljenih košnica do vrcanja u malim serijama — čuvamo pravi ukus u svakoj kašičici.</p>
       </div>
       <ol class="steps">
@@ -137,7 +141,7 @@
     <!-- ZAŠTO JE TEGLA VAŽNA -->
     <section class="gold why">
       <div class="why-head">
-        <h2 class="display fill dark">Zašto je<br>tegla važna</h2>
+        <h2 class="display fill dark">Zašto je<br>tegla <em>važna</em></h2>
         <span class="sticker st1">Zapečaćeno</span>
         <span class="sticker st2">Zaključana svežina</span>
         <span class="sticker st3">Pun ukus</span>
@@ -170,7 +174,7 @@
         <div class="jar u3" data-jar="kesten"></div>
       </div>
       <div class="unlock-text">
-        <h2 class="display fill">Otključaj<br>magiju u<br>tegli</h2>
+        <h2 class="display fill">Otključaj<br>magiju u<br><em>tegli</em></h2>
         <a class="btn" href="#medovi">Kupi</a>
       </div>
     </section>
@@ -178,7 +182,7 @@
     <!-- RECEPTI -->
     <section class="recipes" id="recepti">
       <span class="ico big" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-spoon"/></svg></span>
-      <h2 class="display fill center">Hajde da<br>kuvamo</h2>
+      <h2 class="display fill center">Hajde da<br><em>kuvamo</em></h2>
       <ul class="recipe-cards" id="recipeCards"></ul>
     </section>
 
@@ -206,7 +210,7 @@
 
   <!-- FOOTER -->
   <footer class="footer">
-    <p class="wordmark" aria-hidden="true">Gladni Medved</p>
+    <p class="wordmark" aria-hidden="true">Gladni <em>Medved</em></p>
     <div class="foot-grid">
       <ul><li><a href="#medovi">Med</a></li><li><a href="#recepti">Recepti</a></li><li><a href="#tradicija">O nama</a></li><li><button data-open-game>Igra</button></li></ul>
       <ul><li><a href="#medovi">Gde kupiti</a></li><li><a href="#kontakt">Kontakt</a></li></ul>
@@ -304,6 +308,7 @@
   <script src="data.js" defer></script>
   <script src="main.js" defer></script>
   <script src="game.js" defer></script>
+  <script src="motion.js" defer></script>
   <script src="jar3d.js" defer></script>
 </body>
 </html>

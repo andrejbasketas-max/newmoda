@@ -98,7 +98,7 @@
     ctx.fillStyle = C.clove;
     ctx.fillRect(x - 40, y + 26, 80, 30);
     ctx.fillStyle = C.gold;
-    ctx.font = '800 13px Outfit, sans-serif';
+    ctx.font = '900 14px Zodiak, Georgia, serif';
     ctx.textAlign = 'center';
     ctx.fillText('MED', x, y + 46);
   }

@@ -46,8 +46,12 @@
     if (!btn) return;
     const card = btn.closest('.product');
     const p = byId(card.dataset.id);
+    const prev = $('.size[aria-checked="true"]', card);
     $$('.size', card).forEach((b) => b.setAttribute('aria-checked', b === btn));
-    $('.price', card).textContent = rsd(p.sizes[+btn.dataset.size][1]);
+    const el = $('.price', card);
+    const from = p.sizes[+prev.dataset.size][1], to = p.sizes[+btn.dataset.size][1];
+    if (window.GMFX) window.GMFX.price(el, from, to, rsd);
+    else el.textContent = rsd(to);
   });
 
   // ---------- Cart ----------
@@ -119,6 +123,7 @@
       const card = addBtn.closest('.product');
       const size = card ? +$('.size[aria-checked="true"]', card).dataset.size : 0;
       add(addBtn.dataset.add, size);
+      window.GMFX?.fly(addBtn);
       if (!card) openDialog(cartDlg);
     }
     if (e.target.closest('[data-open-cart]')) openDialog(cartDlg);
@@ -145,6 +150,7 @@
   function openDialog(d) {
     if (d === cartDlg) { $('#cartDone').hidden = true; renderCart(); }
     if (!d.open) d.showModal();
+    if (d === cartDlg) window.GMFX?.drawer(d);
     document.body.classList.add('locked');
   }
   $$('dialog').forEach((d) => {
@@ -214,8 +220,7 @@
     f.reset();
   });
 
-  // ---------- Scroll: honey-fill headings + travelling jar ----------
-  const fills = $$('.fill');
+  // ---------- Scroll: travelling jar ----------
   const journey = $('#journey');
   const jjar = $('#journeyJar');
   const nav = $('#nav');
@@ -241,11 +246,6 @@
   function frame() {
     const vh = innerHeight;
     nav.classList.toggle('scrolled', scrollY > 10);
-    for (const el of fills) {
-      const r = el.getBoundingClientRect();
-      const p = Math.min(1, Math.max(0, (vh * 0.9 - r.top) / (vh * 0.55)));
-      el.style.setProperty('--p', (p * 100).toFixed(1) + '%');
-    }
     const jr = journey.getBoundingClientRect();
     const p = Math.min(1, Math.max(0, -jr.top / (jr.height - vh)));
     const mobile = innerWidth < 760;
@@ -256,7 +256,6 @@
   }
 
   if (reduce) {
-    fills.forEach((el) => el.style.setProperty('--p', '100%'));
     addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 10), { passive: true });
   } else {
     let ticking = false;

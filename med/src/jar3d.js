@@ -2,17 +2,18 @@
 // One WebGL renderer draws every visible jar and copies the frame into that jar's own 2D canvas,
 // so the jars stay in normal page flow (text can sit on top, sections keep their backgrounds).
 import {
-  WebGLRenderer, Scene, PerspectiveCamera, Group, Mesh, Vector2, SplineCurve, LatheGeometry,
-  CylinderGeometry, CircleGeometry, SphereGeometry, TorusGeometry, MeshPhysicalMaterial, MeshStandardMaterial,
-  CanvasTexture, Color, DirectionalLight, PMREMGenerator, NeutralToneMapping, SRGBColorSpace,
-  BackSide, FrontSide, AdditiveBlending, MathUtils,
+  WebGLRenderer, Scene, PerspectiveCamera, Group, Mesh, Vector2, Vector3, SplineCurve, CatmullRomCurve3,
+  QuadraticBezierCurve3, LatheGeometry, TubeGeometry, CylinderGeometry, CircleGeometry, SphereGeometry,
+  TorusGeometry, MeshPhysicalMaterial, MeshStandardMaterial, CanvasTexture, Color, DirectionalLight,
+  PMREMGenerator, NeutralToneMapping, SRGBColorSpace, RepeatWrapping, BackSide, FrontSide, AdditiveBlending, MathUtils,
 } from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 
 const { PRODUCTS, byId, C } = window.MED;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const DISPLAY = 'Zodiak, Georgia, serif';
+const UI = 'Satoshi, system-ui, sans-serif';
 
-// ---------- Renderer ----------
 let renderer;
 try {
   renderer = new WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
@@ -42,12 +43,12 @@ function start() {
   fill.position.set(4, -1, 5);
   scene.add(key, rim, fill);
 
-  const camera = new PerspectiveCamera(28, 1, 0.1, 50);
+  const camera = new PerspectiveCamera(28, 1, 0.1, 60);
 
-  // ---------- Geometry ----------
+  // ---------- Profiles ----------
   const smooth = (pts, n) => new SplineCurve(pts.map(([x, y]) => new Vector2(x, y))).getPoints(n);
 
-  // Outer glass profile (radius, height) — a squat jar with rounded shoulder and short neck
+  // Outer glass (radius, height): a squat jar with rounded shoulder and short neck
   const outer = smooth([
     [0.001, 0], [0.82, 0], [0.97, 0.05], [1.0, 0.22], [1.0, 1.9], [0.98, 2.06], [0.9, 2.18],
     [0.76, 2.25], [0.72, 2.3], [0.72, 2.5], [0.69, 2.53],
@@ -60,35 +61,13 @@ function start() {
     [0.001, 0.125], [0.79, 0.125], [0.92, 0.18], [0.948, 0.3], [0.948, 1.86], [0.93, 1.97],
     [0.6, 1.995], [0.001, 2.0],
   ], 70);
-
-  const glassOuterGeo = new LatheGeometry(outer, 128);
-  const glassInnerGeo = new LatheGeometry(inner, 128);
-  const honeyGeo = new LatheGeometry(honeyProfile, 96);
-
-  // Ribbed metal lid
-  const lidGeo = new CylinderGeometry(0.79, 0.79, 0.36, 240, 2);
-  {
-    const p = lidGeo.attributes.position;
-    for (let i = 0; i < p.count; i++) {
-      const x = p.getX(i), z = p.getZ(i);
-      const r = Math.hypot(x, z);
-      if (r < 0.785) continue;
-      const a = Math.atan2(z, x);
-      const k = 1 + 0.012 * Math.pow(Math.abs(Math.sin(a * 60)), 0.6);
-      p.setX(i, x * k);
-      p.setZ(i, z * k);
+  const rAt = (y) => {
+    for (let i = 1; i < outer.length; i++) {
+      const a = outer[i - 1], b = outer[i];
+      if (a.y !== b.y && (y - a.y) * (y - b.y) <= 0) return a.x + (b.x - a.x) * (y - a.y) / (b.y - a.y);
     }
-    lidGeo.computeVertexNormals();
-  }
-  const lidTopGeo = new CircleGeometry(0.62, 96);
-  const lidRingGeo = new TorusGeometry(0.7, 0.035, 12, 120);
-
-  const LABEL_ARC = Math.PI * 2 * 0.86;
-  const labelGeo = new CylinderGeometry(1.012, 1.012, 0.98, 160, 1, true, -LABEL_ARC / 2, LABEL_ARC);
-
-  // Honey thread between lid and jar when the lid lifts
-  const threadGeo = new CylinderGeometry(1, 1, 1, 20, 8, true);
-  const dropGeo = new SphereGeometry(1, 24, 16);
+    return 1;
+  };
 
   // ---------- Materials ----------
   // Glass adds only its reflections (black diffuse + additive blend), so the honey behind stays saturated
@@ -103,32 +82,49 @@ function start() {
 
   const lidMat = new MeshStandardMaterial({ color: 0x1a0c05, metalness: 0.75, roughness: 0.3, envMapIntensity: 1.4 });
 
-  // Honey: glossy, glowing core and deeper edges, like light passing through a thick liquid
+  // Honey looks lit from inside: a bright yellow core, a deep red-brown rim where light travels further
+  // through the liquid, darker towards the bottom of the jar and a faint swirl so it is never flat.
   const honeyMats = new Map();
-  function honeyMat(hex) {
-    if (honeyMats.has(hex)) return honeyMats.get(hex);
+  function honeyMat(hex, kind = 'body') {
+    const id = hex + kind;
+    if (honeyMats.has(id)) return honeyMats.get(id);
     const base = new Color(hex);
     const m = new MeshPhysicalMaterial({
-      color: base.clone().multiplyScalar(0.3), roughness: 0.16, metalness: 0, clearcoat: 0.8, clearcoatRoughness: 0.05,
-      emissive: base.clone().multiplyScalar(0.78), envMapIntensity: 0.3,
+      color: base.clone().multiplyScalar(0.3), roughness: 0.12, metalness: 0, clearcoat: 0.9, clearcoatRoughness: 0.04,
+      emissive: base.clone().multiplyScalar(0.8), envMapIntensity: 0.35,
     });
-    // Fake light transport: a glowing, saturated core with deeper edges
+    const body = kind === 'body';
+    m.customProgramCacheKey = () => 'honey-' + kind;
     m.onBeforeCompile = (sh) => {
-      sh.fragmentShader = sh.fragmentShader.replace(
-        '#include <opaque_fragment>',
-        `float facing = abs(dot(normalize(normal), normalize(vViewPosition)));
-         outgoingLight *= mix(0.42, 1.0, pow(facing, 1.2));
-         float luma = dot(outgoingLight, vec3(0.2126, 0.7152, 0.0722));
-         outgoingLight = mix(vec3(luma), outgoingLight, 1.12);
-         #include <opaque_fragment>`,
-      );
+      sh.vertexShader = sh.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vObj;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvObj = position;');
+      sh.fragmentShader = sh.fragmentShader
+        .replace('#include <common>', `#include <common>
+          varying vec3 vObj;
+          float hh(vec3 p) { return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }
+          float vnoise(vec3 p) {
+            vec3 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+            return mix(mix(mix(hh(i), hh(i + vec3(1,0,0)), f.x), mix(hh(i + vec3(0,1,0)), hh(i + vec3(1,1,0)), f.x), f.y),
+                       mix(mix(hh(i + vec3(0,0,1)), hh(i + vec3(1,0,1)), f.x), mix(hh(i + vec3(0,1,1)), hh(i + vec3(1,1,1)), f.x), f.y), f.z);
+          }`)
+        .replace('#include <opaque_fragment>', `
+          float facing = abs(dot(normalize(normal), normalize(vViewPosition)));
+          float depthLen = pow(1.0 - facing, 1.35);
+          vec3 core = outgoingLight * vec3(1.1, 1.02, 0.8);
+          vec3 deep = outgoingLight * vec3(0.6, 0.33, 0.17);
+          outgoingLight = mix(core, deep, depthLen);
+          ${body ? `outgoingLight *= mix(0.7, 1.08, smoothstep(0.1, 1.95, vObj.y));
+          outgoingLight *= 0.93 + 0.14 * vnoise(vObj * vec3(2.6, 1.1, 2.6) + vec3(0.0, vObj.x * 0.8, 0.0));` : ''}
+          float luma = dot(outgoingLight, vec3(0.2126, 0.7152, 0.0722));
+          outgoingLight = mix(vec3(luma), outgoingLight, 1.15);
+          #include <opaque_fragment>`);
     };
-    honeyMats.set(hex, m);
+    honeyMats.set(id, m);
     return m;
   }
 
-  // Label: paper + gold foil. Metalness/roughness come from a second canvas (B = metal, G = rough).
-  const labelMats = new Map();
+  // ---------- Label: dark paper + gold foil (B channel = metal, G = roughness) ----------
   function bearPath(ctx, x, y, s) {
     ctx.save();
     ctx.translate(x, y);
@@ -149,55 +145,58 @@ function start() {
     ctx.beginPath(); ctx.moveTo(21, 24.5); ctx.lineTo(27, 24.5); ctx.lineTo(24, 27.5); ctx.closePath(); ctx.fill();
     ctx.restore();
   }
+  function hexRow(ctx, cx, y) {
+    for (let i = 0; i < 5; i++) {
+      const hx = cx + (i - 2) * 40;
+      ctx.beginPath();
+      for (let k = 0; k < 6; k++) {
+        const a = Math.PI / 3 * k + Math.PI / 6;
+        ctx[k ? 'lineTo' : 'moveTo'](hx + 17 * Math.cos(a), y + 17 * Math.sin(a));
+      }
+      ctx.closePath(); ctx.stroke();
+    }
+  }
   function drawLabel(ctx, p, W, H, ink, paper) {
     ctx.fillStyle = paper;
     ctx.fillRect(0, 0, W, H);
     ctx.strokeStyle = ctx.fillStyle = ink;
     const cx = W / 2;
-    // Fine double border across the whole wrap
     ctx.lineWidth = 3;
     ctx.strokeRect(14, 14, W - 28, H - 28);
     ctx.lineWidth = 1.5;
     ctx.strokeRect(26, 26, W - 52, H - 52);
-    bearPath(ctx, cx - 44, 46, 88);
+    bearPath(ctx, cx - 34, 36, 68);
     ctx.textAlign = 'center';
-    ctx.font = `800 ${p.label.length > 6 ? 72 : 84}px Outfit, sans-serif`;
-    ctx.fillText(p.label, cx, 214);
-    ctx.font = '500 26px Outfit, sans-serif';
+    ctx.font = `900 ${p.label.length > 6 ? 70 : 80}px ${DISPLAY}`;
+    ctx.letterSpacing = '-1px';
+    ctx.fillText(p.label, cx, 176);
+    ctx.font = `italic 400 38px ${DISPLAY}`;
+    ctx.letterSpacing = '0px';
+    ctx.fillText(p.id === 'sace' ? 'med u saću' : 'sirovi med', cx, 220);
+    ctx.font = `700 21px ${UI}`;
     ctx.letterSpacing = '6px';
-    ctx.fillText(`GLADNI MEDVED · ${p.sizes[0][0]}`, cx, 262);
-    ctx.letterSpacing = '0px';
+    ctx.fillText(`GLADNI MEDVED · ${p.sizes[0][0].toUpperCase()}`, cx, 270);
     // Side panels
-    ctx.font = '700 24px Outfit, sans-serif';
+    ctx.font = `700 23px ${UI}`;
     ctx.letterSpacing = '4px';
-    ctx.fillText('SIROVI MED · ŠUMADIJA', cx - 560, 150);
-    ctx.fillText('HLADNO VRCANO', cx + 560, 150);
-    ctx.font = '500 20px Outfit, sans-serif';
-    ctx.fillText('BEZ DODATAKA · BEZ PASTERIZACIJE', cx - 560, 190);
-    ctx.fillText('ČUVATI NA SOBNOJ TEMPERATURI', cx + 560, 190);
+    ctx.fillText('ŠUMADIJA · SRBIJA', cx - 560, 140);
+    ctx.fillText('HLADNO VRCANO', cx + 560, 140);
+    ctx.font = `italic 400 30px ${DISPLAY}`;
     ctx.letterSpacing = '0px';
+    ctx.fillText('bez dodataka', cx - 560, 188);
+    ctx.fillText('iz naših košnica', cx + 560, 188);
     ctx.lineWidth = 2;
     for (const x of [cx - 330, cx + 330]) { ctx.beginPath(); ctx.moveTo(x, 50); ctx.lineTo(x, H - 50); ctx.stroke(); }
-    // Honeycomb row on the side panels
-    for (const s of [-1, 1]) {
-      for (let i = 0; i < 5; i++) {
-        const hx = cx + s * 560 + (i - 2) * 40, hy = 240;
-        ctx.beginPath();
-        for (let k = 0; k < 6; k++) {
-          const a = Math.PI / 3 * k + Math.PI / 6;
-          ctx[k ? 'lineTo' : 'moveTo'](hx + 17 * Math.cos(a), hy + 17 * Math.sin(a));
-        }
-        ctx.closePath(); ctx.stroke();
-      }
-    }
+    hexRow(ctx, cx - 560, 242);
+    hexRow(ctx, cx + 560, 242);
   }
+  const labelMats = new Map();
   function labelMat(p) {
     if (labelMats.has(p.id)) return labelMats.get(p.id);
     const W = 2048, H = 320;
     const mk = () => { const c = document.createElement('canvas'); c.width = W; c.height = H; return c; };
     const colorC = mk(), ormC = mk();
     drawLabel(colorC.getContext('2d'), p, W, H, C.gold, C.clove);
-    // Paper: rough, non-metal. Foil: smooth, metallic.
     drawLabel(ormC.getContext('2d'), p, W, H, 'rgb(255,70,255)', 'rgb(255,215,0)');
     const map = new CanvasTexture(colorC);
     map.colorSpace = SRGBColorSpace;
@@ -224,50 +223,180 @@ function start() {
   lidTopTex.colorSpace = SRGBColorSpace;
   const lidTopMat = new MeshStandardMaterial({ map: lidTopTex, metalness: 0.85, roughness: 0.28, envMapIntensity: 1.5 });
 
-  // ---------- Jar assembly ----------
-  const jar = new Group();
+  // Wood for the honey dipper
+  const woodC = document.createElement('canvas');
+  woodC.width = 256; woodC.height = 512;
+  {
+    const ctx = woodC.getContext('2d');
+    const g = ctx.createLinearGradient(0, 0, 256, 0);
+    g.addColorStop(0, '#b77a43'); g.addColorStop(0.5, '#d29a5e'); g.addColorStop(1, '#b07040');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 256, 512);
+    for (let i = 0; i < 70; i++) {
+      ctx.strokeStyle = `rgba(110, 58, 24, ${0.08 + Math.random() * 0.22})`;
+      ctx.lineWidth = 0.6 + Math.random() * 2.2;
+      const x = Math.random() * 256;
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      for (let y = 0; y <= 512; y += 32) ctx.lineTo(x + Math.sin(y / 70 + i) * 5, y);
+      ctx.stroke();
+    }
+  }
+  const woodTex = new CanvasTexture(woodC);
+  woodTex.colorSpace = SRGBColorSpace;
+  woodTex.wrapS = woodTex.wrapT = RepeatWrapping;
+  const woodMat = new MeshStandardMaterial({ map: woodTex, roughness: 0.55, metalness: 0, envMapIntensity: 0.9 });
+
+  // ---------- Geometry ----------
+  const glassOuterGeo = new LatheGeometry(outer, 128);
+  const glassInnerGeo = new LatheGeometry(inner, 128);
+  const honeyGeo = new LatheGeometry(honeyProfile, 96);
+
+  const lidGeo = new CylinderGeometry(0.79, 0.79, 0.36, 240, 2);
+  {
+    const p = lidGeo.attributes.position;
+    for (let i = 0; i < p.count; i++) {
+      const x = p.getX(i), z = p.getZ(i);
+      if (Math.hypot(x, z) < 0.785) continue;
+      const k = 1 + 0.012 * Math.pow(Math.abs(Math.sin(Math.atan2(z, x) * 60)), 0.6);
+      p.setX(i, x * k);
+      p.setZ(i, z * k);
+    }
+    lidGeo.computeVertexNormals();
+  }
+
+  const LABEL_ARC = Math.PI * 2 * 0.86;
+  const labelGeo = new CylinderGeometry(1.012, 1.012, 0.98, 160, 1, true, -LABEL_ARC / 2, LABEL_ARC);
+  const dropGeo = new SphereGeometry(1, 24, 16);
+
+  // Tapered tube helper: radius goes from r0 to r1 along the curve, or follows r0(t) when it is a function
+  function taperTube(curve, segs, r0, r1, radial = 10) {
+    const rad = typeof r0 === 'function' ? r0 : (t) => MathUtils.lerp(r0, r1, t);
+    const g = new TubeGeometry(curve, segs, 1, radial, false);
+    const pos = g.attributes.position;
+    const v = new Vector3();
+    for (let i = 0; i <= segs; i++) {
+      const c = curve.getPointAt(i / segs);
+      const r = rad(i / segs);
+      for (let j = 0; j <= radial; j++) {
+        const k = i * (radial + 1) + j;
+        v.fromBufferAttribute(pos, k).sub(c).multiplyScalar(r).add(c);
+        pos.setXYZ(k, v.x, v.y, v.z);
+      }
+    }
+    g.computeVertexNormals();
+    return g;
+  }
+
+  // Honey running down the outside of the jar from under the lid
+  // Honey that seeped out from under the lid and ran down the shoulder: wide where it leaves the lid,
+  // thinning as it runs, then gathering into a heavy drop.
+  const DRIPS = [[0.62, 1.52, 1], [1.95, 1.2, 0.9], [3.05, 1.78, 0.8], [-1.55, 1.36, 1.1], [-0.35, 2.0, 0.75]];
+  const dripRadius = (t) => 0.024 + 0.05 * Math.pow(1 - t, 3) + 0.012 * MathUtils.smoothstep(t, 0.75, 1);
+  function dripMeshes(mat) {
+    const g = new Group();
+    for (const [theta, yEnd, w] of DRIPS) {
+      const pts = [];
+      for (let k = 0; k <= 30; k++) {
+        const y = 2.27 - (2.27 - yEnd) * k / 30;
+        const r = rAt(y) + 0.03;
+        pts.push(new Vector3(Math.sin(theta) * r, y, Math.cos(theta) * r));
+      }
+      const curve = new CatmullRomCurve3(pts);
+      g.add(new Mesh(taperTube(curve, 60, (t) => dripRadius(t) * w), mat));
+      const end = curve.getPointAt(1);
+      const bulb = new Mesh(dropGeo, mat);
+      bulb.position.set(end.x * 1.012, end.y - 0.04, end.z * 1.012);
+      bulb.scale.set(0.05 * w, 0.072 * w, 0.05 * w);
+      g.add(bulb);
+    }
+    return g;
+  }
+
+  // ---------- Assembly ----------
+  const jar = new Group();   // whole object (tilt, bob)
+  const body = new Group();  // turns around its axis
   const honey = new Mesh(honeyGeo, honeyMat(C.amber));
   const gIn = new Mesh(glassInnerGeo, glassInner);
   const gOut = new Mesh(glassOuterGeo, glassOuter);
-  honey.renderOrder = 0; gIn.renderOrder = 2; gOut.renderOrder = 3;
+  gIn.renderOrder = 2; gOut.renderOrder = 3;
   const label = new Mesh(labelGeo, labelMat(PRODUCTS[1]));
   label.position.y = 1.08;
   label.renderOrder = 1;
+  let drips = dripMeshes(honeyMat(C.amber, 'stream'));
+  body.add(honey, label, gIn, gOut, drips);
 
   const lid = new Group();
   const lidBody = new Mesh(lidGeo, lidMat);
   lidBody.position.y = 0.18;
-  const lidTop = new Mesh(lidTopGeo, lidTopMat);
+  const lidTop = new Mesh(new CircleGeometry(0.62, 96), lidTopMat);
   lidTop.rotation.x = -Math.PI / 2;
   lidTop.position.y = 0.362;
-  const lidRing = new Mesh(lidRingGeo, lidMat);
+  const lidRing = new Mesh(new TorusGeometry(0.7, 0.035, 12, 120), lidMat);
   lidRing.rotation.x = Math.PI / 2;
   lidRing.position.y = 0.36;
   lid.add(lidBody, lidTop, lidRing);
   const LID_Y = 2.27;
-  const JAR_H = 2.78, JAR_W = 2.05, JAR_MID = 1.32;
-  lid.position.y = LID_Y;
 
-  const thread = new Mesh(threadGeo, honeyMat(C.amber));
-  const drop = new Mesh(dropGeo, honeyMat(C.amber));
-  jar.add(honey, label, gIn, gOut, lid, thread, drop);
+  // Honey thread between lid and jar when the lid lifts
+  const thread = new Mesh(new CylinderGeometry(1, 1, 1, 20, 8, true), honeyMat(C.amber, 'stream'));
+  const drop = new Mesh(dropGeo, honeyMat(C.amber, 'stream'));
+
+  // Honey dipper (hero): grooved wooden head, honey-coated, pouring a ribbon into the open jar
+  const dipper = new Group();
+  const headProfile = [[0.001, -0.02], [0.12, 0], [0.19, 0.04]];
+  for (let k = 0; k < 6; k++) {
+    const y = 0.08 + k * 0.075;
+    headProfile.push([0.2, y], [0.155, y + 0.03], [0.2, y + 0.06]);
+  }
+  headProfile.push([0.13, 0.56], [0.06, 0.6], [0.05, 0.64]);
+  const head = new Mesh(new LatheGeometry(headProfile.map(([x, y]) => new Vector2(x, y)), 48), woodMat);
+  const handle = new Mesh(new CylinderGeometry(0.045, 0.06, 2.1, 24), woodMat);
+  handle.position.y = 0.64 + 1.05;
+  const coat = new Mesh(new LatheGeometry(smooth([
+    [0.001, -0.2], [0.04, -0.16], [0.11, -0.05], [0.215, 0.06], [0.225, 0.18], [0.212, 0.3], [0.16, 0.34], [0.001, 0.345],
+  ], 40), 48), honeyMat(C.amber, 'stream'));
+  dipper.add(head, handle, coat);
+  dipper.position.set(0.62, 3.3, 0.18);
+  dipper.rotation.z = -0.62;
+
+  let streamGeo = null;
+  const stream = new Mesh(new SphereGeometry(1, 4, 2), honeyMat(C.amber, 'stream'));
+  const pool = new Mesh(new TorusGeometry(0.08, 0.035, 10, 32), honeyMat(C.amber, 'stream'));
+  pool.rotation.x = Math.PI / 2;
+  const streamDrop = new Mesh(dropGeo, honeyMat(C.amber, 'stream'));
+
+  jar.add(body, lid, thread, drop, dipper, stream, pool, streamDrop);
   scene.add(jar);
 
-  // Floating honey drops for the hero
-  const floaters = new Group();
-  const dropSpecs = [[-1.9, 2.3, 0.4, 0.14], [2.0, 1.5, -0.2, 0.11], [-1.6, 0.5, 0.6, 0.09], [1.7, 2.8, 0.3, 0.08], [1.55, 0.35, 0.8, 0.12]];
-  for (const [x, y, z, s] of dropSpecs) {
-    const d = new Mesh(dropGeo, honeyMat(C.amber));
-    d.position.set(x, y, z);
-    d.scale.set(s, s * 1.25, s);
-    d.userData.base = [x, y, z];
-    floaters.add(d);
-  }
-  scene.add(floaters);
-
+  let current = null;
   function setVariant(p) {
-    honey.material = thread.material = drop.material = honeyMat(p.honey);
+    if (current === p.id) return;
+    current = p.id;
+    honey.material = honeyMat(p.honey);
+    const s = honeyMat(p.honey, 'stream');
+    thread.material = drop.material = coat.material = stream.material = pool.material = streamDrop.material = s;
+    drips.traverse((o) => { if (o.isMesh) o.material = s; });
     label.material = labelMat(p);
+  }
+
+  const tmp = new Vector3();
+  function updateStream(t) {
+    // From the bottom of the coated dipper head to the honey surface, swaying slightly
+    jar.updateMatrixWorld(true);
+    const start = dipper.localToWorld(tmp.set(0, -0.19, 0)).clone();
+    jar.worldToLocal(start);
+    const end = new Vector3(0.06 + Math.sin(t * 1.3) * 0.03, 2.0, 0.08);
+    const ctrl = new Vector3(start.x * 0.4, (start.y + end.y) / 2 + 0.15, start.z * 0.6);
+    const curve = new QuadraticBezierCurve3(start, ctrl, end);
+    streamGeo?.dispose();
+    streamGeo = taperTube(curve, 40, 0.034, 0.016, 8);
+    stream.geometry = streamGeo;
+    pool.position.set(end.x, 2.01, end.z);
+    pool.scale.setScalar(1 + Math.sin(t * 2) * 0.06);
+    const f = (t * 0.55) % 1;
+    streamDrop.position.copy(curve.getPointAt(f));
+    streamDrop.scale.set(0.04, 0.055, 0.04);
   }
 
   // ---------- Views ----------
@@ -285,10 +414,10 @@ function start() {
     const v = {
       el, canvas, ctx: canvas.getContext('2d'), visible: false,
       variant: byId(el.dataset.jar), mode: el.dataset.mode || 'idle',
-      phase: Math.random() * Math.PI * 2, hover: 0, hoverT: 0, spin: 0, pointer: [0, 0],
+      phase: Math.random() * Math.PI * 2, hover: 0, hoverT: 0, spin: 0,
     };
     el.__view = v;
-    const card = el.closest('.product, .r-card, .tile');
+    const card = el.closest('.product, .tile');
     if (card) {
       card.addEventListener('pointerenter', () => { v.hoverT = 1; });
       card.addEventListener('pointerleave', () => { v.hoverT = 0; });
@@ -296,35 +425,22 @@ function start() {
     views.push(v);
     io.observe(el);
   }
-  document.querySelectorAll('.jar[data-jar]').forEach((el) => {
-    if (el.closest('.c-jar')) return; // cart thumbnails stay 2D
-    addView(el);
-  });
 
   let mouse = [0, 0];
   addEventListener('pointermove', (e) => {
     mouse = [e.clientX / innerWidth * 2 - 1, e.clientY / innerHeight * 2 - 1];
   }, { passive: true });
 
-  // ---------- Frame ----------
-  let maxW = 0, maxH = 0;
-  function ensureSize(w, h) {
-    if (w <= maxW && h <= maxH) return;
-    maxW = Math.max(maxW, w);
-    maxH = Math.max(maxH, h);
-    renderer.setSize(maxW, maxH, false);
-  }
-
   function pose(v, t, dt) {
     v.hover += (v.hoverT - v.hover) * Math.min(1, dt * 6);
-    let rotY = 0, tilt = 0, lift = 0, bob = 0, showFloaters = false;
-    const ext = v.el.j3d; // set by main.js for scroll-driven jars
+    let rotY = 0, tilt = 0, lift = 0, bob = 0;
+    const hero = v.mode === 'hero';
+    const ext = v.el.j3d; // set by main.js for the scroll-driven jar
     switch (v.mode) {
       case 'hero':
-        rotY = reduce ? -0.35 : t * 0.35 + v.phase;
-        bob = reduce ? 0 : Math.sin(t * 1.1) * 0.06;
-        tilt = mouse[0] * -0.08;
-        showFloaters = true;
+        rotY = reduce ? -0.4 : t * 0.3 + v.phase;
+        bob = reduce ? 0 : Math.sin(t * 1.1) * 0.05;
+        tilt = mouse[0] * -0.06;
         break;
       case 'journey':
         rotY = (ext?.spin ?? 0) * Math.PI * 2.2 - 0.4;
@@ -333,20 +449,30 @@ function start() {
         break;
       default:
         v.spin += dt * (0.25 + v.hover * 2.2);
-        rotY = reduce ? -0.35 : Math.sin(t * 0.5 + v.phase) * 0.45 + v.spin * (v.hover > 0.02 ? 1 : 0) - 0.2;
+        rotY = reduce ? -0.4 : Math.sin(t * 0.5 + v.phase) * 0.45 + v.spin * (v.hover > 0.02 ? 1 : 0) - 0.2;
         bob = reduce ? 0 : Math.sin(t * 0.9 + v.phase) * 0.03;
         lift = v.mode === 'open' ? 0.55 : v.hover * 0.35;
     }
-    jar.rotation.set(0, rotY, tilt);
+    jar.rotation.set(0, 0, tilt);
     jar.position.y = bob;
+    body.rotation.y = rotY;
+
+    dipper.visible = stream.visible = pool.visible = streamDrop.visible = hero;
+    if (hero) {
+      // Lid set aside, floating up-left; the dipper pours into the open jar
+      lid.position.set(-1.72, 1.15 + Math.sin(t * 0.9) * 0.06, 0.35);
+      lid.rotation.set(1.1, rotY * 0.5, -0.3 + Math.sin(t * 0.7) * 0.05);
+      dipper.rotation.z = -0.62 + (reduce ? 0 : Math.sin(t * 0.8) * 0.035);
+      updateStream(reduce ? 0 : t);
+      thread.visible = drop.visible = false;
+      return;
+    }
 
     // Lid: unscrew (two turns) and rise, then tip back slightly
     const up = MathUtils.smoothstep(lift, 0, 1);
-    lid.position.y = LID_Y + up * 0.9;
-    lid.rotation.set(-up * 0.22, up * Math.PI * 2, up * 0.08);
-    lid.position.z = up * -0.18;
+    lid.position.set(0, LID_Y + up * 0.9, up * -0.18);
+    lid.rotation.set(-up * 0.22, rotY + up * Math.PI * 2, up * 0.08);
 
-    // Honey thread from the underside of the lid to the honey surface
     const gap = lid.position.y - 1.98;
     const on = up > 0.05;
     thread.visible = on && up < 0.97;
@@ -359,15 +485,16 @@ function start() {
       drop.scale.set(0.05, 0.065, 0.05);
       drop.position.set(0, lid.position.y - 0.02 - fall * (gap - 0.05), lid.position.z * (1 - fall));
     }
+  }
 
-    floaters.visible = showFloaters;
-    if (showFloaters) {
-      floaters.children.forEach((d, i) => {
-        const [x, y, z] = d.userData.base;
-        d.position.set(x + Math.sin(t * 0.6 + i) * 0.08, y + Math.sin(t * 0.9 + i * 2) * 0.12, z);
-        d.rotation.z = Math.sin(t + i) * 0.2;
-      });
-    }
+  // ---------- Frame ----------
+  const JAR_H = 2.8, JAR_W = 2.05;
+  let maxW = 0, maxH = 0;
+  function ensureSize(w, h) {
+    if (w <= maxW && h <= maxH) return;
+    maxW = Math.max(maxW, w);
+    maxH = Math.max(maxH, h);
+    renderer.setSize(maxW, maxH, false);
   }
 
   let last = performance.now();
@@ -377,29 +504,29 @@ function start() {
     last = now;
     for (const v of views) {
       if (!v.visible) continue;
-      const r = v.canvas.getBoundingClientRect();
-      if (r.width < 2 || r.height < 2) continue;
-      const w = Math.round(r.width * DPR), h = Math.round(r.height * DPR);
+      const cw = v.canvas.offsetWidth, ch = v.canvas.offsetHeight;
+      if (cw < 2 || ch < 2) continue;
+      const w = Math.round(cw * DPR), h = Math.round(ch * DPR);
       if (v.canvas.width !== w || v.canvas.height !== h) { v.canvas.width = w; v.canvas.height = h; }
       ensureSize(w, h);
 
       setVariant(v.variant);
       pose(v, t, dt);
 
-      // Frame the jar so it fills the element's box (the canvas overhangs it for lid/rotation room)
-      const aspect = w / h;
-      camera.aspect = aspect;
-      camera.updateProjectionMatrix();
-      const tan = 2 * Math.tan(MathUtils.degToRad(camera.fov / 2));
+      // The element's box holds the jar exactly; the canvas may overhang it on any side,
+      // so aim the camera at the canvas centre expressed in jar units.
       const boxW = v.el.offsetWidth || 1, boxH = v.el.offsetHeight || 1;
-      const dist = Math.max(
-        (JAR_H * (v.canvas.offsetHeight / boxH)) / tan,
-        (JAR_W * (v.canvas.offsetWidth / boxW)) / (tan * aspect),
-      );
-      const px = v.mode === 'hero' ? mouse[0] * 0.6 : 0;
-      const py = v.mode === 'hero' ? -mouse[1] * 0.4 : 0;
-      camera.position.set(px, JAR_MID + dist * 0.14 + py, dist);
-      camera.lookAt(0, JAR_MID, 0);
+      const ppu = Math.min(boxH / JAR_H, boxW / JAR_W);
+      const tx = (v.canvas.offsetLeft + cw / 2 - boxW / 2) / ppu;
+      const ty = JAR_H / 2 - (v.canvas.offsetTop + ch / 2 - boxH / 2) / ppu;
+      camera.aspect = cw / ch;
+      camera.updateProjectionMatrix();
+      const dist = (ch / ppu) / (2 * Math.tan(MathUtils.degToRad(camera.fov / 2)));
+      const hero = v.mode === 'hero';
+      const px = hero ? mouse[0] * 0.5 : 0;
+      const py = hero ? -mouse[1] * 0.35 : 0;
+      camera.position.set(tx + px, ty + dist * 0.12 + py, dist);
+      camera.lookAt(tx, ty, 0);
 
       renderer.setViewport(0, maxH - h, w, h);
       renderer.setScissor(0, maxH - h, w, h);
@@ -413,14 +540,17 @@ function start() {
     requestAnimationFrame(frame);
   }
 
-  // Wait for the label font so the foil text renders in Outfit
-  (document.fonts?.load('800 80px Outfit') ?? Promise.resolve())
-    .catch(() => {})
-    .then(() => {
-      labelMats.forEach((m) => { m.map.dispose(); });
-      labelMats.clear();
-      requestAnimationFrame(frame);
+  // Wait for the label fonts so the foil text renders in Zodiak / Satoshi
+  const fonts = document.fonts
+    ? Promise.all([`900 80px ${DISPLAY}`, `italic 400 38px ${DISPLAY}`, `700 21px ${UI}`].map((f) => document.fonts.load(f)))
+    : Promise.resolve();
+  fonts.catch(() => {}).then(() => {
+    labelMats.forEach((m) => m.map.dispose());
+    labelMats.clear();
+    current = null;
+    document.querySelectorAll('.jar[data-jar]').forEach((el) => {
+      if (!el.closest('.c-jar')) addView(el); // cart thumbnails stay 2D
     });
-
-  window.MED3D = { addView };
+    requestAnimationFrame(frame);
+  });
 }
