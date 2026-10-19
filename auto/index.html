@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Vektor Auto — proverena vozila, Novi Beograd</title>
+  <meta name="description" content="Vektor Auto: proverena polovna vozila sa garancijom 12 meseci, kreditom, lizingom i otkupom vašeg auta. Novi Beograd.">
+  <meta name="theme-color" content="#0b0f17">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    (function (r) {
+      r.classList.add('js');
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      r.classList.add('motion-ok');
+      // If the scripts fail to load, show everything instead of leaving hidden content.
+      setTimeout(function () { if (!window.vektorReady) r.classList.remove('motion-ok'); }, 4000);
+    })(document.documentElement);
+  </script>
+  <script src="../assets/vendor/motion.js" defer></script>
+  <script src="car.js" defer></script>
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/></symbol>
+    <symbol id="i-percent" viewBox="0 0 24 24"><path d="M19 5 5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></symbol>
+    <symbol id="i-repeat" viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  </svg>
+
+  <a class="skip" href="#ponuda">Preskoči na ponudu</a>
+
+  <header class="nav" data-nav>
+    <a class="logo" href="#top" aria-label="Vektor Auto — početak">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 7h8l5 12 5-12h8L19 27h-6z"/></svg>
+      <span>VEKTOR</span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Glavna navigacija">
+      <a href="#ponuda">Ponuda</a>
+      <a href="#auto-meseca">Auto meseca</a>
+      <a href="#finansiranje">Finansiranje</a>
+      <a href="#otkup">Otkup</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <a class="btn btn-ghost nav-phone" href="tel:+381111234567"><svg class="ic"><use href="#i-phone"/></svg><span>011 123 4567</span></a>
+    <button class="burger" type="button" aria-label="Otvori meni" aria-expanded="false" aria-controls="navLinks" data-burger><svg class="ic"><use href="#i-menu"/></svg></button>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-floor" aria-hidden="true"></div>
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow" data-hero>Auto salon · Novi Beograd</p>
+          <h1 class="hero-title" id="hero-title">
+            <span class="line"><span data-hero-line>Vozi</span></span>
+            <span class="line"><span data-hero-line>dalje<em>.</em></span></span>
+          </h1>
+          <p class="lead" data-hero>Proverena polovna vozila sa garancijom 12 meseci, kreditom bez skrivenih troškova i otkupom vašeg starog auta. Sve na jednom mestu.</p>
+          <div class="hero-cta" data-hero>
+            <a class="btn btn-primary btn-lg" href="#ponuda">Pogledaj ponudu <svg class="ic"><use href="#i-arrow"/></svg></a>
+            <a class="link-arrow" href="#kontakt" data-interest="Probna vožnja">Zakaži probnu vožnju</a>
+          </div>
+        </div>
+        <div class="hero-stage" aria-hidden="true">
+          <div class="streaks"><i></i><i></i><i></i><i></i></div>
+          <div class="hero-car" data-hero-car></div>
+        </div>
+      </div>
+      <dl class="wrap hero-stats" data-hero>
+        <div><dt>Odmah dostupno</dt><dd><span data-count-cars>12</span> vozila</dd></div>
+        <div><dt>Garancija</dt><dd>12 meseci</dd></div>
+        <div><dt>Rata već od</dt><dd><span data-min-rate>—</span> €/mes</dd></div>
+        <div><dt>Probna vožnja</dt><dd>isti dan</dd></div>
+      </dl>
+    </section>
+
+    <!-- TRUST -->
+    <section class="trust" aria-label="Zašto Vektor">
+      <ul class="wrap trust-grid">
+        <li data-reveal><svg class="ic"><use href="#i-shield"/></svg><div><h2>Provereno poreklo</h2><p>Servisna istorija, kilometraža i papiri provereni pre nego što auto uđe u salon.</p></div></li>
+        <li data-reveal><svg class="ic"><use href="#i-award"/></svg><div><h2>Garancija 12 meseci</h2><p>Motor i menjač pokriveni godinu dana, bez obzira na kilometražu.</p></div></li>
+        <li data-reveal><svg class="ic"><use href="#i-percent"/></svg><div><h2>Kredit i lizing</h2><p>Odobrenje za 24 sata, učešće već od 10% i rok do 84 meseca.</p></div></li>
+        <li data-reveal><svg class="ic"><use href="#i-repeat"/></svg><div><h2>Otkup i zamena</h2><p>Vaš stari auto uračunavamo u cenu novog. Procena besplatno.</p></div></li>
+      </ul>
+    </section>
+
+    <!-- INVENTORY -->
+    <section class="inventory" id="ponuda" aria-labelledby="ponuda-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Ponuda</p>
+          <h2 class="h2" id="ponuda-title" data-reveal>Spremno za<br>preuzimanje</h2>
+        </div>
+
+        <div class="toolbar" role="search" aria-label="Filtriranje vozila">
+          <div class="chips" role="group" aria-label="Karoserija" data-body-filter>
+            <button type="button" class="chip" aria-pressed="true" data-body="all">Sve</button>
+            <button type="button" class="chip" aria-pressed="false" data-body="sedan">Limuzina</button>
+            <button type="button" class="chip" aria-pressed="false" data-body="hatch">Hečbek</button>
+            <button type="button" class="chip" aria-pressed="false" data-body="wagon">Karavan</button>
+            <button type="button" class="chip" aria-pressed="false" data-body="suv">SUV</button>
+            <button type="button" class="chip" aria-pressed="false" data-body="coupe">Kupe</button>
+          </div>
+          <div class="selects">
+            <label class="select">
+              <span>Gorivo</span>
+              <select data-fuel-filter>
+                <option value="all">Sva goriva</option>
+                <option value="Dizel">Dizel</option>
+                <option value="Benzin">Benzin</option>
+                <option value="Hibrid">Hibrid</option>
+                <option value="Električni">Električni</option>
+              </select>
+            </label>
+            <label class="select">
+              <span>Sortiraj</span>
+              <select data-sort>
+                <option value="featured">Preporučeno</option>
+                <option value="price-asc">Cena: najniža</option>
+                <option value="price-desc">Cena: najviša</option>
+                <option value="km-asc">Kilometraža: najmanja</option>
+                <option value="year-desc">Godište: najnovije</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <p class="result-count" aria-live="polite" data-result-count></p>
+
+        <ul class="car-grid" data-car-grid></ul>
+        <div class="empty" hidden data-empty>
+          <p>Nema vozila za izabrane filtere.</p>
+          <button type="button" class="btn btn-dark" data-reset>Prikaži sva vozila</button>
+        </div>
+        <noscript><p class="empty">Za pregled ponude uključite JavaScript ili nas pozovite na 011 123 4567.</p></noscript>
+      </div>
+    </section>
+
+    <!-- CAR OF THE MONTH -->
+    <section class="feature" id="auto-meseca" aria-labelledby="feature-title" data-feature>
+      <div class="feature-sticky">
+        <div class="feature-word" aria-hidden="true" data-feature-word>M4</div>
+        <div class="wrap feature-grid">
+          <div class="feature-copy">
+            <p class="eyebrow">Auto meseca</p>
+            <h2 class="h2" id="feature-title">BMW M4<br>Competition</h2>
+            <p class="lead">2021 · 32.000 km · prvi vlasnik, kompletna servisna istorija u ovlašćenom servisu. Isle of Man zelena, karbonski paket.</p>
+            <div class="feature-price">
+              <span class="price">74.900 €</span>
+              <button type="button" class="btn btn-primary" data-open-car="m4">Pogledaj detalje <svg class="ic"><use href="#i-arrow"/></svg></button>
+            </div>
+          </div>
+          <dl class="feature-stats">
+            <div data-feature-stat><dt>Snaga</dt><dd><span data-to="510">510</span> KS</dd></div>
+            <div data-feature-stat><dt>0–100 km/h</dt><dd><span data-to="3.9" data-dec="1">3,9</span> s</dd></div>
+            <div data-feature-stat><dt>Maks. brzina</dt><dd><span data-to="250">250</span> km/h</dd></div>
+          </dl>
+        </div>
+        <div class="feature-road" aria-hidden="true"><div class="feature-car" data-feature-car></div></div>
+      </div>
+    </section>
+
+    <!-- FINANCING -->
+    <section class="finance" id="finansiranje" aria-labelledby="finance-title">
+      <div class="wrap finance-grid">
+        <div>
+          <p class="eyebrow">Finansiranje</p>
+          <h2 class="h2" id="finance-title" data-reveal>Izračunaj<br>svoju ratu</h2>
+          <p class="lead" data-reveal>Pomerite klizače i odmah vidite mesečnu ratu. Za tačnu ponudu banke dovoljno je da nas pozovete — odgovor stiže za 24 sata.</p>
+
+          <form class="calc" data-calc>
+            <div class="field-range">
+              <label for="calc-price">Cena vozila</label>
+              <output for="calc-price" data-out="price"></output>
+              <input type="range" id="calc-price" name="price" min="5000" max="80000" step="500" value="29900">
+            </div>
+            <div class="field-range">
+              <label for="calc-down">Učešće</label>
+              <output for="calc-down" data-out="down"></output>
+              <input type="range" id="calc-down" name="down" min="10" max="50" step="5" value="20">
+            </div>
+            <div class="field-range">
+              <label for="calc-months">Rok otplate</label>
+              <output for="calc-months" data-out="months"></output>
+              <input type="range" id="calc-months" name="months" min="12" max="84" step="12" value="60">
+            </div>
+          </form>
+        </div>
+
+        <div class="calc-result" data-reveal>
+          <p class="calc-label">Mesečna rata</p>
+          <p class="calc-rate"><span data-rate>—</span><small>€</small></p>
+          <dl class="calc-break">
+            <div><dt>Iznos kredita</dt><dd data-loan>—</dd></div>
+            <div><dt>Učešće</dt><dd data-downpay>—</dd></div>
+            <div><dt>Ukupno za otplatu</dt><dd data-total>—</dd></div>
+            <div><dt>Kamatna stopa</dt><dd><span data-apr>7,9</span>% godišnje</dd></div>
+          </dl>
+          <a class="btn btn-primary btn-block" href="#kontakt" data-interest="Kredit / lizing">Zatraži ponudu banke</a>
+          <p class="fine">Informativni obračun sa fiksnom stopom. Konačni uslovi zavise od banke ili lizing kuće.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRADE-IN -->
+    <section class="tradein" id="otkup" aria-labelledby="tradein-title">
+      <div class="wrap tradein-grid">
+        <div>
+          <p class="eyebrow">Otkup i zamena</p>
+          <h2 class="h2" id="tradein-title" data-reveal>Stari auto<br>je vaše učešće</h2>
+          <a class="btn btn-light btn-lg" href="#kontakt" data-interest="Otkup / zamena" data-reveal>Zatraži besplatnu procenu <svg class="ic"><use href="#i-arrow"/></svg></a>
+        </div>
+        <ol class="steps">
+          <li data-reveal><span class="step-n">01</span><h3>Pošaljite podatke</h3><p>Marka, model, godište i kilometraža. Par fotografija ubrzava stvar.</p></li>
+          <li data-reveal><span class="step-n">02</span><h3>Procena za 24 sata</h3><p>Dobijate konkretnu cenu, ne raspon. Pregled u salonu traje 20 minuta.</p></li>
+          <li data-reveal><span class="step-n">03</span><h3>Isplata ili zamena</h3><p>Novac na račun istog dana ili iznos ide direktno u cenu novog vozila.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="kontakt" aria-labelledby="contact-title">
+      <div class="wrap contact-grid">
+        <div class="contact-info">
+          <p class="eyebrow">Kontakt</p>
+          <h2 class="h2" id="contact-title" data-reveal>Svratite<br>na kafu</h2>
+          <ul class="info-list">
+            <li><svg class="ic"><use href="#i-pin"/></svg><div><strong>Bulevar Zorana Đinđića 100</strong><span>Novi Beograd</span></div></li>
+            <li><svg class="ic"><use href="#i-phone"/></svg><div><a href="tel:+381111234567"><strong>011 123 4567</strong></a><span>Poziv ili Viber</span></div></li>
+            <li><svg class="ic"><use href="#i-mail"/></svg><div><a href="mailto:prodaja@vektorauto.rs"><strong>prodaja@vektorauto.rs</strong></a><span>Odgovor za 1 radni dan</span></div></li>
+            <li><svg class="ic"><use href="#i-clock"/></svg><div><strong>Pon–Pet 9–19 · Sub 9–15</strong><span class="status" data-open-status>Radno vreme</span></div></li>
+          </ul>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Bulevar+Zorana+%C4%90in%C4%91i%C4%87a+100+Novi+Beograd" target="_blank" rel="noopener">
+            <svg viewBox="0 0 400 200" aria-hidden="true">
+              <path d="M-10 150 L410 60" class="map-road map-road-big"/>
+              <path d="M120 -10 L180 210" class="map-road"/>
+              <path d="M280 -10 L300 210" class="map-road"/>
+              <path d="M-10 40 L410 120" class="map-road map-road-thin"/>
+              <path d="M0 190 Q120 170 200 185 T410 170" class="map-river"/>
+            </svg>
+            <span class="map-pin"><svg class="ic"><use href="#i-pin"/></svg></span>
+            <span class="map-label">Otvori u Google mapama <svg class="ic"><use href="#i-arrow"/></svg></span>
+          </a>
+        </div>
+
+        <form class="form" data-form novalidate>
+          <h3>Pošaljite upit</h3>
+          <div class="field">
+            <label for="f-name">Ime i prezime</label>
+            <input id="f-name" name="name" autocomplete="name" required aria-describedby="f-name-err">
+            <p class="err" id="f-name-err" hidden>Unesite ime da bismo znali kome se javljamo.</p>
+          </div>
+          <div class="field">
+            <label for="f-phone">Telefon</label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="f-phone-hint f-phone-err">
+            <p class="hint" id="f-phone-hint">Na primer 064 123 4567</p>
+            <p class="err" id="f-phone-err" hidden>Unesite broj telefona sa najmanje 8 cifara.</p>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-interest">Interesuje me</label>
+              <select id="f-interest" name="interest">
+                <option>Probna vožnja</option>
+                <option>Kredit / lizing</option>
+                <option>Otkup / zamena</option>
+                <option>Opšte pitanje</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-car">Vozilo</label>
+              <select id="f-car" name="car" data-car-select><option value="">Još ne znam</option></select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-msg">Poruka <span class="opt">(nije obavezno)</span></label>
+            <textarea id="f-msg" name="message" rows="3"></textarea>
+          </div>
+          <button class="btn btn-primary btn-block btn-lg" type="submit">Pošalji upit</button>
+          <p class="form-done" role="status" data-form-status></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <a class="logo" href="#top" aria-label="Vektor Auto — na vrh">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 7h8l5 12 5-12h8L19 27h-6z"/></svg>
+        <span>VEKTOR</span>
+      </a>
+      <p>Bulevar Zorana Đinđića 100, Novi Beograd · <a href="tel:+381111234567">011 123 4567</a></p>
+      <p>© 2026 Vektor Auto d.o.o.</p>
+    </div>
+  </footer>
+
+  <dialog class="modal" data-modal aria-labelledby="modal-title">
+    <div class="modal-inner">
+      <button type="button" class="modal-close" aria-label="Zatvori" data-modal-close><svg class="ic"><use href="#i-x"/></svg></button>
+      <div class="modal-media" data-modal-media></div>
+      <div class="modal-body">
+        <p class="eyebrow" data-modal-make></p>
+        <h2 id="modal-title" data-modal-title></h2>
+        <p class="modal-price"><span data-modal-price></span><small data-modal-rate></small></p>
+        <dl class="spec-grid" data-modal-specs></dl>
+        <ul class="feature-list" data-modal-features></ul>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-primary" data-modal-drive>Zakaži probnu vožnju</button>
+          <button type="button" class="btn btn-outline" data-modal-calc>Izračunaj ratu</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</body>
+</html>
