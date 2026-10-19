@@ -32,5 +32,6 @@ Online prodavnica meda — otvori `med/index.html`. Vizuelno prati Hungry Tiger 
 - `data.js` — proizvodi, cene, recepti i SVG tegle/ilustracije (cene i sorte menjaš ovde).
 - `main.js` — korpa (čuva se u `localStorage`), porudžbina, recepti, meni, efekat „punjenja medom“ na naslovima.
 - `game.js` — mini-igra.
+- `src/jar3d.js` → `jar3d.js` — prave 3D tegle u WebGL-u (Three.js): stakleni odsjaji, med koji „svetli“, etiketa sa zlatnom folijom, rebrasti poklopac. U hero delu tegla se okreće i prate je kapi meda; dok skroluješ, tegla putuje kroz tri ekrana i poklopac se odvrće uz nit meda; u prodavnici se tegla zavrti kad pređeš mišem. Jedan renderer crta sve vidljive tegle, a bez WebGL-a ostaju SVG tegle. Posle izmene: `npm install && npm run build:med`.
 
 Porudžbina i newsletter nemaju backend: forma samo potvrđuje lokalno. Brend, adresa, telefon i e-mail su izmišljeni (placeholder).

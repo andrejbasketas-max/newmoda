@@ -224,8 +224,8 @@
   const KEYS = [
     [0, 24, -14, 0.9, 0],
     [0.33, 22, -6, 1, 0],
-    [0.55, 0, 0, 1.05, 1],
-    [0.75, 0, 4, 1.05, 1],
+    [0.52, -22, 0, 1, 1],
+    [0.75, -22, 4, 1, 1],
     [1, 24, 16, 0.95, 0],
   ];
   const at = (p) => {
@@ -250,8 +250,9 @@
     const p = Math.min(1, Math.max(0, -jr.top / (jr.height - vh)));
     const mobile = innerWidth < 760;
     const [x, rot, s, lid] = at(p);
-    jjar.style.transform = `translateX(${mobile ? x * 0.9 : x}vw) rotate(${rot}deg) scale(${s})`;
+    jjar.style.transform = `translate(${mobile ? x * 0.9 : x}vw, ${lid * 9}vh) rotate(${rot}deg) scale(${s})`;
     jjar.style.setProperty('--lid', lid);
+    jjar.j3d = { spin: p, lid };
   }
 
   if (reduce) {

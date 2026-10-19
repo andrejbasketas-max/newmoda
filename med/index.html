@@ -53,7 +53,7 @@
       <h1 class="hero-title">Zlatni ukus</h1>
       <hr class="rule">
       <p class="hero-product">Livadski med</p>
-      <div class="hero-jar jar" data-jar="livadski"></div>
+      <div class="hero-jar jar" data-jar="livadski" data-mode="hero"></div>
       <div class="hero-foot">
         <p class="micro">Čist med iz naših košnica. Za one koji žele više od slatkog.</p>
         <button class="btn" data-add="livadski">Kupi</button>
@@ -63,7 +63,7 @@
     <!-- JOURNEY: jar travels through three poster screens -->
     <div class="journey" id="journey">
       <div class="journey-stage" aria-hidden="true">
-        <div class="journey-jar jar" data-jar="livadski" id="journeyJar"></div>
+        <div class="journey-jar jar" data-jar="livadski" data-mode="journey" id="journeyJar"></div>
       </div>
 
       <section class="j-sec j-a">
@@ -106,7 +106,7 @@
       </div>
       <div class="inside-art botanical pink">
         <div class="inside-jar jar" data-jar="bagrem"></div>
-        <div class="inside-jar jar tilt" data-jar="kesten"></div>
+        <div class="inside-jar jar tilt" data-jar="kesten" data-mode="open"></div>
       </div>
     </section>
 
@@ -304,5 +304,6 @@
   <script src="data.js" defer></script>
   <script src="main.js" defer></script>
   <script src="game.js" defer></script>
+  <script src="jar3d.js" defer></script>
 </body>
 </html>
