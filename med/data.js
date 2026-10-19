@@ -6,13 +6,13 @@ window.MED = (() => {
   };
 
   const PRODUCTS = [
-    { id: 'bagrem', name: 'Bagremov med', label: 'BAGREMOV', honey: '#f4c95d', level: 1,
+    { id: 'bagrem', name: 'Bagremov med', label: 'BAGREMOV', honey: '#f2b53a', level: 1,
       notes: 'Svetao, nežan i blag. Najsporije se kristališe — idealan za čaj i decu.',
       sizes: [['450 g', 950], ['900 g', 1750]] },
-    { id: 'livadski', name: 'Livadski med', label: 'LIVADSKI', honey: '#e8961f', level: 2,
+    { id: 'livadski', name: 'Livadski med', label: 'LIVADSKI', honey: '#e98406', level: 2,
       notes: 'Cvetni i pun, sa notama divljeg cveća sa šumadijskih livada.',
       sizes: [['450 g', 850], ['900 g', 1550]] },
-    { id: 'lipa', name: 'Lipov med', label: 'LIPOV', honey: '#eab13c', level: 2,
+    { id: 'lipa', name: 'Lipov med', label: 'LIPOV', honey: '#eb9d1e', level: 2,
       notes: 'Svež, skoro mentolast, sa mirisom lipe u junu.',
       sizes: [['450 g', 900], ['900 g', 1650]] },
     { id: 'kesten', name: 'Kestenov med', label: 'KESTENOV', honey: '#8f3f10', level: 3,

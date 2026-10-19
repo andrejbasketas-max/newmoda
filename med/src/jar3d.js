@@ -101,26 +101,33 @@ function start() {
 
   const lidMat = new MeshStandardMaterial({ color: 0x1a0c05, metalness: 0.75, roughness: 0.3, envMapIntensity: 1.4 });
 
-  // Honey looks lit from inside: a bright yellow core, a deep red-brown rim where light travels further
-  // through the liquid, darker towards the bottom of the jar and a faint swirl so it is never flat.
+  // Honey as seen in real product shots (cf. Busy Bee raw honey): a translucent liquid lit from behind.
+  // Light passing straight through the middle reads pale gold, the long paths between centre and edge
+  // turn deep orange-red, the thin rim glows peach, and a little of the background shows through.
+  // Reflections still come from the physical material; the honey colour itself is computed here.
   const honeyMats = new Map();
   function honeyMat(hex, kind = 'body') {
     const id = hex + kind;
     if (honeyMats.has(id)) return honeyMats.get(id);
     const base = new Color(hex);
     const m = new MeshPhysicalMaterial({
-      color: base.clone().multiplyScalar(0.3), roughness: 0.12, metalness: 0, clearcoat: 0.9, clearcoatRoughness: 0.04,
-      emissive: base.clone().multiplyScalar(0.8), envMapIntensity: 0.35,
+      color: base.clone().multiplyScalar(0.06), roughness: 0.08, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.03,
+      envMapIntensity: 0.55, transparent: true, specularIntensity: 0.8,
     });
     const body = kind === 'body';
+    const lum = base.r * 0.2126 + base.g * 0.7152 + base.b * 0.0722;
     m.customProgramCacheKey = () => 'honey-' + kind;
     m.onBeforeCompile = (sh) => {
+      sh.uniforms.honeyCol = { value: base };
+      sh.uniforms.clarity = { value: MathUtils.clamp(lum * 1.5, 0.1, 0.42) };
       sh.vertexShader = sh.vertexShader
         .replace('#include <common>', '#include <common>\nvarying vec3 vObj;')
         .replace('#include <begin_vertex>', '#include <begin_vertex>\nvObj = position;');
       sh.fragmentShader = sh.fragmentShader
         .replace('#include <common>', `#include <common>
           varying vec3 vObj;
+          uniform vec3 honeyCol;
+          uniform float clarity;
           float hh(vec3 p) { return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }
           float vnoise(vec3 p) {
             vec3 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
@@ -129,17 +136,28 @@ function start() {
           }`)
         .replace('#include <opaque_fragment>', `
           float facing = abs(dot(normalize(normal), normalize(vViewPosition)));
-          float depthLen = pow(1.0 - facing, 1.35);
-          vec3 core = outgoingLight * vec3(1.1, 1.02, 0.8);
-          vec3 deep = outgoingLight * vec3(0.6, 0.33, 0.17);
-          outgoingLight = mix(core, deep, depthLen);
-          ${body ? `outgoingLight *= mix(0.7, 1.08, smoothstep(0.1, 1.95, vObj.y));
+          vec3 through = mix(honeyCol, vec3(1.0, 0.84, 0.52), clarity);       // light straight through
+          vec3 deep = honeyCol * vec3(0.8, 0.42, 0.15);                        // long path, Beer-Lambert
+          vec3 rim = mix(honeyCol, vec3(1.0, 0.72, 0.5), clarity * 0.9);       // thin edge, backlit
+          float core = pow(facing, 14.0);
+          float edgeGlow = pow(1.0 - facing, 4.0);
+          float mid = clamp(1.0 - abs(facing - 0.42) / 0.3, 0.0, 1.0);
+          vec3 col = honeyCol;
+          col = mix(col, deep, mid * 0.55);
+          col = mix(col, through, core * 0.55);
+          col = mix(col, rim, edgeGlow * 0.55);
+          ${body ? `
+          // refraction streaks from the far wall, darker towards the bottom, a caustic where light pools
+          float ang = atan(vObj.z, vObj.x);
+          col *= 0.86 + 0.28 * vnoise(vec3(ang * 4.0, vObj.y * 0.7, 0.0));
+          col *= mix(0.72, 1.05, smoothstep(0.1, 1.9, vObj.y));
+          col += through * 0.22 * smoothstep(0.55, 0.15, vObj.y) * pow(facing, 3.0);
           // the back of the label seen through the honey
           float band = smoothstep(0.56, 0.64, vObj.y) * (1.0 - smoothstep(1.52, 1.6, vObj.y));
-          outgoingLight *= 1.0 - 0.42 * band * pow(facing, 1.5);
-          outgoingLight *= 0.93 + 0.14 * vnoise(vObj * vec3(2.6, 1.1, 2.6) + vec3(0.0, vObj.x * 0.8, 0.0));` : ''}
-          float luma = dot(outgoingLight, vec3(0.2126, 0.7152, 0.0722));
-          outgoingLight = mix(vec3(luma), outgoingLight, 1.15);
+          col *= 1.0 - 0.4 * band * pow(facing, 1.5);` : `
+          col *= 0.95 + 0.1 * vnoise(vObj * 6.0);`}
+          outgoingLight += col * 0.95;
+          diffuseColor.a = ${body ? 'mix(0.97, 0.8, edgeGlow)' : 'mix(0.92, 0.7, edgeGlow)'};
           #include <opaque_fragment>`);
     };
     honeyMats.set(id, m);
