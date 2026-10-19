@@ -5,7 +5,7 @@ Static landing page for a (fictional) perfume house. Open `index.html` or serve 
 - `index.html`, `assets/styles.css`, `assets/main.js` — page, styles, interactions (bag, scent finder, newsletter).
 - `assets/motion.js` — GSAP + ScrollTrigger + SplitText + Lenis: preloader, text reveals, pinned "Origins" scroll, tilt cards, cursor.
 - `src/scene.js` → `assets/scene.js` — Three.js 3D glass bottle that follows the hero and the notes section.
-- `assets/vendor/` — vendored GSAP and Lenis builds.
+- `assets/vendor/` — vendored GSAP, Lenis and Motion (successor to Framer Motion; `motion.js` exposes `window.Motion`, not yet loaded by any page) builds.
 
 Without WebGL the SVG bottles are shown; with `prefers-reduced-motion` the page renders statically.
 
@@ -14,7 +14,7 @@ Without WebGL the SVG bottles are shown; with `prefers-reduced-motion` the page 
 ```bash
 npm install
 npm run build    # bundles src/scene.js into assets/scene.js
-npm run vendor   # re-copies GSAP/Lenis into assets/vendor
+npm run vendor   # re-copies GSAP/Lenis/Motion into assets/vendor
 ```
 
 ## Kafić „Zrno“ (`kafic/`)
