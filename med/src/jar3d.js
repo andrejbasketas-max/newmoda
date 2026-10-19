@@ -46,8 +46,8 @@ function start() {
       m.lookAt(0, 0, 0);
       studio.add(m);
     };
-    panel(2.6, 9, 0xfff3e2, 4.2, -6, 1, 4);   // key softbox
-    panel(1.4, 9, 0xffe4bd, 2.8, 6.5, 0.5, 2.5); // strip light
+    panel(1.1, 9, 0xfff3e2, 5, -6, 1, 4);   // key softbox (narrow = crisp glass highlight)
+    panel(0.6, 9, 0xffe4bd, 3.4, 6.5, 0.5, 2.5); // strip light
     panel(9, 2.4, 0xffeccc, 1.4, 0, 8, 1);  // top
     panel(7, 6, 0xff9f3d, 2.2, 1, 1, -7);   // warm back glow
     panel(16, 8, 0x823513, 0.5, 0, -7, 0);  // rust floor bounce
@@ -114,6 +114,8 @@ function start() {
       color: base.clone().multiplyScalar(0.06), roughness: 0.08, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.03,
       envMapIntensity: 0.55, transparent: true, specularIntensity: 0.8,
     });
+    // Tone mapping desaturates bright red-orange towards coral; honey keeps its true colour instead
+    m.toneMapped = false;
     const body = kind === 'body';
     const lum = base.r * 0.2126 + base.g * 0.7152 + base.b * 0.0722;
     m.customProgramCacheKey = () => 'honey-' + kind;
@@ -136,28 +138,36 @@ function start() {
           }`)
         .replace('#include <opaque_fragment>', `
           float facing = abs(dot(normalize(normal), normalize(vViewPosition)));
-          vec3 through = mix(honeyCol, vec3(1.0, 0.84, 0.52), clarity);       // light straight through
-          vec3 deep = honeyCol * vec3(0.8, 0.42, 0.15);                        // long path, Beer-Lambert
-          vec3 rim = mix(honeyCol, vec3(1.0, 0.72, 0.5), clarity * 0.9);       // thin edge, backlit
-          float core = pow(facing, 14.0);
           float edgeGlow = pow(1.0 - facing, 4.0);
-          float mid = clamp(1.0 - abs(facing - 0.42) / 0.3, 0.0, 1.0);
-          vec3 col = honeyCol;
-          col = mix(col, deep, mid * 0.55);
-          col = mix(col, through, core * 0.55);
-          col = mix(col, rim, edgeGlow * 0.55);
+          vec3 glow = mix(honeyCol, vec3(1.0, 0.66, 0.06), 0.22 + clarity * 0.65) * mix(1.0, 1.25, clarity * 2.0); // light pooling
+          vec3 dark = honeyCol * vec3(0.6, 0.2, 0.02);                             // deep red-orange body
+          vec3 col;
           ${body ? `
-          // refraction streaks from the far wall, darker towards the bottom, a caustic where light pools
+          // Like real jars on a sunny table: the bottom glows yellow where light collects,
+          // the honey turns deep red-orange towards the top, with bright refraction bands.
+          float t = smoothstep(0.12, 1.95, vObj.y);
+          col = mix(glow, honeyCol, smoothstep(0.0, 0.42, t));
+          col = mix(col, dark, smoothstep(0.38, 1.0, t) * 0.7);
           float ang = atan(vObj.z, vObj.x);
-          col *= 0.86 + 0.28 * vnoise(vec3(ang * 4.0, vObj.y * 0.7, 0.0));
-          col *= mix(0.72, 1.05, smoothstep(0.1, 1.9, vObj.y));
-          col += through * 0.22 * smoothstep(0.55, 0.15, vObj.y) * pow(facing, 3.0);
+          float bands = vnoise(vec3(ang * 5.0, vObj.y * 0.35, 0.0));
+          col *= 0.78 + 0.5 * bands;
+          col *= mix(0.82, 1.08, facing);
+          col = mix(col, glow, edgeGlow * 0.4 * (1.0 - t));
           // the back of the label seen through the honey
           float band = smoothstep(0.56, 0.64, vObj.y) * (1.0 - smoothstep(1.52, 1.6, vObj.y));
-          col *= 1.0 - 0.4 * band * pow(facing, 1.5);` : `
+          col *= 1.0 - 0.38 * band * pow(facing, 1.5);` : `
+          col = mix(honeyCol, glow, 0.35 + 0.3 * facing);
           col *= 0.95 + 0.1 * vnoise(vObj * 6.0);`}
-          outgoingLight += col * 0.95;
-          diffuseColor.a = ${body ? 'mix(0.97, 0.8, edgeGlow)' : 'mix(0.92, 0.7, edgeGlow)'};
+          #ifdef ENVMAP_TYPE_CUBE_UV
+            // the studio lights refracted through the liquid, tinted by it
+            vec3 inc = normalize(-vViewPosition);
+            vec3 refr = inverseTransformDirection(refract(-inc, normal, 0.67), viewMatrix);
+            col += textureCubeUV(envMap, envMapRotation * refr, 0.1).rgb * honeyCol * honeyCol * 0.35;
+          #endif
+          float lumC = dot(col, vec3(0.2126, 0.7152, 0.0722));
+          col = max(mix(vec3(lumC), col, 1.3), 0.0);
+          outgoingLight = outgoingLight * 0.8 + col * 0.82;
+          diffuseColor.a = ${body ? 'mix(0.96, 0.78, edgeGlow)' : 'mix(0.9, 0.68, edgeGlow)'};
           #include <opaque_fragment>`);
     };
     honeyMats.set(id, m);
