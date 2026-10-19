@@ -93,7 +93,7 @@ window.MED = (() => {
       <path d="M163 100v120" stroke="${C.gold}" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/>
       <rect x="30" y="118" width="140" height="100" fill="${C.clove}"/>
       <rect x="38" y="125" width="124" height="86" rx="3" fill="none" stroke="${C.gold}" stroke-width="1.3"/>
-      <use href="#bear" x="85" y="131" width="30" height="25" style="color:${C.gold}"/>
+      <use href="#logo" x="84" y="127" width="32" height="32" style="color:${C.gold}"/>
       <text x="100" y="${p.label.length > 6 ? 182 : 185}" text-anchor="middle" fill="${C.gold}" font-family="Telma, Georgia, serif" font-weight="700" font-size="${small}" letter-spacing="-.3">${p.label}</text>
       <text x="100" y="200" text-anchor="middle" fill="${C.gold}" font-family="Sentient, Georgia, serif" font-weight="700" font-size="7.6" letter-spacing=".9">GLADNI MEDVED · ${p.sizes[0][0]}</text>`;
   }

@@ -63,12 +63,11 @@ $$('.fill').forEach((h) => {
   const { words } = split(h);
   if (reduce) { h.style.color = on; return; }
   words.forEach((w) => { w.style.color = off; });
+  // Rise in, then pour the honey colour through the words once (not tied to every scroll tick)
   inView(h, () => {
     animate(words, { y: ['108%', '0%'], rotate: [4, 0] }, { ...spring(170, 20), delay: stagger(0.06) });
+    animate(words, { color: [off, on] }, { duration: 0.9, ease: 'easeOut', delay: stagger(0.12, { startDelay: 0.25 }) });
   }, { amount: 0.3 });
-  scroll(animate(words, { color: [off, on] }, { delay: stagger(0.12), ease: 'linear' }), {
-    target: h, offset: ['start 92%', 'end 45%'],
-  });
 });
 
 // ---------- Hero intro ----------
@@ -81,7 +80,8 @@ if (heroTitle) {
     animate('.hero-product', { opacity: [0, 1], y: [30, 0] }, { ...spring(160, 20), delay: 0.55 });
     animate('.hero-jar', { opacity: [0, 1], scale: [0.6, 1], y: [80, 0] }, { ...spring(120, 14), delay: 0.45 });
     animate('.hero-foot > *', { opacity: [0, 1], y: [20, 0] }, { delay: stagger(0.08, { startDelay: 0.9 }) });
-    animate('.nav .pill, .brand', { opacity: [0, 1], y: [-24, 0] }, { ...spring(300, 24), delay: stagger(0.04, { startDelay: 0.2 }) });
+    animate('.nav-links, .menu-btn, .brand, .nav-right > *', { opacity: [0, 1], y: [-24, 0] }, { ...spring(300, 24), delay: stagger(0.05, { startDelay: 0.2 }) });
+    animate('.brand-mark', { rotate: [-90, 0], scale: [0.4, 1] }, { ...spring(160, 12), delay: 0.3 });
     animate('.hero .rule', { scaleX: [0, 1] }, { duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: stagger(0.15) });
   }
 }
@@ -137,11 +137,6 @@ if (!reduce) {
       target: $('.unlock'), offset: ['start end', 'end start'],
     });
   });
-  $$('.inside-jar').forEach((j, i) => {
-    scroll(animate(j, { '--py': [`${i ? 70 : -50}px`, `${i ? -70 : 50}px`] }, { ease: 'linear' }), {
-      target: $('.inside'), offset: ['start end', 'end start'],
-    });
-  });
   $$('.sticker').forEach((s, i) => {
     const base = [14, -12, 26][i];
     s.style.opacity = 0;
@@ -171,7 +166,7 @@ if (!reduce) {
   });
 
   // ---------- Springy presses ----------
-  $$('.btn, .pill, .dock-btn, .r-card').forEach((el) => {
+  $$('.btn, .pill, .dock-btn, .r-card, .cart-btn, .menu-btn, .round').forEach((el) => {
     press(el, () => {
       animate(el, { scale: 0.93 }, spring(600, 30));
       return () => animate(el, { scale: 1 }, spring(500, 12));

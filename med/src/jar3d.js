@@ -24,7 +24,7 @@ try {
 if (renderer) start();
 
 function start() {
-  const DPR = Math.min(devicePixelRatio || 1, 2);
+  const MAX_Q = Math.min(devicePixelRatio || 1, 1.5);
   renderer.setPixelRatio(1);
   renderer.toneMapping = NeutralToneMapping;
   renderer.toneMappingExposure = 1;
@@ -98,6 +98,7 @@ function start() {
   const glassInner = glassOuter.clone();
   glassInner.side = BackSide;
   glassInner.envMapIntensity = 0.7;
+  glassInner.clearcoat = 0; // the far wall only needs a faint reflection; skip the second specular layer
 
   const lidMat = new MeshStandardMaterial({ color: 0x1a0c05, metalness: 0.75, roughness: 0.3, envMapIntensity: 1.4 });
 
@@ -175,24 +176,19 @@ function start() {
   }
 
   // ---------- Label: dark paper + gold foil (B channel = metal, G = roughness) ----------
-  function bearPath(ctx, x, y, s) {
+  // Brand mark (same paths as the #logo symbol in index.html): a bear in a honeycomb cell, 64-unit box
+  const LOGO_HEX = new Path2D('M32 3l25 14.5v29L32 61 7 46.5v-29z');
+  const LOGO_BEAR = new Path2D('M14.5 22a6.5 6.5 0 1 0 13 0a6.5 6.5 0 1 0-13 0ZM36.5 22a6.5 6.5 0 1 0 13 0a6.5 6.5 0 1 0-13 0ZM16.5 36a15.5 14 0 1 0 31 0a15.5 14 0 1 0-31 0ZM18 22a3 3 0 1 1 6 0a3 3 0 1 1-6 0ZM40 22a3 3 0 1 1 6 0a3 3 0 1 1-6 0ZM24 33a2 2 0 1 1 4 0a2 2 0 1 1-4 0ZM36 33a2 2 0 1 1 4 0a2 2 0 1 1-4 0ZM24.5 41.5a7.5 6 0 1 1 15 0a7.5 6 0 1 1-15 0ZM28.8 38.8Q32 37.2 35.2 38.8Q33.8 42.2 32 42.6Q30.2 42.2 28.8 38.8Z');
+  function logoMark(ctx, x, y, s) {
     ctx.save();
     ctx.translate(x, y);
-    ctx.scale(s / 48, s / 48);
-    ctx.lineWidth = 2.4;
-    ctx.lineJoin = ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.arc(10, 9, 6, 0, Math.PI * 2); ctx.stroke();
-    ctx.beginPath(); ctx.arc(38, 9, 6, 0, Math.PI * 2); ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(24, 5); ctx.bezierCurveTo(35, 5, 42, 13, 42, 23); ctx.bezierCurveTo(42, 32, 34, 38, 24, 38);
-    ctx.bezierCurveTo(14, 38, 6, 32, 6, 23); ctx.bezierCurveTo(6, 13, 13, 5, 24, 5); ctx.closePath();
-    ctx.fill(); ctx.stroke();
-    ctx.save(); ctx.globalCompositeOperation = 'destination-out';
-    ctx.beginPath(); ctx.ellipse(24, 27, 6.6, 4.8, 0, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(17, 19, 1.6, 0, Math.PI * 2); ctx.arc(31, 19, 1.6, 0, Math.PI * 2); ctx.fill();
-    ctx.restore();
-    ctx.beginPath(); ctx.ellipse(24, 27, 8, 6, 0, 0, Math.PI * 2); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(21, 24.5); ctx.lineTo(27, 24.5); ctx.lineTo(24, 27.5); ctx.closePath(); ctx.fill();
+    ctx.scale(s / 64, s / 64);
+    ctx.lineWidth = 3;
+    ctx.lineJoin = 'round';
+    ctx.stroke(LOGO_HEX);
+    ctx.translate(9, 7);
+    ctx.scale(46 / 64, 46 / 64);
+    ctx.fill(LOGO_BEAR);
     ctx.restore();
   }
   function hexRow(ctx, cx, y) {
@@ -215,7 +211,7 @@ function start() {
     ctx.strokeRect(14, 14, W - 28, H - 28);
     ctx.lineWidth = 1.5;
     ctx.strokeRect(26, 26, W - 52, H - 52);
-    bearPath(ctx, cx - 34, 36, 68);
+    logoMark(ctx, cx - 38, 26, 76);
     ctx.textAlign = 'center';
     ctx.font = `700 ${p.label.length > 6 ? 82 : 92}px ${DISPLAY}`;
     ctx.letterSpacing = '0px';
@@ -266,8 +262,8 @@ function start() {
     ctx.fillRect(0, 0, 512, 512);
     ctx.strokeStyle = ctx.fillStyle = C.gold;
     ctx.lineWidth = 6;
-    ctx.beginPath(); ctx.arc(256, 256, 200, 0, Math.PI * 2); ctx.stroke();
-    bearPath(ctx, 256 - 110, 256 - 100, 220);
+    ctx.beginPath(); ctx.arc(256, 256, 214, 0, Math.PI * 2); ctx.stroke();
+    logoMark(ctx, 256 - 165, 256 - 165, 330);
   }
   const lidTopTex = new CanvasTexture(lidTopC);
   lidTopTex.colorSpace = SRGBColorSpace;
@@ -298,9 +294,9 @@ function start() {
   const woodMat = new MeshStandardMaterial({ map: woodTex, roughness: 0.55, metalness: 0, envMapIntensity: 0.9 });
 
   // ---------- Geometry ----------
-  const glassOuterGeo = new LatheGeometry(outer, 128);
-  const glassInnerGeo = new LatheGeometry(inner, 128);
-  const honeyGeo = new LatheGeometry(honeyProfile, 96);
+  const glassOuterGeo = new LatheGeometry(outer, 80);
+  const glassInnerGeo = new LatheGeometry(inner, 72);
+  const honeyGeo = new LatheGeometry(honeyProfile, 64);
 
   const lidGeo = new CylinderGeometry(0.79, 0.79, 0.36, 240, 2);
   {
@@ -316,7 +312,7 @@ function start() {
   }
 
   const LABEL_ARC = Math.PI * 2 * 0.86;
-  const labelGeo = new CylinderGeometry(1.012, 1.012, 0.98, 160, 1, true, -LABEL_ARC / 2, LABEL_ARC);
+  const labelGeo = new CylinderGeometry(1.012, 1.012, 0.98, 96, 1, true, -LABEL_ARC / 2, LABEL_ARC);
   const dropGeo = new SphereGeometry(1, 24, 16);
 
   // Tapered tube helper: radius goes from r0 to r1 along the curve, or follows r0(t) when it is a function
@@ -493,14 +489,19 @@ function start() {
     jar.worldToLocal(start);
     const end = new Vector3(0.06 + Math.sin(t * 1.3) * 0.03, 2.0, 0.08);
     const ctrl = new Vector3(start.x * 0.4, (start.y + end.y) / 2 + 0.15, start.z * 0.6);
-    const curve = new QuadraticBezierCurve3(start, ctrl, end);
+    streamCurve = new QuadraticBezierCurve3(start, ctrl, end);
     streamGeo?.dispose();
-    streamGeo = taperTube(curve, 40, 0.034, 0.016, 8);
+    streamGeo = taperTube(streamCurve, 32, 0.034, 0.016, 8);
+    streamGeo.userData.built = true;
     stream.geometry = streamGeo;
     pool.position.set(end.x, 2.01, end.z);
+  }
+  let streamCurve = null;
+  // Cheap per-frame part: the pool breathes and a drop slides down the (cached) ribbon
+  function animateStream(t) {
     pool.scale.setScalar(1 + Math.sin(t * 2) * 0.06);
-    const f = (t * 0.55) % 1;
-    streamDrop.position.copy(curve.getPointAt(f));
+    if (!streamCurve) return;
+    streamDrop.position.copy(streamCurve.getPointAt((t * 0.55) % 1));
     streamDrop.scale.set(0.04, 0.055, 0.04);
   }
 
@@ -521,6 +522,7 @@ function start() {
       variant: byId(el.dataset.jar), mode: el.dataset.mode || 'idle',
       phase: Math.random() * Math.PI * 2, hover: 0, hoverT: 0, spin: 0,
       grounded: !!el.closest('.product, .tile'),
+      slot: views.length % 3,
     };
     el.__view = v;
     const card = el.closest('.product, .tile');
@@ -570,7 +572,8 @@ function start() {
       lid.position.set(-1.72, 1.15 + Math.sin(t * 0.9) * 0.06, 0.35);
       lid.rotation.set(1.1, rotY * 0.5, -0.3 + Math.sin(t * 0.7) * 0.05);
       dipper.rotation.z = -0.62 + (reduce ? 0 : Math.sin(t * 0.8) * 0.035);
-      updateStream(reduce ? 0 : t);
+      if (!stream.geometry.userData.built || frameNo % 3 === 0) updateStream(reduce ? 0 : t);
+      animateStream(reduce ? 0 : t);
       thread.visible = drop.visible = false;
       return;
     }
@@ -604,18 +607,45 @@ function start() {
     renderer.setSize(maxW, maxH, false);
   }
 
+  // Adaptive resolution: if the 3D work per frame gets expensive, render fewer pixels (and back up when idle).
+  let quality = MAX_Q;
+  let cost = 0, lastTune = 0, frameNo = 0;
+  function tune(now, spent) {
+    cost = cost * 0.85 + spent * 0.15;
+    if (now - lastTune < 500) return;
+    lastTune = now;
+    if (cost > 10 && quality > 0.5) quality = Math.max(0.5, quality * 0.8);
+    else if (cost < 4 && quality < MAX_Q) quality = Math.min(MAX_Q, quality * 1.08);
+  }
+  // While the page is being scrolled quickly, background jars hold their last frame
+  let lastScrollY = scrollY, scrollSpeed = 0;
+  addEventListener('scroll', () => {
+    scrollSpeed = Math.max(scrollSpeed, Math.abs(scrollY - lastScrollY));
+    lastScrollY = scrollY;
+  }, { passive: true });
+
   let last = performance.now();
   function frame(now) {
     const t = now / 1000;
     const dt = Math.min(0.05, (now - last) / 1000);
     last = now;
+    frameNo++;
+    const start = performance.now();
+    const fastScroll = scrollSpeed > 40;
+    scrollSpeed *= 0.6;
     for (const v of views) {
       if (!v.visible) continue;
+      // Jars that only sway (shop, tiles, panels) are drawn every third frame and freeze during fast
+      // scrolling; the hero, the scroll-driven jar and any jar under the pointer stay at full rate.
+      const busy = v.mode === 'hero' || v.mode === 'journey' || v.hoverT > 0 || v.hover > 0.02;
+      if (!busy && v.ready && (fastScroll || (frameNo + v.slot) % 3)) continue;
+      if (reduce && v.ready && v.drawnQ === quality) continue;
       const cw = v.canvas.offsetWidth, ch = v.canvas.offsetHeight;
       if (cw < 2 || ch < 2) continue;
-      const w = Math.round(cw * DPR), h = Math.round(ch * DPR);
+      const w = Math.round(cw * quality), h = Math.round(ch * quality);
       if (v.canvas.width !== w || v.canvas.height !== h) { v.canvas.width = w; v.canvas.height = h; }
       ensureSize(w, h);
+      v.drawnQ = quality;
 
       setVariant(v.variant);
       pose(v, t, dt);
@@ -644,6 +674,7 @@ function start() {
       v.ctx.drawImage(renderer.domElement, 0, 0, w, h, 0, 0, w, h);
       if (!v.ready) { v.ready = true; v.el.classList.add('is-3d'); }
     }
+    tune(now, performance.now() - start);
     requestAnimationFrame(frame);
   }
 

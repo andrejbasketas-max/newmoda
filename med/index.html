@@ -6,6 +6,7 @@
   <title>Gladni Medved — Pravi med iz naših košnica</title>
   <meta name="description" content="Gladni Medved: sirovi, hladno vrcani med iz Šumadije. Bagremov, livadski, lipov, kestenov, šumski i med u saću — poruči online.">
   <meta name="theme-color" content="#823513">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 3l25 14.5v29L32 61 7 46.5v-29z' fill='%23823513' stroke='%23faae33' stroke-width='3' stroke-linejoin='round'/%3E%3Cpath fill='%23faae33' d='M14.5 22a6.5 6.5 0 1 0 13 0a6.5 6.5 0 1 0-13 0ZM36.5 22a6.5 6.5 0 1 0 13 0a6.5 6.5 0 1 0-13 0ZM16.5 36a15.5 14 0 1 0 31 0a15.5 14 0 1 0-31 0ZM18 22a3 3 0 1 1 6 0a3 3 0 1 1-6 0ZM40 22a3 3 0 1 1 6 0a3 3 0 1 1-6 0ZM24 33a2 2 0 1 1 4 0a2 2 0 1 1-4 0ZM36 33a2 2 0 1 1 4 0a2 2 0 1 1-4 0ZM24.5 41.5a7.5 6 0 1 1 15 0a7.5 6 0 1 1-15 0ZM28.8 38.8Q32 37.2 35.2 38.8Q33.8 42.2 32 42.6Q30.2 42.2 28.8 38.8Z'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
   <script>
     // Hide the hero for a moment so Motion can play its intro without a flash (never longer than 2.5 s)
@@ -20,33 +21,49 @@
 
   <!-- NAV -->
   <header class="nav" id="nav">
-    <nav class="nav-side" aria-label="Glavna navigacija">
-      <button class="pill nav-menu" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu">Meni</button>
-      <a class="pill nav-link" href="#medovi">Med</a>
-      <a class="pill nav-link" href="#tradicija">O nama</a>
-      <a class="pill nav-link" href="#recepti">Recepti</a>
-      <button class="pill nav-link" data-open-game>Igra</button>
-    </nav>
+    <div class="nav-left">
+      <nav class="nav-links" id="navLinks" aria-label="Glavna navigacija">
+        <span class="nav-ink" aria-hidden="true"></span>
+        <a class="nav-link" href="#medovi" data-spy="medovi">Med</a>
+        <a class="nav-link" href="#tradicija" data-spy="tradicija">O nama</a>
+        <a class="nav-link" href="#recepti" data-spy="recepti">Recepti</a>
+        <button class="nav-link" data-open-game>Igra</button>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu" aria-label="Otvori meni">
+        <svg class="mb-open" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-list"/></svg>
+        <svg class="mb-close" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-x"/></svg>
+        <span class="mb-label">Meni</span>
+      </button>
+    </div>
     <a class="brand" href="#top" aria-label="Gladni Medved — početak">
-      <svg class="brand-bear" viewBox="0 0 48 40" aria-hidden="true"><use href="#bear"/></svg>
-      <span>Gladni<br>Medved</span>
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><use href="#logo"/></svg>
+      <span class="brand-name">Gladni<br>Medved</span>
     </a>
-    <div class="nav-side nav-right">
-      <a class="pill nav-link" href="#kontakt">Kontakt</a>
-      <button class="pill pill-icon" data-open-cart aria-label="Otvori korpu">
-        <span class="nav-buy">Kupi</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-basket"/></svg>
+    <div class="nav-right">
+      <a class="nav-link nav-contact" href="#kontakt" data-spy="kontakt">Kontakt</a>
+      <button class="cart-btn" data-open-cart aria-label="Otvori korpu">
+        <lord-icon icon="basket" trigger="hover" target=".cart-btn" loading="lazy" aria-hidden="true"></lord-icon>
+        <span class="cart-label">Korpa</span>
         <span class="cart-count" data-cart-count hidden>0</span>
       </button>
     </div>
   </header>
 
-  <div class="mobile-menu" id="mobileMenu" hidden>
-    <a href="#medovi">Med</a>
-    <a href="#tradicija">O nama</a>
-    <a href="#recepti">Recepti</a>
-    <button data-open-game>Igra</button>
-    <a href="#kontakt">Kontakt</a>
+  <div class="mobile-menu botanical" id="mobileMenu" hidden>
+    <ol class="mm-links">
+      <li><a href="#medovi"><span class="mm-num">01</span><span class="mm-label">Naši medovi</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      <li><a href="#tradicija"><span class="mm-num">02</span><span class="mm-label">O nama</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      <li><a href="#recepti"><span class="mm-num">03</span><span class="mm-label">Recepti</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      <li><button data-open-game><span class="mm-num">04</span><span class="mm-label">Igra</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></button></li>
+      <li><a href="#kontakt"><span class="mm-num">05</span><span class="mm-label">Kontakt</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+    </ol>
+    <div class="mm-foot">
+      <p class="mm-note"><lord-icon icon="truck" trigger="in" loading="lazy" aria-hidden="true"></lord-icon>Besplatna dostava preko 3.000 RSD</p>
+      <div class="mm-contact">
+        <a href="tel:+381601234567"><svg viewBox="0 0 256 256" aria-hidden="true"><use href="#i-phone"/></svg>+381 60 123 4567</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener"><lord-icon icon="instagram" trigger="hover" target="a" loading="lazy" aria-hidden="true"></lord-icon>Instagram</a>
+      </div>
+    </div>
   </div>
 
   <main id="top">
@@ -78,9 +95,9 @@
       <section class="j-sec j-b">
         <h2 class="display fill">Otvori<br><em>teglu</em></h2>
         <ul class="icon-row" aria-label="Šta oseća nos">
-          <li><span class="ico"><svg viewBox="0 0 24 24"><use href="#i-flower"/></svg></span><span class="sr">Cvet</span></li>
-          <li><span class="ico"><svg viewBox="0 0 24 24"><use href="#i-bee"/></svg></span><span class="sr">Pčela</span></li>
-          <li><span class="ico"><svg viewBox="0 0 24 24"><use href="#i-comb"/></svg></span><span class="sr">Saće</span></li>
+          <li><span class="ico"><lord-icon icon="sunflower" trigger="in" loading="lazy" aria-hidden="true"></lord-icon></span><span class="sr">Cvet</span></li>
+          <li><span class="ico"><lord-icon icon="bee" trigger="in" delay="250" loading="lazy" aria-hidden="true"></lord-icon></span><span class="sr">Pčela</span></li>
+          <li><span class="ico"><lord-icon icon="honeycomb" trigger="in" delay="500" loading="lazy" aria-hidden="true"></lord-icon></span><span class="sr">Saće</span></li>
         </ul>
         <p class="micro center">Skini poklopac i zapahnuće te miris livade, lipe i letnjeg sunca. Gust, zlatan i spreman za svaki zalogaj.</p>
         <div class="j-b-foot">
@@ -101,9 +118,9 @@
         <hr class="rule">
         <p class="micro">Naš med je samo med. Bez ičega drugog.</p>
         <ul class="facts">
-          <li><span class="ico"><svg viewBox="0 0 24 24"><use href="#i-flower"/></svg></span>Nektar sa livada bez pesticida</li>
-          <li><span class="ico"><svg viewBox="0 0 24 24"><use href="#i-drop"/></svg></span>Hladno vrcanje koje čuva enzime i polen</li>
-          <li><span class="ico"><svg viewBox="0 0 24 24"><use href="#i-comb"/></svg></span>Ceđeno kroz sito — bez pasterizacije</li>
+          <li><span class="ico"><lord-icon icon="sunflower" trigger="in" loading="lazy" aria-hidden="true"></lord-icon></span>Nektar sa livada bez pesticida</li>
+          <li><span class="ico"><lord-icon icon="drop" trigger="in" delay="200" loading="lazy" aria-hidden="true"></lord-icon></span>Hladno vrcanje koje čuva enzime i polen</li>
+          <li><span class="ico"><lord-icon icon="honeycomb" trigger="in" delay="400" loading="lazy" aria-hidden="true"></lord-icon></span>Ceđeno kroz sito — bez pasterizacije</li>
         </ul>
         <h3 class="display-sm fill">Bez dodataka.<br>Bez prečica.</h3>
         <p class="display-sm fill">Samo čist med<br>u svakoj tegli</p>
@@ -149,17 +166,17 @@
       </div>
       <div class="why-cols">
         <article>
-          <h3 class="col-title"><span class="ico dark"><svg viewBox="0 0 24 24"><use href="#i-seal"/></svg></span>Svežina</h3>
+          <h3 class="col-title"><span class="ico dark"><lord-icon icon="badge" trigger="in" loading="lazy" aria-hidden="true"></lord-icon></span>Svežina</h3>
           <p class="micro">Zatvoreno hermetički da svaka kašika ostane gusta i mirisna. Staklo ne upija mirise i čuva svaku seriju kakva je izašla iz vrcaljke.</p>
           <div class="tile tile-comb"><div class="jar" data-jar="lipa"></div></div>
         </article>
         <article>
-          <h3 class="col-title"><span class="ico dark"><svg viewBox="0 0 24 24"><use href="#i-flower"/></svg></span>Aroma &amp; ukus</h3>
+          <h3 class="col-title"><span class="ico dark"><lord-icon icon="bee" trigger="in" delay="200" loading="lazy" aria-hidden="true"></lord-icon></span>Aroma &amp; ukus</h3>
           <p class="micro">Zaključavanjem svake arome čuvamo dubinu bagrema, lipe i livadskog cveća. Pravi ukus i miris u svakom zalogaju.</p>
           <div class="tile tile-pink botanical pink"><div class="jar" data-jar="sace"></div></div>
         </article>
         <article>
-          <h3 class="col-title"><span class="ico dark"><svg viewBox="0 0 24 24"><use href="#i-drop"/></svg></span>Hranljivo sačuvano</h3>
+          <h3 class="col-title"><span class="ico dark"><lord-icon icon="drop" trigger="in" delay="400" loading="lazy" aria-hidden="true"></lord-icon></span>Hranljivo sačuvano</h3>
           <p class="micro">Staklo čuva ne samo ukus i aromu, već i enzime, polen i minerale. Svaka serija ostaje živa — spremna da zasladi svaki dan.</p>
           <div class="tile tile-clove"><div class="jar" data-jar="suma"></div></div>
         </article>
@@ -181,7 +198,7 @@
 
     <!-- RECEPTI -->
     <section class="recipes" id="recepti">
-      <span class="ico big" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-spoon"/></svg></span>
+      <span class="ico big" aria-hidden="true"><lord-icon icon="tea" trigger="in" loading="lazy"></lord-icon></span>
       <h2 class="display fill center">Hajde da<br><em>kuvamo</em></h2>
       <ul class="recipe-cards" id="recipeCards"></ul>
     </section>
@@ -190,7 +207,7 @@
     <section class="news" id="kontakt">
       <div class="news-form">
         <h2 class="display-sm">Slatke vesti pravo u tvoj inbox + 10% popusta na prvu teglu.</h2>
-        <span class="seal" aria-hidden="true"><svg viewBox="0 0 48 40"><use href="#bear"/></svg></span>
+        <span class="seal" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="#logo-bear"/></svg></span>
         <form id="newsForm" novalidate>
           <div class="fields">
             <label class="sr" for="nName">Ime i prezime</label>
@@ -210,29 +227,34 @@
 
   <!-- FOOTER -->
   <footer class="footer">
+    <svg class="foot-mark" viewBox="0 0 64 64" aria-hidden="true"><use href="#logo"/></svg>
     <p class="wordmark" aria-hidden="true">Gladni <em>Medved</em></p>
     <div class="foot-grid">
       <ul><li><a href="#medovi">Med</a></li><li><a href="#recepti">Recepti</a></li><li><a href="#tradicija">O nama</a></li><li><button data-open-game>Igra</button></li></ul>
       <ul><li><a href="#medovi">Gde kupiti</a></li><li><a href="#kontakt">Kontakt</a></li></ul>
       <ul><li><a href="#">Uslovi korišćenja</a></li><li><a href="#">Politika prodaje</a></li><li><a href="#">Privatnost</a></li></ul>
-      <address><span>Topola, Šumadija, Srbija</span><a href="mailto:zdravo@gladnimedved.rs">zdravo@gladnimedved.rs</a><a href="tel:+381601234567">+381 60 123 4567</a></address>
-      <a class="pill-icon round" href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><use href="#i-insta"/></svg></a>
+      <address>
+        <span class="addr"><lord-icon icon="location" trigger="hover" target=".addr" loading="lazy" aria-hidden="true"></lord-icon>Topola, Šumadija, Srbija</span>
+        <a href="mailto:zdravo@gladnimedved.rs">zdravo@gladnimedved.rs</a>
+        <a href="tel:+381601234567">+381 60 123 4567</a>
+      </address>
+      <a class="round insta" href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><lord-icon icon="instagram" trigger="hover" target=".insta" loading="lazy" aria-hidden="true"></lord-icon></a>
     </div>
     <hr class="rule">
-    <div class="foot-bottom"><span><span id="year"></span> © Gladni Medved</span><span>Sva prava zadržana</span></div>
+    <div class="foot-bottom"><span><span id="year"></span> © Gladni Medved</span><span>Animirane ikonice: <a href="https://lordicon.com/" target="_blank" rel="noopener">Lordicon</a></span><span>Sva prava zadržana</span></div>
   </footer>
 
   <!-- Floating dock -->
   <div class="dock">
-    <a class="dock-btn" href="#medovi" aria-label="Svi medovi"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-jar"/></svg></a>
-    <button class="dock-btn" data-open-cart aria-label="Otvori korpu"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-basket"/></svg><span class="cart-count" data-cart-count hidden>0</span></button>
+    <a class="dock-btn" href="#medovi" aria-label="Svi medovi"><svg viewBox="0 0 256 256" aria-hidden="true"><use href="#i-jar"/></svg></a>
+    <button class="dock-btn dock-cart" data-open-cart aria-label="Otvori korpu"><lord-icon icon="basket" trigger="hover" target=".dock-cart" loading="lazy" aria-hidden="true"></lord-icon><span class="cart-count" data-cart-count hidden>0</span></button>
   </div>
 
   <!-- CART -->
   <dialog class="drawer" id="cart" aria-labelledby="cartTitle">
     <div class="drawer-head">
       <h2 id="cartTitle">Korpa</h2>
-      <button class="pill" data-close>Zatvori</button>
+      <button class="pill pill-x" data-close aria-label="Zatvori korpu"><svg viewBox="0 0 256 256" aria-hidden="true"><use href="#i-x"/></svg>Zatvori</button>
     </div>
     <div class="cart-body">
       <ul class="cart-items" id="cartItems"></ul>
@@ -243,7 +265,7 @@
           <div><dt>Dostava</dt><dd id="sumShip">—</dd></div>
           <div class="total"><dt>Ukupno</dt><dd id="sumTotal">0 RSD</dd></div>
         </dl>
-        <p class="micro" id="shipHint"></p>
+        <p class="micro ship"><lord-icon icon="truck" trigger="in" loading="lazy" aria-hidden="true"></lord-icon><span id="shipHint"></span></p>
         <form id="orderForm" class="order-form">
           <label class="sr" for="oName">Ime i prezime</label>
           <input class="input" id="oName" placeholder="Ime i prezime" autocomplete="name" required>
@@ -263,13 +285,13 @@
 
   <!-- RECIPE -->
   <dialog class="modal" id="recipe" aria-labelledby="recipeTitle">
-    <button class="pill modal-close" data-close>Zatvori</button>
+    <button class="pill pill-x modal-close" data-close><svg viewBox="0 0 256 256" aria-hidden="true"><use href="#i-x"/></svg>Zatvori</button>
     <div id="recipeBody"></div>
   </dialog>
 
   <!-- GAME -->
   <dialog class="modal game" id="game" aria-labelledby="gameTitle">
-    <button class="pill modal-close" data-close>Zatvori</button>
+    <button class="pill pill-x modal-close" data-close><svg viewBox="0 0 256 256" aria-hidden="true"><use href="#i-x"/></svg>Zatvori</button>
     <h2 class="display-sm" id="gameTitle">Uhvati 50 kapi</h2>
     <p class="micro">Pomeraj teglu mišem, prstom ili strelicama. Hvataj kapi meda, izbegavaj pčele. Skupi 50 i osvoji 10% popusta.</p>
     <div class="game-wrap">
@@ -286,29 +308,29 @@
 
   <!-- SVG sprites -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="bear" viewBox="0 0 48 40">
-      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
-        <circle cx="10" cy="9" r="6"/><circle cx="38" cy="9" r="6"/>
-        <path d="M24 5c11 0 18 8 18 18 0 9-8 15-18 15S6 32 6 23C6 13 13 5 24 5z"/>
-        <ellipse cx="24" cy="27" rx="8" ry="6"/>
-      </g>
-      <g fill="currentColor"><circle cx="17" cy="19" r="2"/><circle cx="31" cy="19" r="2"/><path d="M21 24.5h6l-3 3z"/></g>
+    <!-- Brand mark: a bear in a honeycomb cell. Solid shapes with cut-outs (nonzero winding). -->
+    <symbol id="logo-bear" viewBox="0 0 64 64">
+      <path fill="currentColor" d="M14.5 22a6.5 6.5 0 1 0 13 0a6.5 6.5 0 1 0-13 0ZM36.5 22a6.5 6.5 0 1 0 13 0a6.5 6.5 0 1 0-13 0ZM16.5 36a15.5 14 0 1 0 31 0a15.5 14 0 1 0-31 0ZM18 22a3 3 0 1 1 6 0a3 3 0 1 1-6 0ZM40 22a3 3 0 1 1 6 0a3 3 0 1 1-6 0ZM24 33a2 2 0 1 1 4 0a2 2 0 1 1-4 0ZM36 33a2 2 0 1 1 4 0a2 2 0 1 1-4 0ZM24.5 41.5a7.5 6 0 1 1 15 0a7.5 6 0 1 1-15 0ZM28.8 38.8Q32 37.2 35.2 38.8Q33.8 42.2 32 42.6Q30.2 42.2 28.8 38.8Z"/>
     </symbol>
-    <symbol id="i-basket" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18l-2 11H5z"/><path d="M8 9l3-6M16 9l-3-6M9 13v4M12 13v4M15 13v4"/></g></symbol>
-    <symbol id="i-jar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="4" rx="1"/><path d="M6.5 6.5h11c1 0 1.5.7 1.5 1.7V19a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 19V8.2c0-1 .5-1.7 1.5-1.7z"/><path d="M5 11h14M5 17h14"/></g></symbol>
-    <symbol id="i-flower" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="2.6"/><path d="M12 9.4C10 6 10.6 3 12 3s2 3 0 6.4M14.5 11.2c3.6-1.6 6.2-.6 5.9.8-.3 1.4-3.4 1.8-5.9.6M13.6 14.2c2.4 3 2 6 .6 6.2-1.4.2-2.6-2.7-.6-6.2M10.4 14.2c-2 3.5-4.6 4.5-5.3 3.2-.7-1.2 1.6-3.4 5.3-3.2M9.5 11.2C6 12.4 3.2 11.4 3.6 10c.4-1.4 3.6-1.5 5.9 1.2"/></g></symbol>
-    <symbol id="i-bee" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><ellipse cx="12" cy="14" rx="4.5" ry="6"/><path d="M7.8 12h8.4M7.6 15.5h8.8"/><path d="M10 8.5C7 4 3.5 5 4 7.5S8.5 10 10 9M14 8.5C17 4 20.5 5 20 7.5S15.5 10 14 9"/><path d="M12 20v2"/></g></symbol>
-    <symbol id="i-comb" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M8 3.5l3.5 2v4L8 11.5l-3.5-2v-4zM16 3.5l3.5 2v4L16 11.5l-3.5-2v-4zM12 10.5l3.5 2v4L12 18.5l-3.5-2v-4z"/><path d="M12 18.5v2.5"/></g></symbol>
-    <symbol id="i-drop" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z M9.5 15a2.5 2.5 0 0 0 2.5 2.5"/></symbol>
-    <symbol id="i-seal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 4c-1.5 2 1.5 3 0 5M12 3c-1.5 2 1.5 3 0 5M16 4c-1.5 2 1.5 3 0 5"/><path d="M4 12h16v3a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/></g></symbol>
-    <symbol id="i-spoon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 19L14 10"/><ellipse cx="16.5" cy="7.5" rx="3.2" ry="4.2" transform="rotate(45 16.5 7.5)"/><path d="M14.8 5.8l3.4 3.4M13.8 7.8l2.4 2.4"/></g></symbol>
-    <symbol id="i-insta" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17" cy="7" r=".6" fill="currentColor"/></g></symbol>
+    <symbol id="logo" viewBox="0 0 64 64">
+      <path d="M32 3l25 14.5v29L32 61 7 46.5v-29z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+      <use href="#logo-bear" x="9" y="7" width="46" height="46"/>
+    </symbol>
+    <!-- UI icons from Phosphor (MIT) -->
+    <symbol id="i-list" viewBox="0 0 256 256"><path fill="currentColor" d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></symbol>
+    <symbol id="i-x" viewBox="0 0 256 256"><path fill="currentColor" d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 256 256"><path fill="currentColor" d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 256 256"><path fill="currentColor" d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128Z"/></symbol>
+    <symbol id="i-jar" viewBox="0 0 256 256"><path fill="currentColor" d="M184,48.81V32a16,16,0,0,0-16-16H88A16,16,0,0,0,72,32V48.81A40.05,40.05,0,0,0,40,88V200a40,40,0,0,0,40,40h96a40,40,0,0,0,40-40V88A40.05,40.05,0,0,0,184,48.81ZM56,112H200v64H56ZM168,48H152V32h16Zm-48,0V32h16V48ZM104,32V48H88V32ZM80,64h96a24,24,0,0,1,24,24v8H56V88A24,24,0,0,1,80,64Zm96,160H80a24,24,0,0,1-24-24v-8H200v8A24,24,0,0,1,176,224Z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 256 256"><path fill="currentColor" d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 256 256"><path fill="currentColor" d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83.2,111.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z"/></symbol>
   </svg>
 
   <script src="data.js" defer></script>
   <script src="main.js" defer></script>
   <script src="game.js" defer></script>
   <script src="motion.js" defer></script>
+  <script src="icons.js" defer></script>
   <script src="jar3d.js" defer></script>
 </body>
 </html>

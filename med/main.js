@@ -75,9 +75,9 @@
           <p class="c-name">${p.name}</p>
           <p class="micro">${size} · ${rsd(price)}</p>
           <div class="qty">
-            <button class="pill pill-sq" data-dec="${i}" aria-label="Smanji količinu">−</button>
+            <button class="pill pill-sq" data-dec="${i}" aria-label="Smanji količinu"><svg viewBox="0 0 256 256" aria-hidden="true"><use href="#i-minus"/></svg></button>
             <span aria-live="polite">${it.qty}</span>
-            <button class="pill pill-sq" data-inc="${i}" aria-label="Povećaj količinu">+</button>
+            <button class="pill pill-sq" data-inc="${i}" aria-label="Povećaj količinu"><svg viewBox="0 0 256 256" aria-hidden="true"><use href="#i-plus"/></svg></button>
           </div>
         </div>
         <button class="c-remove" data-rm="${i}">Ukloni</button>
@@ -184,15 +184,52 @@
   // ---------- Nav / mobile menu ----------
   const menuBtn = $('#menuBtn');
   const menu = $('#mobileMenu');
+  let menuT;
   function setMenu(open) {
+    if (open === !menu.hidden && open === menu.classList.contains('is-open')) return;
     menuBtn.setAttribute('aria-expanded', open);
-    menuBtn.textContent = open ? 'Zatvori' : 'Meni';
-    menu.hidden = !open;
+    menuBtn.setAttribute('aria-label', open ? 'Zatvori meni' : 'Otvori meni');
+    $('.mb-label', menuBtn).textContent = open ? 'Zatvori' : 'Meni';
     document.body.classList.toggle('menu-open', open);
+    clearTimeout(menuT);
+    if (open) {
+      menu.hidden = false;
+      requestAnimationFrame(() => requestAnimationFrame(() => menu.classList.add('is-open')));
+    } else {
+      menu.classList.remove('is-open');
+      menuT = setTimeout(() => { menu.hidden = true; }, reduce ? 0 : 450);
+    }
   }
   menuBtn.addEventListener('click', () => setMenu(menu.hidden));
   $$('a', menu).forEach((a) => a.addEventListener('click', () => setMenu(false)));
   addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+  // Desktop links: a honey "ink" pill slides to the hovered link, resting on the section in view
+  const navLinks = $('#navLinks');
+  const ink = $('.nav-ink', navLinks);
+  let activeLink = null;
+  function moveInk(link) {
+    if (!link) { ink.style.opacity = 0; return; }
+    ink.style.opacity = 1;
+    ink.style.width = link.offsetWidth + 'px';
+    ink.style.transform = `translateX(${link.offsetLeft}px)`;
+  }
+  $$('.nav-link', navLinks).forEach((l) => {
+    l.addEventListener('pointerenter', () => moveInk(l));
+    l.addEventListener('focus', () => moveInk(l));
+  });
+  navLinks.addEventListener('pointerleave', () => moveInk(activeLink));
+  const spyLinks = $$('[data-spy]');
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      spyLinks.forEach((l) => l.classList.toggle('is-active', l.dataset.spy === e.target.id));
+      activeLink = $(`.nav-link[data-spy="${e.target.id}"]`, navLinks);
+      if (!navLinks.matches(':hover')) moveInk(activeLink);
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  spyLinks.forEach((l) => { const s = document.getElementById(l.dataset.spy); if (s) spy.observe(s); });
+  document.fonts?.ready.then(() => moveInk(activeLink));
 
   // ---------- Toast ----------
   const toastEl = $('#toast');
@@ -243,9 +280,21 @@
     return a.map((v, k) => lerp(v, b[k], e));
   };
 
+  // The bar tucks away while scrolling down and comes back as soon as you scroll up
+  let lastY = scrollY;
+  function navState() {
+    const y = scrollY;
+    nav.classList.toggle('scrolled', y > 10);
+    if (!document.body.classList.contains('menu-open')) {
+      if (y > lastY + 6 && y > 240) nav.classList.add('nav-hidden');
+      else if (y < lastY - 6 || y < 240) nav.classList.remove('nav-hidden');
+    }
+    lastY = y;
+  }
+
   function frame() {
     const vh = innerHeight;
-    nav.classList.toggle('scrolled', scrollY > 10);
+    navState();
     const jr = journey.getBoundingClientRect();
     const p = Math.min(1, Math.max(0, -jr.top / (jr.height - vh)));
     const mobile = innerWidth < 760;
@@ -256,7 +305,7 @@
   }
 
   if (reduce) {
-    addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 10), { passive: true });
+    addEventListener('scroll', navState, { passive: true });
   } else {
     let ticking = false;
     const onScroll = () => {
