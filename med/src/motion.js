@@ -1,5 +1,5 @@
 // Page motion for Gladni Medved, built on Motion (motion.dev).
-import { animate, scroll, inView, stagger, press, hover } from 'motion';
+import { animate, scroll, inView, stagger, press } from 'motion';
 
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -99,13 +99,12 @@ if (!reduce) {
     });
   };
   reveal('.products', { children: '.product', y: 70, stagger: 0.1, amount: 0.05 });
-  reveal('.recipe-cards', { children: 'li', y: 80, stagger: 0.12, amount: 0.1 });
   reveal('.why-cols', { children: 'article', y: 60, stagger: 0.12, amount: 0.1 });
   reveal('.facts', { children: 'li', y: 30, stagger: 0.1 });
   reveal('.icon-row', { children: 'li', y: 30, stagger: 0.1 });
   reveal('.foot-grid', { children: ':scope > *', y: 30, stagger: 0.06 });
   $$('.micro:not(.hero-foot .micro)').forEach((m) => {
-    if (m.closest('.product, .r-card, .why-cols, .cart, dialog')) return;
+    if (m.closest('.product, .why-cols, .cart, dialog')) return;
     m.style.opacity = 0;
     inView(m, () => { animate(m, { opacity: [0, 1], y: [16, 0] }, { duration: 0.7, ease: [0.22, 1, 0.36, 1] }); }, { amount: 0.5 });
   });
@@ -147,26 +146,8 @@ if (!reduce) {
   const seal = $('.seal');
   if (seal) scroll(animate(seal, { rotate: [0, 540] }, { ease: 'linear' }), { target: $('.news') });
 
-  // ---------- Recipe cards: 3D tilt toward the pointer ----------
-  $$('.r-card').forEach((card) => {
-    card.style.transformPerspective = '900px';
-    hover(card, () => {
-      const move = (e) => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        animate(card, { rotateY: x * 14, rotateX: -y * 12, y: -6 }, spring(300, 24));
-      };
-      card.addEventListener('pointermove', move);
-      return () => {
-        card.removeEventListener('pointermove', move);
-        animate(card, { rotateY: 0, rotateX: 0, y: 0 }, spring(200, 18));
-      };
-    });
-  });
-
   // ---------- Springy presses ----------
-  $$('.btn, .pill, .dock-btn, .r-card, .cart-btn, .menu-btn, .round').forEach((el) => {
+  $$('.btn, .pill, .dock-btn, .cart-btn, .menu-btn, .round').forEach((el) => {
     press(el, () => {
       animate(el, { scale: 0.93 }, spring(600, 30));
       return () => animate(el, { scale: 1 }, spring(500, 12));

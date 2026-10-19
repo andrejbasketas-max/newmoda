@@ -418,20 +418,6 @@ body.menu-open .nav::after { display: none; }
   .u2 { left: 26%; top: 18%; }
 }
 
-/* ---------- Recipes ---------- */
-.recipes { padding: 120px var(--gutter); display: flex; flex-direction: column; align-items: center; gap: 30px; }
-.recipe-cards { width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 40px; }
-.r-card {
-  width: 100%; height: 100%; text-align: left; border: 0; border-radius: 6px; padding: 14px 14px 22px;
-  background: var(--gold); color: var(--clove); display: flex; flex-direction: column; gap: 12px;
-}
-.r-card .art { display: block; aspect-ratio: 4 / 3; border-radius: 4px; overflow: hidden; }
-.r-card .art > svg { width: 100%; height: 100%; }
-.r-tags { display: flex; gap: 6px; }
-.r-title { font-family: var(--display); font-size: 34px; font-weight: 700; line-height: 1.05; letter-spacing: 0; }
-.r-card .micro { text-transform: none; font-size: 16px; letter-spacing: 0; line-height: 1.4; }
-@media (max-width: 900px) { .recipe-cards { grid-template-columns: 1fr; max-width: 480px; } }
-
 /* ---------- Newsletter ---------- */
 .news { display: grid; grid-template-columns: 1fr 1fr; min-height: 92svh; }
 .news-form {
@@ -535,20 +521,7 @@ dialog::backdrop { background: rgba(40, 16, 6, .72); }
 .modal-close { position: sticky; top: 0; float: right; z-index: 2; }
 .modal .display-sm { margin: 14px 0 12px; }
 .modal .micro { max-width: 36em; }
-.r-art { margin-top: 20px; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; }
-.r-art > svg { width: 100%; height: 100%; }
-.breakdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 0; }
-.breakdown div { background: var(--clove); border-radius: 6px; padding: 12px 14px; }
-.breakdown dt { font-size: 11px; text-transform: uppercase; opacity: .8; }
-.breakdown dd { margin: 4px 0 0; font-family: var(--display); font-size: 20px; font-weight: 700; }
-.ingredients { display: grid; gap: 6px; font-size: 15px; }
-.ingredients li::before { content: "● "; font-size: 9px; vertical-align: 2px; margin-right: 6px; }
-.tip { margin-top: 18px; padding: 12px 16px; border: 1px dashed var(--gold); border-radius: 6px; font-size: 14px; }
-.instructions { counter-reset: s; display: grid; gap: 14px; margin-bottom: 26px; }
-.instructions li { counter-increment: s; display: grid; grid-template-columns: 32px 1fr; column-gap: 12px; font-size: 15px; }
-.instructions li::before { content: counter(s); grid-row: span 2; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9999px; background: var(--gold); color: var(--clove); font-weight: 700; font-size: 13px; }
-.instructions b { text-transform: uppercase; font-size: 13px; }
-@media (max-width: 560px) { .breakdown { grid-template-columns: 1fr 1fr; } .modal { padding: 20px; } }
+@media (max-width: 560px) { .modal { padding: 20px; } }
 
 .game h2 { margin-top: 18px; }
 .game-wrap { position: relative; margin-top: 18px; }

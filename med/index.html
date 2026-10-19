@@ -26,7 +26,6 @@
         <span class="nav-ink" aria-hidden="true"></span>
         <a class="nav-link" href="#medovi" data-spy="medovi">Med</a>
         <a class="nav-link" href="#tradicija" data-spy="tradicija">O nama</a>
-        <a class="nav-link" href="#recepti" data-spy="recepti">Recepti</a>
         <button class="nav-link" data-open-game>Igra</button>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu" aria-label="Otvori meni">
@@ -53,9 +52,8 @@
     <ol class="mm-links">
       <li><a href="#medovi"><span class="mm-num">01</span><span class="mm-label">Naši medovi</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
       <li><a href="#tradicija"><span class="mm-num">02</span><span class="mm-label">O nama</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-      <li><a href="#recepti"><span class="mm-num">03</span><span class="mm-label">Recepti</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-      <li><button data-open-game><span class="mm-num">04</span><span class="mm-label">Igra</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></button></li>
-      <li><a href="#kontakt"><span class="mm-num">05</span><span class="mm-label">Kontakt</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      <li><button data-open-game><span class="mm-num">03</span><span class="mm-label">Igra</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></button></li>
+      <li><a href="#kontakt"><span class="mm-num">04</span><span class="mm-label">Kontakt</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
     </ol>
     <div class="mm-foot">
       <p class="mm-note"><lord-icon icon="truck" trigger="in" loading="lazy" aria-hidden="true"></lord-icon>Besplatna dostava preko 3.000 RSD</p>
@@ -196,13 +194,6 @@
       </div>
     </section>
 
-    <!-- RECEPTI -->
-    <section class="recipes" id="recepti">
-      <span class="ico big" aria-hidden="true"><lord-icon icon="tea" trigger="in" loading="lazy"></lord-icon></span>
-      <h2 class="display fill center">Hajde da<br><em>kuvamo</em></h2>
-      <ul class="recipe-cards" id="recipeCards"></ul>
-    </section>
-
     <!-- NEWSLETTER -->
     <section class="news" id="kontakt">
       <div class="news-form">
@@ -230,7 +221,7 @@
     <svg class="foot-mark" viewBox="0 0 64 64" aria-hidden="true"><use href="#logo"/></svg>
     <p class="wordmark" aria-hidden="true">Gladni <em>Medved</em></p>
     <div class="foot-grid">
-      <ul><li><a href="#medovi">Med</a></li><li><a href="#recepti">Recepti</a></li><li><a href="#tradicija">O nama</a></li><li><button data-open-game>Igra</button></li></ul>
+      <ul><li><a href="#medovi">Med</a></li><li><a href="#tradicija">O nama</a></li><li><button data-open-game>Igra</button></li></ul>
       <ul><li><a href="#medovi">Gde kupiti</a></li><li><a href="#kontakt">Kontakt</a></li></ul>
       <ul><li><a href="#">Uslovi korišćenja</a></li><li><a href="#">Politika prodaje</a></li><li><a href="#">Privatnost</a></li></ul>
       <address>
@@ -281,12 +272,6 @@
         <p class="micro">Porudžbina je primljena. Javićemo ti se telefonom da potvrdimo dostavu.</p>
       </div>
     </div>
-  </dialog>
-
-  <!-- RECIPE -->
-  <dialog class="modal" id="recipe" aria-labelledby="recipeTitle">
-    <button class="pill pill-x modal-close" data-close><svg viewBox="0 0 256 256" aria-hidden="true"><use href="#i-x"/></svg>Zatvori</button>
-    <div id="recipeBody"></div>
   </dialog>
 
   <!-- GAME -->

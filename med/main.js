@@ -1,5 +1,5 @@
 (() => {
-  const { PRODUCTS, LEVELS, RECIPES, byId, jarSVG, artSVG } = window.MED;
+  const { PRODUCTS, LEVELS, byId, jarSVG, artSVG } = window.MED;
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -23,17 +23,6 @@
         <span class="price">${rsd(p.sizes[0][1])}</span>
         <button class="btn" data-add="${p.id}">Dodaj u korpu</button>
       </div>
-    </li>`).join('');
-
-  // ---------- Render recipes ----------
-  $('#recipeCards').innerHTML = RECIPES.map((r) => `
-    <li>
-      <button class="r-card" data-recipe="${r.id}">
-        <span class="art">${artSVG(r.art)}</span>
-        <span class="r-tags"><span class="badge dark">Recept</span><span class="badge dark">${r.time}</span></span>
-        <span class="r-title">${r.title}</span>
-        <span class="micro">${r.desc}</span>
-      </button>
     </li>`).join('');
 
   // Jars + illustrations
@@ -128,8 +117,6 @@
     }
     if (e.target.closest('[data-open-cart]')) openDialog(cartDlg);
     if (e.target.closest('[data-open-game]')) { setMenu(false); openDialog($('#game')); }
-    const r = e.target.closest('[data-recipe]');
-    if (r) openRecipe(r.dataset.recipe);
   });
 
   $('#orderForm').addEventListener('submit', (e) => {
@@ -161,25 +148,6 @@
       if (!$$('dialog').some((x) => x.open)) document.body.classList.remove('locked');
     });
   });
-
-  function openRecipe(id) {
-    const r = RECIPES.find((x) => x.id === id);
-    $('#recipeBody').innerHTML = `
-      <div class="r-tags"><span class="badge">Recept</span><span class="badge">${r.time}</span></div>
-      <h2 class="display-sm" id="recipeTitle">${r.title}</h2>
-      <p class="micro">${r.desc}</p>
-      <div class="r-art">${artSVG(r.art)}</div>
-      <h3 class="label">Ukratko</h3>
-      <dl class="breakdown">${r.breakdown.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>
-      <h3 class="label">Sastojci</h3>
-      <ul class="ingredients">${r.ingredients.map((x) => `<li>${x}</li>`).join('')}</ul>
-      <p class="tip">${r.tip}</p>
-      <h3 class="label">Priprema</h3>
-      <ol class="instructions">${r.steps.map(([t, d]) => `<li><b>${t}</b><span>${d}</span></li>`).join('')}</ol>
-      <button class="btn" data-add="${r.id === 'feta' ? 'kesten' : r.id === 'caj' ? 'lipa' : 'livadski'}">Kupi med za ovaj recept</button>`;
-    openDialog($('#recipe'));
-    $('#recipe').scrollTop = 0;
-  }
 
   // ---------- Nav / mobile menu ----------
   const menuBtn = $('#menuBtn');

@@ -1,4 +1,4 @@
-// Products, recipes and the SVG artwork (jars + illustrations) used across the page.
+// Products and the SVG artwork (jars + illustrations) used across the page.
 window.MED = (() => {
   const C = {
     gold: '#faae33', rust: '#823513', saffron: '#9f531b', spice: '#402011',
@@ -26,50 +26,6 @@ window.MED = (() => {
       sizes: [['300 g', 1400], ['600 g', 2600]] },
   ];
   const LEVELS = ['', 'Blag', 'Srednji', 'Jak'];
-
-  const RECIPES = [
-    {
-      id: 'palacinke', art: 'pancakes', time: '15 min',
-      title: 'Palačinke sa medom i orasima',
-      desc: 'Tanke palačinke, prepečeni orasi i obilno livadskog meda. Nedeljno jutro za 15 minuta.',
-      breakdown: [['Priprema', '5 min'], ['Pečenje', '10 min'], ['Porcije', '2'], ['Ukupno', '~15 min']],
-      ingredients: ['2 jaja', '250 ml mleka', '120 g brašna', 'Prstohvat soli', '1 kašika ulja + malo za tiganj', '50 g oraha, grubo seckanih', '4 kašike livadskog meda Gladni Medved'],
-      tip: 'Orahe prepeci na suvom tiganju dok ne zamirišu — med ih posle lepi za palačinku.',
-      steps: [
-        ['Umuti testo', 'Izmešaj jaja, mleko, brašno, so i ulje u glatko testo. Ostavi 5 minuta.'],
-        ['Prepeci orahe', 'Na suvom tiganju prepeci orahe 2–3 minuta, pa ih skloni.'],
-        ['Peci palačinke', 'Na blago nauljenom tiganju peci tanke palačinke po 1 minut sa svake strane.'],
-        ['Složi i prelij', 'Složi palačinke, pospi orasima i prelij medom. Odmah posluži.'],
-      ],
-    },
-    {
-      id: 'feta', art: 'feta', time: '20 min',
-      title: 'Pečeni feta sa medom i timijanom',
-      desc: 'Topao, slan i sladak u isto vreme. Kestenov med i timijan na zapečenom siru.',
-      breakdown: [['Priprema', '5 min'], ['Pečenje', '15 min'], ['Porcije', '4'], ['Ukupno', '~20 min']],
-      ingredients: ['200 g feta sira u komadu', '2 kašike maslinovog ulja', '2 kašike kestenovog meda Gladni Medved', '3 grančice svežeg timijana', 'Sveže mleveni biber', 'Hrskav hleb za služenje'],
-      tip: 'Za još jaču notu, pred kraj upali grejač odozgo da med karamelizuje.',
-      steps: [
-        ['Zagrej rernu', 'Zagrej rernu na 200 °C.'],
-        ['Pripremi sir', 'Stavi feta sir u manju posudu, prelij uljem i pospi timijanom i biberom.'],
-        ['Peci', 'Peci 12–15 minuta, dok sir ne omekša i ivice ne porumene.'],
-        ['Prelij medom', 'Izvadi, prelij kestenovim medom i služi toplo uz hleb.'],
-      ],
-    },
-    {
-      id: 'caj', art: 'tea', time: '5 min',
-      title: 'Čaj od đumbira sa lipovim medom',
-      desc: 'Topla šolja za hladne večeri. Đumbir, limun i kašika lipovog meda.',
-      breakdown: [['Priprema', '2 min'], ['Kuvanje', '3 min'], ['Porcije', '1'], ['Ukupno', '~5 min']],
-      ingredients: ['300 ml vode', '3 cm svežeg đumbira, tanko sečenog', '2 kriške limuna', '1–2 kašike lipovog meda Gladni Medved'],
-      tip: 'Med dodaj tek kad čaj malo prohladi (ispod 40 °C) — tako čuva enzime i aromu.',
-      steps: [
-        ['Prokuvaj', 'Prokuvaj vodu sa đumbirom 3 minuta.'],
-        ['Procedi', 'Procedi u šolju i dodaj kriške limuna.'],
-        ['Zasladi', 'Sačekaj minut-dva, pa umešaj lipov med.'],
-      ],
-    },
-  ];
 
   const byId = (id) => PRODUCTS.find((p) => p.id === id) || PRODUCTS[1];
 
@@ -159,46 +115,9 @@ window.MED = (() => {
         <ellipse cx="216" cy="88" rx="30" ry="19" transform="rotate(-28 216 88)" fill="${C.amber}" stroke="${C.spice}" stroke-width="4"/>
         <path d="M194 92l40-21M200 101l40-21M190 83l36-19" stroke="${C.spice}" stroke-width="3"/>`;
     },
-    pancakes() {
-      let stack = '';
-      for (let i = 0; i < 5; i++) {
-        const y = 226 - i * 18;
-        stack += `<ellipse cx="200" cy="${y + 6}" rx="112" ry="27" fill="${C.saffron}"/><ellipse cx="200" cy="${y}" rx="112" ry="27" fill="${i & 1 ? '#f0b75a' : '#e8a548'}"/>`;
-      }
-      return `<rect width="400" height="300" fill="${C.rust}"/>
-        <ellipse cx="200" cy="246" rx="160" ry="42" fill="${C.spice}"/>
-        ${stack}
-        <path d="M120 150c20-22 140-22 160 0c-10 12-30 6-36 30a8 8 0 0 1-15 0c-4-14-20-16-40-14c-12 2-14 34-24 34s-8-26-22-30c-12-4-20-8-23-20z" fill="${C.amber}"/>
-        <path d="M170 140l10 8-12 4zM214 136l12 6-11 7zM238 150l9 9-12 2z" fill="${C.cardamom}"/>
-        ${bee(330, 70, 0.8)}`;
-    },
-    feta() {
-      return `<rect width="400" height="300" fill="${C.clove}"/>
-        <ellipse cx="200" cy="190" rx="168" ry="88" fill="${C.saffron}"/>
-        <ellipse cx="200" cy="182" rx="150" ry="74" fill="${C.rust}"/>
-        <path d="M128 150l140-22 10 70-140 22z" fill="${C.cream}"/>
-        <path d="M138 220l140-22 4 16-140 22z" fill="#d9b981"/>
-        <path d="M140 160c20 20 30-14 50 6s30-16 50 4 24-12 34 0" fill="none" stroke="${C.gold}" stroke-width="6" stroke-linecap="round"/>
-        <path d="M150 190c20 14 40-12 60 2s30-10 56-2" fill="none" stroke="${C.amber}" stroke-width="5" stroke-linecap="round"/>
-        <g stroke="${C.gold}" stroke-width="2.5" stroke-linecap="round" fill="${C.gold}">
-          <path d="M84 120l60 24"/><ellipse cx="100" cy="122" rx="5" ry="2.6"/><ellipse cx="112" cy="134" rx="5" ry="2.6"/><ellipse cx="124" cy="132" rx="5" ry="2.6"/>
-          <path d="M300 230l46-30"/><ellipse cx="316" cy="214" rx="5" ry="2.6"/><ellipse cx="328" cy="214" rx="5" ry="2.6"/>
-        </g>`;
-    },
-    tea() {
-      return `<rect width="400" height="300" fill="${C.chili}"/>
-        <g fill="#a81a49"><circle cx="40" cy="40" r="60"/><circle cx="380" cy="280" r="80"/></g>
-        <path d="M140 110h120v100a44 44 0 0 1-44 44h-32a44 44 0 0 1-44-44z" fill="${C.clove}"/>
-        <path d="M258 140c40-6 44 50 0 48" fill="none" stroke="${C.clove}" stroke-width="14"/>
-        <ellipse cx="200" cy="112" rx="60" ry="10" fill="${C.saffron}"/>
-        <path d="M180 92c-12-16 10-22 0-40M206 90c-12-16 10-22 0-44M232 92c-12-16 10-22 0-40" fill="none" stroke="${C.gold}" stroke-width="5" stroke-linecap="round"/>
-        <circle cx="96" cy="230" r="34" fill="${C.gold}"/><circle cx="96" cy="230" r="26" fill="none" stroke="${C.amber}" stroke-width="3"/>
-        <path d="M96 204v52M70 230h52M78 212l36 36M114 212l-36 36" stroke="${C.amber}" stroke-width="2.5"/>
-        <path d="M296 250c10-20 40-20 50-6 6 10-6 18-20 14-10 10-26 8-30-8z" fill="${C.gold}"/>`;
-    },
   };
   const artSVG = (name) =>
     `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${ART[name]()}</svg>`;
 
-  return { C, PRODUCTS, LEVELS, RECIPES, byId, jarSVG, artSVG };
+  return { C, PRODUCTS, LEVELS, byId, jarSVG, artSVG };
 })();
