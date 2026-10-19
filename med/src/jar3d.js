@@ -11,8 +11,8 @@ import {
 
 const { PRODUCTS, byId, C } = window.MED;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const DISPLAY = 'Zodiak, Georgia, serif';
-const UI = 'Satoshi, system-ui, sans-serif';
+const DISPLAY = '"Clash Display", sans-serif';
+const UI = '"Cabinet Grotesk", system-ui, sans-serif';
 
 let renderer;
 try {
@@ -217,10 +217,10 @@ function start() {
     ctx.strokeRect(26, 26, W - 52, H - 52);
     bearPath(ctx, cx - 34, 36, 68);
     ctx.textAlign = 'center';
-    ctx.font = `900 ${p.label.length > 6 ? 70 : 80}px ${DISPLAY}`;
+    ctx.font = `600 ${p.label.length > 6 ? 66 : 76}px ${DISPLAY}`;
     ctx.letterSpacing = '-1px';
     ctx.fillText(p.label, cx, 176);
-    ctx.font = `italic 400 38px ${DISPLAY}`;
+    ctx.font = `400 34px ${DISPLAY}`;
     ctx.letterSpacing = '0px';
     ctx.fillText(p.id === 'sace' ? 'med u saću' : 'sirovi med', cx, 220);
     ctx.font = `700 21px ${UI}`;
@@ -231,7 +231,7 @@ function start() {
     ctx.letterSpacing = '4px';
     ctx.fillText('ŠUMADIJA · SRBIJA', cx - 560, 140);
     ctx.fillText('HLADNO VRCANO', cx + 560, 140);
-    ctx.font = `italic 400 30px ${DISPLAY}`;
+    ctx.font = `500 26px ${UI}`;
     ctx.letterSpacing = '0px';
     ctx.fillText('bez dodataka', cx - 560, 188);
     ctx.fillText('iz naših košnica', cx + 560, 188);
@@ -647,9 +647,9 @@ function start() {
     requestAnimationFrame(frame);
   }
 
-  // Wait for the label fonts so the foil text renders in Zodiak / Satoshi
+  // Wait for the label fonts so the foil text renders in Clash Display / Cabinet Grotesk
   const fonts = document.fonts
-    ? Promise.all([`900 80px ${DISPLAY}`, `italic 400 38px ${DISPLAY}`, `700 21px ${UI}`].map((f) => document.fonts.load(f)))
+    ? Promise.all([`600 76px ${DISPLAY}`, `400 34px ${DISPLAY}`, `700 21px ${UI}`, `500 26px ${UI}`].map((f) => document.fonts.load(f)))
     : Promise.resolve();
   fonts.catch(() => {}).then(() => {
     labelMats.forEach((m) => m.map.dispose());

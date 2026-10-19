@@ -94,8 +94,8 @@ window.MED = (() => {
       <rect x="30" y="118" width="140" height="100" fill="${C.clove}"/>
       <rect x="38" y="125" width="124" height="86" rx="3" fill="none" stroke="${C.gold}" stroke-width="1.3"/>
       <use href="#bear" x="85" y="131" width="30" height="25" style="color:${C.gold}"/>
-      <text x="100" y="${p.label.length > 6 ? 182 : 185}" text-anchor="middle" fill="${C.gold}" font-family="Zodiak, Georgia, serif" font-weight="900" font-size="${small}" letter-spacing="-.3">${p.label}</text>
-      <text x="100" y="200" text-anchor="middle" fill="${C.gold}" font-family="Satoshi, sans-serif" font-weight="700" font-size="7.6" letter-spacing=".9">GLADNI MEDVED · ${p.sizes[0][0]}</text>`;
+      <text x="100" y="${p.label.length > 6 ? 182 : 185}" text-anchor="middle" fill="${C.gold}" font-family="Clash Display, sans-serif" font-weight="600" font-size="${small}" letter-spacing="-.3">${p.label}</text>
+      <text x="100" y="200" text-anchor="middle" fill="${C.gold}" font-family="Cabinet Grotesk, sans-serif" font-weight="700" font-size="7.6" letter-spacing=".9">GLADNI MEDVED · ${p.sizes[0][0]}</text>`;
   }
   const jarSVG = (p, opts) =>
     `<svg class="jar-svg" viewBox="0 0 200 270" role="img" aria-label="Tegla: ${p.name}">${jarInner(p, opts)}</svg>`;
