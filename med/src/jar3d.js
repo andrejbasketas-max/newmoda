@@ -4,10 +4,10 @@
 import {
   WebGLRenderer, Scene, PerspectiveCamera, Group, Mesh, Vector2, Vector3, SplineCurve, CatmullRomCurve3,
   QuadraticBezierCurve3, LatheGeometry, TubeGeometry, CylinderGeometry, CircleGeometry, SphereGeometry,
-  TorusGeometry, MeshPhysicalMaterial, MeshStandardMaterial, CanvasTexture, Color, DirectionalLight,
-  PMREMGenerator, NeutralToneMapping, SRGBColorSpace, RepeatWrapping, BackSide, FrontSide, AdditiveBlending, MathUtils,
+  TorusGeometry, PlaneGeometry, MeshPhysicalMaterial, MeshStandardMaterial, MeshBasicMaterial, ShaderMaterial,
+  InstancedMesh, Object3D, CanvasTexture, Color, DirectionalLight, PMREMGenerator, NeutralToneMapping,
+  SRGBColorSpace, RepeatWrapping, BackSide, FrontSide, DoubleSide, AdditiveBlending, MathUtils,
 } from 'three';
-import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 
 const { PRODUCTS, byId, C } = window.MED;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -33,7 +33,26 @@ function start() {
 
   const scene = new Scene();
   const pmrem = new PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+  // Product-photography studio for reflections: dark warm room, tall softboxes left and right,
+  // a top light and a warm glow behind (that is what reads as "real glass" on a jar).
+  {
+    const studio = new Scene();
+    studio.background = new Color(0x120804);
+    const panel = (w, h, hex, power, x, y, z) => {
+      const m = new Mesh(new PlaneGeometry(w, h), new MeshBasicMaterial({ color: new Color(hex).multiplyScalar(power), side: DoubleSide }));
+      m.material.toneMapped = false;
+      m.position.set(x, y, z);
+      m.lookAt(0, 0, 0);
+      studio.add(m);
+    };
+    panel(2.6, 9, 0xfff3e2, 4.2, -6, 1, 4);   // key softbox
+    panel(1.4, 9, 0xffe4bd, 2.8, 6.5, 0.5, 2.5); // strip light
+    panel(9, 2.4, 0xffeccc, 1.4, 0, 8, 1);  // top
+    panel(7, 6, 0xff9f3d, 2.2, 1, 1, -7);   // warm back glow
+    panel(16, 8, 0x823513, 0.5, 0, -7, 0);  // rust floor bounce
+    scene.environment = pmrem.fromScene(studio, 0.02).texture;
+  }
 
   const key = new DirectionalLight(0xfff1d6, 2.2);
   key.position.set(-4, 6, 6);
@@ -73,7 +92,7 @@ function start() {
   // Glass adds only its reflections (black diffuse + additive blend), so the honey behind stays saturated
   const glassOuter = new MeshPhysicalMaterial({
     color: 0x000000, metalness: 0, roughness: 0.03, transparent: true, blending: AdditiveBlending,
-    clearcoat: 1, clearcoatRoughness: 0.02, envMapIntensity: 1.6, side: FrontSide, depthWrite: false,
+    clearcoat: 1, clearcoatRoughness: 0.02, envMapIntensity: 1.25, side: FrontSide, depthWrite: false,
     specularIntensity: 1, ior: 1.5,
   });
   const glassInner = glassOuter.clone();
@@ -115,6 +134,9 @@ function start() {
           vec3 deep = outgoingLight * vec3(0.6, 0.33, 0.17);
           outgoingLight = mix(core, deep, depthLen);
           ${body ? `outgoingLight *= mix(0.7, 1.08, smoothstep(0.1, 1.95, vObj.y));
+          // the back of the label seen through the honey
+          float band = smoothstep(0.56, 0.64, vObj.y) * (1.0 - smoothstep(1.52, 1.6, vObj.y));
+          outgoingLight *= 1.0 - 0.42 * band * pow(facing, 1.5);
           outgoingLight *= 0.93 + 0.14 * vnoise(vObj * vec3(2.6, 1.1, 2.6) + vec3(0.0, vObj.x * 0.8, 0.0));` : ''}
           float luma = dot(outgoingLight, vec3(0.2126, 0.7152, 0.0722));
           outgoingLight = mix(vec3(luma), outgoingLight, 1.15);
@@ -319,12 +341,66 @@ function start() {
   const honey = new Mesh(honeyGeo, honeyMat(C.amber));
   const gIn = new Mesh(glassInnerGeo, glassInner);
   const gOut = new Mesh(glassOuterGeo, glassOuter);
-  gIn.renderOrder = 2; gOut.renderOrder = 3;
   const label = new Mesh(labelGeo, labelMat(PRODUCTS[1]));
   label.position.y = 1.08;
   label.renderOrder = 1;
   let drips = dripMeshes(honeyMat(C.amber, 'stream'));
-  body.add(honey, label, gIn, gOut, drips);
+
+  // Glass thickness: the silhouette of a real jar goes dark where you look through the wall edge-on
+  const edge = new Mesh(glassOuterGeo, new ShaderMaterial({
+    transparent: true, depthWrite: false,
+    uniforms: { tint: { value: new Color(0x120602) }, strength: { value: 0.6 } },
+    vertexShader: `varying vec3 vN; varying vec3 vV;
+      void main() { vec4 mv = modelViewMatrix * vec4(position, 1.0); vN = normalize(normalMatrix * normal); vV = -mv.xyz; gl_Position = projectionMatrix * mv; }`,
+    fragmentShader: `uniform vec3 tint; uniform float strength; varying vec3 vN; varying vec3 vV;
+      void main() { float f = 1.0 - abs(dot(normalize(vN), normalize(vV))); gl_FragColor = vec4(tint, pow(f, 2.2) * strength); }`,
+  }));
+  edge.renderOrder = 2;
+  gIn.renderOrder = 3; gOut.renderOrder = 4;
+
+  // Air bubbles trapped against the glass, mostly near the top of the honey
+  const BUBBLES = 70;
+  const bubbles = new InstancedMesh(new SphereGeometry(1, 12, 8), new MeshPhysicalMaterial({
+    color: 0xfff1c9, roughness: 0.05, transparent: true, opacity: 0.55, clearcoat: 1, envMapIntensity: 2, emissive: 0x6b3a08,
+  }), BUBBLES);
+  {
+    const o = new Object3D();
+    let seed = 7;
+    const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+    for (let i = 0; i < BUBBLES; i++) {
+      const a = rnd() * Math.PI * 2;
+      const top = rnd() < 0.75;
+      const y = top ? 1.6 + rnd() * 0.36 : 0.22 + rnd() * 0.32;
+      const r = rAt(y) - 0.047;
+      o.position.set(Math.sin(a) * r, y, Math.cos(a) * r);
+      o.scale.setScalar(0.006 + Math.pow(rnd(), 3) * 0.022);
+      o.updateMatrix();
+      bubbles.setMatrixAt(i, o.matrix);
+    }
+  }
+  bubbles.renderOrder = 1;
+
+  body.add(honey, bubbles, label, edge, gIn, gOut, drips);
+
+  // Soft contact shadow for jars that stand on something (shop, tiles)
+  const shC = document.createElement('canvas');
+  shC.width = shC.height = 256;
+  {
+    const ctx = shC.getContext('2d');
+    const g = ctx.createRadialGradient(128, 128, 10, 128, 128, 128);
+    g.addColorStop(0, 'rgba(0,0,0,0.75)');
+    g.addColorStop(0.45, 'rgba(0,0,0,0.35)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 256, 256);
+  }
+  const shadow = new Mesh(new PlaneGeometry(3.4, 3.4), new MeshBasicMaterial({
+    map: new CanvasTexture(shC), transparent: true, depthWrite: false, color: 0x1a0802,
+  }));
+  shadow.rotation.x = -Math.PI / 2;
+  shadow.position.y = 0.002;
+  shadow.scale.set(1, 0.62, 1);
+  shadow.renderOrder = -1;
 
   const lid = new Group();
   const lidBody = new Mesh(lidGeo, lidMat);
@@ -367,6 +443,7 @@ function start() {
   const streamDrop = new Mesh(dropGeo, honeyMat(C.amber, 'stream'));
 
   jar.add(body, lid, thread, drop, dipper, stream, pool, streamDrop);
+  scene.add(shadow);
   scene.add(jar);
 
   let current = null;
@@ -415,6 +492,7 @@ function start() {
       el, canvas, ctx: canvas.getContext('2d'), visible: false,
       variant: byId(el.dataset.jar), mode: el.dataset.mode || 'idle',
       phase: Math.random() * Math.PI * 2, hover: 0, hoverT: 0, spin: 0,
+      grounded: !!el.closest('.product, .tile'),
     };
     el.__view = v;
     const card = el.closest('.product, .tile');
@@ -454,7 +532,8 @@ function start() {
         lift = v.mode === 'open' ? 0.55 : v.hover * 0.35;
     }
     jar.rotation.set(0, 0, tilt);
-    jar.position.y = bob;
+    jar.position.y = v.grounded ? 0 : bob;
+    shadow.visible = v.grounded;
     body.rotation.y = rotY;
 
     dipper.visible = stream.visible = pool.visible = streamDrop.visible = hero;
