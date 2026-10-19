@@ -34,7 +34,7 @@ Online prodavnica meda — otvori `med/index.html`. Vizuelno prati Hungry Tiger 
 - `game.js` — mini-igra.
 - `src/jar3d.js` → `jar3d.js` — prave 3D tegle u WebGL-u (Three.js): stakleni odsjaji iz „studija“ sa softboksovima, providan med koji svetli zlatno pri dnu i taman je pri vrhu, mehurići, med koji curi niz teglu, etiketa sa zlatnom folijom, rebrasti poklopac i senka ispod tegli u prodavnici. U hero delu drvena kašika sipa med u otvorenu teglu; dok skroluješ, tegla putuje kroz tri ekrana i poklopac se odvrće uz nit meda; u prodavnici se tegla zavrti kad pređeš mišem. Jedan renderer crta sve vidljive tegle, a bez WebGL-a ostaju SVG tegle.
 - `src/motion.js` → `motion.js` — animacije preko [Motion](https://motion.dev): slova i reči naslova, bojenje naslova dok skroluješ, staggered ulazi, parallax, nagib kartica recepata, kap meda koja leti u korpu, animirane cene.
-- `fonts/` — Clash Display (naslovi, cene) i Cabinet Grotesk (sav sitan tekst), oba iz [Awwwards Free Fonts](https://www.awwwards.com/awwwards/collections/free-fonts/) kolekcije, sa [Fontshare](https://www.fontshare.com) — besplatni i za komercijalnu upotrebu.
+- `fonts/` — [Telma](https://www.fontshare.com/fonts/telma) (naslovi, cene, imena proizvoda, etikete) i [Sentient](https://www.fontshare.com/fonts/sentient) (sav sitan tekst), sa [Fontshare](https://www.fontshare.com) — besplatni i za komercijalnu upotrebu. Telma nema veliko „Đ“, pa ga u tom slučaju crta Sentient.
 - Posle izmene u `src/`: `npm install && npm run build:med`.
 
 Porudžbina i newsletter nemaju backend: forma samo potvrđuje lokalno. Brend, adresa, telefon i e-mail su izmišljeni (placeholder).

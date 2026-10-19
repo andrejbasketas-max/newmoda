@@ -1,11 +1,11 @@
-/* Fonts from the Awwwards "Free Fonts" collection, via Fontshare (free for personal and commercial use) */
-@font-face { font-family: "Clash Display"; src: url("fonts/clash-display-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
-@font-face { font-family: "Clash Display"; src: url("fonts/clash-display-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
-@font-face { font-family: "Clash Display"; src: url("fonts/clash-display-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
-@font-face { font-family: "Clash Display"; src: url("fonts/clash-display-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
-@font-face { font-family: "Cabinet Grotesk"; src: url("fonts/cabinet-grotesk-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
-@font-face { font-family: "Cabinet Grotesk"; src: url("fonts/cabinet-grotesk-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
-@font-face { font-family: "Cabinet Grotesk"; src: url("fonts/cabinet-grotesk-800.woff2") format("woff2"); font-weight: 800; font-display: swap; }
+/* Telma (display) and Sentient (text) from Fontshare by Indian Type Foundry — free for personal and commercial use */
+@font-face { font-family: "Telma"; src: url("fonts/telma-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Telma"; src: url("fonts/telma-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Telma"; src: url("fonts/telma-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Sentient"; src: url("fonts/sentient-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Sentient"; src: url("fonts/sentient-400i.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Sentient"; src: url("fonts/sentient-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Sentient"; src: url("fonts/sentient-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
 
 /* Gladni Medved — inspired by the Hungry Tiger style reference:
    rust canvas, one gold accent, poster-scale type, pill controls, dotted gold rules, no shadows. */
@@ -22,8 +22,8 @@
   --honey-bg: #eea236;
   --gold-fade: #c98526;
   --cream: #ffe9c2;
-  --display: "Clash Display", "Arial Narrow", sans-serif;
-  --font: "Cabinet Grotesk", system-ui, -apple-system, sans-serif;
+  --display: "Telma", "Sentient", Georgia, serif;   /* Telma has no capital Đ; Sentient supplies it */
+  --font: "Sentient", Georgia, "Times New Roman", serif;
   --gutter: clamp(16px, 2vw, 28px);
   --ease: cubic-bezier(.22, 1, .36, 1);
   --botanical: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg transform='rotate(-24 64 80)'%3E%3Cpath d='M64 36c-36-24-68 8-50 42 12 24 39 33 50 50 11-17 38-26 50-50 18-34-14-66-50-42z'/%3E%3Cpath d='M62 126h4v38h-4z'/%3E%3C/g%3E%3Cg transform='rotate(28 206 104)'%3E%3Cpath d='M204 18h4v172h-4z'/%3E%3Cellipse cx='190' cy='40' rx='16' ry='6.5' transform='rotate(-25 190 40)'/%3E%3Cellipse cx='222' cy='40' rx='16' ry='6.5' transform='rotate(25 222 40)'/%3E%3Cellipse cx='190' cy='64' rx='17' ry='7' transform='rotate(-25 190 64)'/%3E%3Cellipse cx='222' cy='64' rx='17' ry='7' transform='rotate(25 222 64)'/%3E%3Cellipse cx='190' cy='88' rx='18' ry='7' transform='rotate(-25 190 88)'/%3E%3Cellipse cx='222' cy='88' rx='18' ry='7' transform='rotate(25 222 88)'/%3E%3Cellipse cx='190' cy='112' rx='18' ry='7' transform='rotate(-25 190 112)'/%3E%3Cellipse cx='222' cy='112' rx='18' ry='7' transform='rotate(25 222 112)'/%3E%3Cellipse cx='190' cy='136' rx='17' ry='7' transform='rotate(-25 190 136)'/%3E%3Cellipse cx='222' cy='136' rx='17' ry='7' transform='rotate(25 222 136)'/%3E%3Cellipse cx='206' cy='18' rx='7' ry='15'/%3E%3C/g%3E%3Cg%3E%3Ccircle cx='96' cy='212' r='11'/%3E%3Ccircle cx='110' cy='221' r='11'/%3E%3Ccircle cx='110' cy='237' r='11'/%3E%3Ccircle cx='96' cy='246' r='11'/%3E%3Ccircle cx='82' cy='237' r='11'/%3E%3Ccircle cx='82' cy='221' r='11'/%3E%3Cpath d='M94 254h4v40h-4z'/%3E%3Cpath d='M98 278c18-14 34-10 40 0-14 8-28 8-40 0z'/%3E%3C/g%3E%3Cpath d='M250 210c22 8 30 36 14 56-10-18-26-28-14-56z'/%3E%3Cpath d='M18 250c16-16 42-14 52 6-20 6-38 6-52-6z'/%3E%3C/svg%3E");
@@ -35,8 +35,9 @@ body {
   margin: 0;
   font-family: var(--font);
   font-weight: 500;
-  font-size: 15px;
-  line-height: 1.3;
+  font-size: 17px;
+  line-height: 1.35;
+  font-variant-numeric: lining-nums;
   color: var(--gold);
   background: var(--rust);
   overflow-x: clip;
@@ -61,17 +62,17 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ---------- Type ---------- */
 .display, .display-md, .display-sm, .hero-title, .hero-product, .wordmark {
-  font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: -.03em;
+  font-family: var(--display); font-weight: 700; text-transform: none; letter-spacing: 0;
 }
-.display { font-size: clamp(50px, 8.6vw, 128px); line-height: .9; }
+.display { font-size: clamp(52px, 9vw, 136px); line-height: .98; }
 /* Italic accent words inside the big headlines */
 :is(.display, .display-md, .display-sm, .hero-title, .hero-product, .wordmark) em {
-  font-style: normal; font-weight: 400; text-transform: none; letter-spacing: -.035em;
+  font-style: normal; font-weight: 400; text-transform: none; letter-spacing: 0;
 }
-.display-md { font-size: clamp(44px, 6.4vw, 101px); line-height: .88; }
-.display-sm { font-size: clamp(28px, 3.4vw, 50px); line-height: .95; letter-spacing: -.01em; }
+.display-md { font-size: clamp(46px, 6.8vw, 106px); line-height: .98; }
+.display-sm { font-size: clamp(30px, 3.6vw, 54px); line-height: 1.02; letter-spacing: 0; }
 .micro {
-  font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .035em; line-height: 1.35; max-width: 26em;
+  font-size: 13.5px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; line-height: 1.45; max-width: 28em;
 }
 .center { text-align: center; margin-inline: auto; }
 .label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin: 28px 0 12px; }
@@ -80,7 +81,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .fill { --on: var(--gold); --off: var(--saffron); color: var(--on); }
 
 /* Words/letters split by motion.js: each rises from under its own baseline (clipped only at the bottom) */
-.w { display: inline-block; clip-path: inset(-0.5em -0.3em -0.14em -0.3em); }
+.w { display: inline-block; clip-path: inset(-0.6em -0.4em -0.32em -0.4em); }
 .wi, .ch { display: inline-block; will-change: transform; }
 .ch { transform-origin: 0 100%; }
 html.mo-wait :is(.hero-title, .hero-product, .hero-jar, .hero .eyebrow, .hero-foot, .nav) { opacity: 0; }
@@ -101,7 +102,7 @@ html.mo-wait :is(.hero-title, .hero-product, .hero-jar, .hero .eyebrow, .hero-fo
 .pill, .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   border: 1px solid var(--gold); border-radius: 9999px; background: var(--gold); color: var(--clove);
-  font-family: var(--font); font-size: 13px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  font-family: var(--font); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
   text-decoration: none; white-space: nowrap; transition: background .25s, color .25s, transform .2s var(--ease);
 }
 .pill { min-height: 34px; padding: 8px 16px; }
@@ -114,7 +115,7 @@ html.mo-wait :is(.hero-title, .hero-product, .hero-jar, .hero .eyebrow, .hero-fo
 
 .badge {
   display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 9999px;
-  background: var(--gold); color: var(--clove); font-size: 11px; font-weight: 500; letter-spacing: .02em; text-transform: uppercase;
+  background: var(--gold); color: var(--clove); font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
 }
 .badge.dark { background: var(--spice); color: var(--gold); }
 .badge.heat { background: var(--chili); color: var(--cream); font-weight: 700; }
@@ -176,7 +177,7 @@ html.mo-wait :is(.hero-title, .hero-product, .hero-jar, .hero .eyebrow, .hero-fo
 .nav-menu { display: none; }
 .brand {
   display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none;
-  font-family: var(--display); font-weight: 600; font-size: 14px; line-height: .82; text-transform: uppercase; text-align: center; letter-spacing: -.01em;
+  font-family: var(--display); font-weight: 700; font-size: 19px; line-height: .9; text-transform: none; text-align: center; letter-spacing: 0;
 }
 .brand-bear { width: 26px; height: 22px; }
 .pill-icon { position: relative; }
@@ -194,7 +195,7 @@ html.mo-wait :is(.hero-title, .hero-product, .hero-jar, .hero .eyebrow, .hero-fo
 .mobile-menu[hidden] { display: none; }
 .mobile-menu a, .mobile-menu button {
   background: none; border: 0; padding: 0; text-align: left; text-decoration: none; color: var(--gold);
-  font: 600 clamp(48px, 15vw, 88px)/.92 var(--display); text-transform: uppercase; letter-spacing: -.03em;
+  font: 700 clamp(48px, 15vw, 88px)/.92 var(--display); text-transform: none; letter-spacing: 0;
 }
 
 @media (max-width: 860px) {
@@ -208,9 +209,9 @@ html.mo-wait :is(.hero-title, .hero-product, .hero-jar, .hero .eyebrow, .hero-fo
   display: flex; flex-direction: column; align-items: center;
 }
 .hero .eyebrow { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .18em; margin: 18px 0 6px; }
-.hero-title { font-size: clamp(58px, 15vw, 270px); line-height: .84; white-space: nowrap; padding: .04em var(--gutter) .08em; }
+.hero-title { font-size: clamp(60px, 13.5vw, 240px); line-height: 1; white-space: nowrap; padding: .04em var(--gutter) .08em; }
 .hero-title, .hero-product { position: relative; z-index: 2; }
-.hero-product { font-size: clamp(34px, 5.6vw, 86px); line-height: .9; margin: 14px 0 10px; }
+.hero-product { font-size: clamp(36px, 6vw, 92px); line-height: 1; margin: 6px 0 10px; }
 .hero-jar { width: clamp(170px, 21vw, 310px); margin-bottom: -60px; }
 .hero-foot {
   position: absolute; left: var(--gutter); bottom: 28px; text-align: left;
@@ -272,12 +273,12 @@ html.mo-wait :is(.hero-title, .hero-product, .hero-jar, .hero .eyebrow, .hero-fo
 .product::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
   background: radial-gradient(circle, var(--gold) 1.2px, transparent 1.6px) 0 50% / 8px 3px repeat-x; }
 .product .jar { width: 56%; margin: 6px auto 18px; }
-.p-name { font-family: var(--display); font-size: 32px; font-weight: 600; line-height: 1; letter-spacing: -.025em; }
+.p-name { font-family: var(--display); font-size: 38px; font-weight: 700; line-height: 1.05; letter-spacing: 0; }
 .sizes { display: flex; gap: 6px; margin-top: 4px; }
 .size { background: transparent; color: var(--gold); }
 .size[aria-checked="true"] { background: var(--gold); color: var(--clove); }
 .p-buy { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 10px; }
-.price { font-family: var(--display); font-size: 24px; font-weight: 600; letter-spacing: -.02em; }
+.price { font-family: var(--display); font-size: 30px; font-weight: 700; letter-spacing: 0; }
 .shop-note { margin-top: 64px; max-width: 40em; }
 
 /* ---------- Gold sections ---------- */
@@ -351,8 +352,8 @@ html.mo-wait :is(.hero-title, .hero-product, .hero-jar, .hero .eyebrow, .hero-fo
 .r-card .art { display: block; aspect-ratio: 4 / 3; border-radius: 4px; overflow: hidden; }
 .r-card .art > svg { width: 100%; height: 100%; }
 .r-tags { display: flex; gap: 6px; }
-.r-title { font-family: var(--display); font-size: 30px; font-weight: 600; line-height: .98; letter-spacing: -.025em; }
-.r-card .micro { text-transform: none; font-size: 14px; letter-spacing: 0; }
+.r-title { font-family: var(--display); font-size: 34px; font-weight: 700; line-height: 1.05; letter-spacing: 0; }
+.r-card .micro { text-transform: none; font-size: 16px; letter-spacing: 0; line-height: 1.4; }
 @media (max-width: 900px) { .recipe-cards { grid-template-columns: 1fr; max-width: 480px; } }
 
 /* ---------- Newsletter ---------- */
@@ -417,21 +418,21 @@ dialog::backdrop { background: rgba(40, 16, 6, .72); }
 .drawer-head { display: flex; justify-content: space-between; align-items: center; padding: 20px 22px; position: relative; }
 .drawer-head::after { content: ""; position: absolute; left: 22px; right: 22px; bottom: 0; height: 3px;
   background: radial-gradient(circle, var(--gold) 1.2px, transparent 1.6px) 0 50% / 8px 3px repeat-x; }
-.drawer-head h2 { font-family: var(--display); font-size: 34px; font-weight: 600; text-transform: uppercase; letter-spacing: -.03em; }
+.drawer-head h2 { font-family: var(--display); font-size: 34px; font-weight: 700; text-transform: none; letter-spacing: 0; }
 .cart-body { flex: 1; overflow-y: auto; padding: 20px 22px 28px; display: flex; flex-direction: column; gap: 20px; }
 .cart-items { display: grid; gap: 10px; }
 .c-item { display: grid; grid-template-columns: 64px 1fr auto; gap: 14px; align-items: center; background: var(--spice); border-radius: 6px; padding: 12px 14px; }
 .c-jar { width: 54px; }
-.c-name { font-family: var(--display); font-weight: 600; font-size: 19px; letter-spacing: -.02em; margin-bottom: 2px; }
+.c-name { font-family: var(--display); font-weight: 700; font-size: 19px; letter-spacing: 0; margin-bottom: 2px; }
 .qty { display: flex; align-items: center; gap: 10px; margin-top: 8px; font-weight: 700; }
 .pill-sq { min-height: 28px; width: 28px; padding: 0; font-size: 16px; }
 .c-remove { align-self: start; background: none; border: 0; font-size: 11px; text-transform: uppercase; text-decoration: underline; padding: 0; }
-.cart-empty { font-family: var(--display); font-size: 26px; font-weight: 600; text-transform: uppercase; line-height: 1.1; letter-spacing: -.02em; }
+.cart-empty { font-family: var(--display); font-size: 26px; font-weight: 700; text-transform: none; line-height: 1.1; letter-spacing: 0; }
 .cart-empty a { font-size: 13px; font-weight: 500; }
 .cart-sum dl { margin: 0 0 8px; display: grid; gap: 8px; font-size: 13px; text-transform: uppercase; }
 .cart-sum dl div { display: flex; justify-content: space-between; }
 .cart-sum dd { margin: 0; }
-.cart-sum .total { font-family: var(--display); font-size: 20px; font-weight: 600; padding-top: 10px; border-top: 1px solid var(--cardamom); }
+.cart-sum .total { font-family: var(--display); font-size: 20px; font-weight: 700; padding-top: 10px; border-top: 1px solid var(--cardamom); }
 .order-form { display: grid; gap: 8px; margin-top: 18px; }
 .order-form .btn { margin-top: 6px; }
 .cart-done { display: flex; flex-direction: column; gap: 14px; }
@@ -446,7 +447,7 @@ dialog::backdrop { background: rgba(40, 16, 6, .72); }
 .breakdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 0; }
 .breakdown div { background: var(--clove); border-radius: 6px; padding: 12px 14px; }
 .breakdown dt { font-size: 11px; text-transform: uppercase; opacity: .8; }
-.breakdown dd { margin: 4px 0 0; font-family: var(--display); font-size: 20px; font-weight: 600; }
+.breakdown dd { margin: 4px 0 0; font-family: var(--display); font-size: 20px; font-weight: 700; }
 .ingredients { display: grid; gap: 6px; font-size: 15px; }
 .ingredients li::before { content: "● "; font-size: 9px; vertical-align: 2px; margin-right: 6px; }
 .tip { margin-top: 18px; padding: 12px 16px; border: 1px dashed var(--gold); border-radius: 6px; font-size: 14px; }
