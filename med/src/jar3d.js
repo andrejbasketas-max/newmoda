@@ -124,11 +124,12 @@ function start() {
       sh.uniforms.honeyCol = { value: base };
       sh.uniforms.clarity = { value: MathUtils.clamp(lum * 1.5, 0.1, 0.42) };
       sh.vertexShader = sh.vertexShader
-        .replace('#include <common>', '#include <common>\nvarying vec3 vObj;')
-        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvObj = position;');
+        .replace('#include <common>', '#include <common>\nvarying vec3 vObj;\nvarying vec3 vObjN;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvObj = position;\nvObjN = normal;');
       sh.fragmentShader = sh.fragmentShader
         .replace('#include <common>', `#include <common>
           varying vec3 vObj;
+          varying vec3 vObjN;
           uniform vec3 honeyCol;
           uniform float clarity;
           float hh(vec3 p) { return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }
@@ -140,24 +141,39 @@ function start() {
         .replace('#include <opaque_fragment>', `
           float facing = abs(dot(normalize(normal), normalize(vViewPosition)));
           float edgeGlow = pow(1.0 - facing, 4.0);
-          vec3 glow = mix(honeyCol, vec3(1.0, 0.66, 0.06), 0.22 + clarity * 0.65) * mix(1.0, 1.25, clarity * 2.0); // light pooling
-          vec3 dark = honeyCol * vec3(0.6, 0.2, 0.02);                             // deep red-orange body
+          // Advertising-style honey: a glowing golden core (backlit), warm amber depth at the edges,
+          // slow viscous swirls, tiny glints and a bright meniscus on the surface.
+          // Light honeys glow gold; dark ones (chestnut, forest) glow deep red-amber instead of turning olive
+          float lightness = clamp((clarity - 0.1) / 0.32, 0.0, 1.0);
+          float lift = 0.1 + 0.55 * lightness;
+          vec3 glowTint = mix(vec3(0.62, 0.17, 0.02), vec3(1.0, 0.6, 0.06), lightness);
+          vec3 gold = mix(honeyCol, glowTint, lift);
+          vec3 core = mix(gold, mix(vec3(0.85, 0.36, 0.06), vec3(1.0, 0.8, 0.3), lightness), lift);
+          vec3 amber = honeyCol * vec3(0.72, 0.36, 0.08);
+          vec3 glow = core;
           vec3 col;
           ${body ? `
-          // Like real jars on a sunny table: the bottom glows yellow where light collects,
-          // the honey turns deep red-orange towards the top, with bright refraction bands.
           float t = smoothstep(0.12, 1.95, vObj.y);
-          col = mix(glow, honeyCol, smoothstep(0.0, 0.42, t));
-          col = mix(col, dark, smoothstep(0.38, 1.0, t) * 0.7);
           float ang = atan(vObj.z, vObj.x);
-          float bands = vnoise(vec3(ang * 5.0, vObj.y * 0.35, 0.0));
-          col *= 0.78 + 0.5 * bands;
-          col *= mix(0.82, 1.08, facing);
-          col = mix(col, glow, edgeGlow * 0.4 * (1.0 - t));
+          float warp = vnoise(vec3(ang * 2.0, vObj.y * 1.1, 3.0));
+          float swirl = vnoise(vec3(ang * 3.0 + vObj.y * 1.7 + warp * 2.2, vObj.y * 0.8, 1.0));
+          col = mix(amber, gold, smoothstep(0.3, 0.95, facing));
+          col = mix(col, core, pow(facing, 12.0) * 0.7);
+          col *= mix(1.16, 0.8, t);
+          col = mix(col, core, smoothstep(0.45, 0.0, t) * 0.35 * facing);
+          col *= 0.84 + 0.32 * swirl;
           // the back of the label seen through the honey
           float band = smoothstep(0.56, 0.64, vObj.y) * (1.0 - smoothstep(1.52, 1.6, vObj.y));
-          col *= 1.0 - 0.38 * band * pow(facing, 1.5);` : `
-          col = mix(honeyCol, glow, 0.35 + 0.3 * facing);
+          col *= 1.0 - 0.32 * band * pow(facing, 1.5);
+          // suspended glints
+          float gl = step(0.993, hh(floor(vObj * 80.0))) * (1.0 - band * 0.8);
+          col += mix(vec3(0.9, 0.5, 0.2), vec3(1.0, 0.9, 0.62), lightness) * gl * pow(facing, 1.5) * mix(0.3, 0.8, lightness);
+          // surface: golden top with a bright rim where honey meets the glass
+          float top = smoothstep(0.8, 0.97, vObjN.y);
+          float rim = top * smoothstep(0.62, 0.9, length(vObj.xz));
+          col = mix(col, core * 1.08, top * 0.55);
+          col += vec3(1.0, 0.86, 0.5) * rim * 0.55;` : `
+          col = mix(gold, core, 0.3 + 0.5 * pow(facing, 2.0));
           col *= 0.95 + 0.1 * vnoise(vObj * 6.0);`}
           #ifdef ENVMAP_TYPE_CUBE_UV
             // the studio lights refracted through the liquid, tinted by it
@@ -166,7 +182,7 @@ function start() {
             col += textureCubeUV(envMap, envMapRotation * refr, 0.1).rgb * honeyCol * honeyCol * 0.35;
           #endif
           float lumC = dot(col, vec3(0.2126, 0.7152, 0.0722));
-          col = max(mix(vec3(lumC), col, 1.3), 0.0);
+          col = max(mix(vec3(lumC), col, 1.18), 0.0);
           outgoingLight = outgoingLight * 0.8 + col * 0.82;
           diffuseColor.a = ${body ? 'mix(0.96, 0.78, edgeGlow)' : 'mix(0.9, 0.68, edgeGlow)'};
           #include <opaque_fragment>`);
