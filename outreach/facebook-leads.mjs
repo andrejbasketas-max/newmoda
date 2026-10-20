@@ -38,7 +38,24 @@ const KIND = {
   lawyer: "kancelarija", accountant: "agencija", estate_agent: "agencija",
   travel_agency: "agencija", photographer: "studio", tattoo: "studio",
   carpenter: "radionica", electrician: "firma", plumber: "firma", painter: "firma",
+  nightclub: "klub", biergarten: "bašta", hookah_lounge: "lounge bar", ice_cream: "poslastičarnica",
+  deli: "radnja", wine: "vinoteka", pasta: "radnja", convenience: "radnja", gift: "radnja",
+  fashion_accessories: "butik", leather: "radnja", fabric: "radnja", tailor: "krojačka radnja",
+  books: "knjižara", stationery: "knjižara", computer: "radnja", mobile_phone: "radnja",
+  car_parts: "radnja", flooring: "salon podova", glaziery: "radionica", optician: "optika",
+  perfumery: "parfimerija", dancing_school: "plesni studio", language_school: "škola",
+  driving_school: "auto-škola", gallery: "galerija", arts_centre: "galerija", atelier: "atelje",
+  speech_therapist: "ordinacija", alternative: "ordinacija", animal_boarding: "pansion za ljubimce",
+  caterer: "ketering", carpet_cleaner: "firma",
 };
+
+// Serbian Cyrillic → Latin, so names and streets match the Latin message.
+const LAT = { а:"a",б:"b",в:"v",г:"g",д:"d",ђ:"đ",е:"e",ж:"ž",з:"z",и:"i",ј:"j",к:"k",л:"l",љ:"lj",м:"m",
+  н:"n",њ:"nj",о:"o",п:"p",р:"r",с:"s",т:"t",ћ:"ć",у:"u",ф:"f",х:"h",ц:"c",ч:"č",џ:"dž",ш:"š" };
+const latin = (s) => s.replace(/[\u0400-\u04FF]/g, (c) => {
+  const l = LAT[c.toLowerCase()];
+  return l === undefined ? c : c === c.toLowerCase() ? l : l[0].toUpperCase() + l.slice(1);
+});
 
 // What a site would show for each kind of business, used in the pitch.
 const SHOWS = {
@@ -93,17 +110,19 @@ function toLead(el) {
   const kind = KIND[type] || "biznis";
   const page = fbPage(t["contact:facebook"] || t.facebook);
   return {
-    name: t.name,
+    name: latin(t.name),
     page,
     facebook: page ? `https://www.facebook.com/${page}` : "",
     messenger: page ? `https://m.me/${page}` : "",
     type,
     kind,
     shows: SHOWS[kind] || "šta radite, cene i kontakt",
-    street: t["addr:street"] || "",
-    address: [t["addr:street"], t["addr:housenumber"]].filter(Boolean).join(" "),
+    street: latin(t["addr:street"] || ""),
+    address: latin([t["addr:street"], t["addr:housenumber"]].filter(Boolean).join(" ")),
     phone: t.phone || t["contact:phone"] || "",
-    hasSite: SITE_TAGS.some((k) => t[k] && !NOT_A_SITE.test(t[k])),
+    // Chains (banks, fuel stations, Yettel…) and pages named after a domain already have a site.
+    hasSite: SITE_TAGS.some((k) => t[k] && !NOT_A_SITE.test(t[k])) ||
+      !!(t.brand || t["brand:wikidata"]) || /\.(rs|com|net|org|co)$/i.test(page),
     osm: `https://www.openstreetmap.org/${el.type}/${el.id}`,
   };
 }
