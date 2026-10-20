@@ -26,6 +26,7 @@
         <span class="nav-ink" aria-hidden="true"></span>
         <a class="nav-link" href="#medovi" data-spy="medovi">Med</a>
         <a class="nav-link" href="#tradicija" data-spy="tradicija">O nama</a>
+        <a class="nav-link" href="#poruci" data-spy="poruci">Poruči</a>
         <button class="nav-link" data-open-game>Igra</button>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu" aria-label="Otvori meni">
@@ -52,8 +53,9 @@
     <ol class="mm-links">
       <li><a href="#medovi"><span class="mm-num">01</span><span class="mm-label">Naši medovi</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
       <li><a href="#tradicija"><span class="mm-num">02</span><span class="mm-label">O nama</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-      <li><button data-open-game><span class="mm-num">03</span><span class="mm-label">Igra</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></button></li>
-      <li><a href="#kontakt"><span class="mm-num">04</span><span class="mm-label">Kontakt</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      <li><a href="#poruci"><span class="mm-num">03</span><span class="mm-label">Poruči</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      <li><button data-open-game><span class="mm-num">04</span><span class="mm-label">Igra</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></button></li>
+      <li><a href="#kontakt"><span class="mm-num">05</span><span class="mm-label">Kontakt</span><svg class="mm-arrow" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
     </ol>
     <div class="mm-foot">
       <p class="mm-note"><lord-icon icon="truck" trigger="in" loading="lazy" aria-hidden="true"></lord-icon>Besplatna dostava preko 3.000 RSD</p>
@@ -140,6 +142,68 @@
       <p class="micro shop-note">Cene su u dinarima. Dostava širom Srbije, besplatna za porudžbine preko 3.000 RSD. Plaćanje pouzećem.</p>
     </section>
 
+    <!-- PORUČI -->
+    <section class="order" id="poruci">
+      <hr class="rule">
+      <div class="order-head">
+        <h2 class="display fill">Poruči<br><em>svoj med</em></h2>
+        <p class="micro">Izaberi med, veličinu i količinu, ostavi adresu — šaljemo kurirskom službom, plaćaš pouzećem.</p>
+      </div>
+      <form class="order-grid" id="quickOrder" novalidate>
+        <div class="order-pick">
+          <p class="order-step"><span class="num">1</span>Izaberi med</p>
+          <div class="order-honeys" id="orderHoneys" role="radiogroup" aria-label="Vrsta meda"></div>
+          <div class="order-row">
+            <div>
+              <p class="order-step"><span class="num">2</span>Veličina</p>
+              <div class="sizes" id="orderSizes" role="radiogroup" aria-label="Veličina tegle"></div>
+            </div>
+            <div>
+              <p class="order-step"><span class="num">3</span>Količina</p>
+              <div class="qty order-qty">
+                <button type="button" class="pill pill-sq" id="oqDec" aria-label="Smanji količinu"><svg viewBox="0 0 256 256" aria-hidden="true"><use href="#i-minus"/></svg></button>
+                <output id="oqVal" aria-live="polite">1</output>
+                <button type="button" class="pill pill-sq" id="oqInc" aria-label="Povećaj količinu"><svg viewBox="0 0 256 256" aria-hidden="true"><use href="#i-plus"/></svg></button>
+              </div>
+            </div>
+          </div>
+          <ul class="order-perks">
+            <li><span class="ico"><lord-icon icon="truck" trigger="in" loading="lazy" aria-hidden="true"></lord-icon></span><span><b>Dostava za 1–3 radna dana</b>Kurirskom službom širom Srbije, besplatno preko 3.000 RSD.</span></li>
+            <li><span class="ico"><lord-icon icon="badge" trigger="in" delay="200" loading="lazy" aria-hidden="true"></lord-icon></span><span><b>Plaćanje pouzećem</b>Plaćaš kuriru kad ti stigne paket — bez kartice i unapred.</span></li>
+            <li><span class="ico"><lord-icon icon="honeycomb" trigger="in" delay="400" loading="lazy" aria-hidden="true"></lord-icon></span><span><b>Sigurno pakovanje</b>Staklene tegle umotane tako da stignu cele.</span></li>
+          </ul>
+        </div>
+        <div class="order-card">
+          <div class="order-summary">
+            <div class="jar order-jar" id="orderJar" data-jar="livadski"></div>
+            <div>
+              <p class="order-name" id="orderName">Livadski med</p>
+              <p class="micro" id="orderLine">450 g × 1</p>
+              <p class="order-total" id="orderTotal">850 RSD</p>
+              <p class="micro ship"><lord-icon icon="truck" trigger="in" loading="lazy" aria-hidden="true"></lord-icon><span id="orderShip"></span></p>
+            </div>
+          </div>
+          <p class="order-step"><span class="num">4</span>Podaci za dostavu</p>
+          <div class="order-fields">
+            <label class="field"><span>Ime i prezime</span><input class="input" name="name" autocomplete="name" required></label>
+            <label class="field"><span>Telefon</span><input class="input" name="phone" type="tel" autocomplete="tel" required></label>
+            <label class="field wide"><span>Ulica i broj</span><input class="input" name="street" autocomplete="address-line1" required></label>
+            <label class="field"><span>Grad</span><input class="input" name="city" autocomplete="address-level2" required></label>
+            <label class="field"><span>Poštanski broj</span><input class="input" name="zip" inputmode="numeric" autocomplete="postal-code" required></label>
+            <label class="field wide"><span>Napomena (nije obavezno)</span><input class="input" name="note"></label>
+          </div>
+          <button class="btn btn-dark btn-wide" type="submit">Poruči · plaćanje pouzećem</button>
+          <p class="micro form-msg" id="orderMsg" role="status"></p>
+        </div>
+      </form>
+      <div class="order-done" id="orderDone" hidden>
+        <lord-icon icon="badge" trigger="in" aria-hidden="true"></lord-icon>
+        <p class="display-sm">Hvala, porudžbina je primljena!</p>
+        <p class="micro" id="orderDoneText"></p>
+        <button class="btn" type="button" id="orderAgain">Nova porudžbina</button>
+      </div>
+    </section>
+
     <!-- TRADICIJA -->
     <section class="gold tradition" id="tradicija">
       <div class="tradition-head">
@@ -221,7 +285,7 @@
     <svg class="foot-mark" viewBox="0 0 64 64" aria-hidden="true"><use href="#logo"/></svg>
     <p class="wordmark" aria-hidden="true">Gladni <em>Medved</em></p>
     <div class="foot-grid">
-      <ul><li><a href="#medovi">Med</a></li><li><a href="#tradicija">O nama</a></li><li><button data-open-game>Igra</button></li></ul>
+      <ul><li><a href="#medovi">Med</a></li><li><a href="#poruci">Poruči</a></li><li><a href="#tradicija">O nama</a></li><li><button data-open-game>Igra</button></li></ul>
       <ul><li><a href="#medovi">Gde kupiti</a></li><li><a href="#kontakt">Kontakt</a></li></ul>
       <ul><li><a href="#">Uslovi korišćenja</a></li><li><a href="#">Politika prodaje</a></li><li><a href="#">Privatnost</a></li></ul>
       <address>

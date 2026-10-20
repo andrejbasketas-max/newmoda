@@ -216,6 +216,88 @@
     });
   }
 
+  // ---------- Quick order section ----------
+  const order = { id: 'livadski', size: 0, qty: 1 };
+  const orderJar = $('#orderJar');
+  $('#orderHoneys').innerHTML = PRODUCTS.map((p) => `
+    <button type="button" class="honey-opt" role="radio" aria-checked="${p.id === order.id}" data-honey="${p.id}">
+      <span class="honey-thumb">${jarSVG(p)}</span>
+      <span class="honey-name">${p.name}</span>
+      <span class="honey-from">od ${rsd(p.sizes[0][1])}</span>
+    </button>`).join('');
+
+  function renderOrder() {
+    const p = byId(order.id);
+    $$('.honey-opt').forEach((b) => b.setAttribute('aria-checked', b.dataset.honey === order.id));
+    $('#orderSizes').innerHTML = p.sizes.map(([s, price], i) =>
+      `<button type="button" class="pill size" role="radio" aria-checked="${i === order.size}" data-osize="${i}">${s} · ${rsd(price)}</button>`).join('');
+    const [size, price] = p.sizes[order.size];
+    const sub = price * order.qty;
+    const ship = sub >= FREE_SHIP ? 0 : SHIP;
+    $('#oqVal').textContent = order.qty;
+    $('#orderName').textContent = p.name;
+    $('#orderLine').textContent = `${size} × ${order.qty}`;
+    $('#orderTotal').textContent = rsd(sub + ship);
+    $('#orderShip').textContent = ship
+      ? `Dostava ${rsd(SHIP)} · još ${rsd(FREE_SHIP - sub)} do besplatne`
+      : 'Dostava je besplatna';
+    // Swap the jar shown next to the summary (2D art and, when running, the 3D view)
+    if (orderJar.dataset.jar !== p.id) {
+      orderJar.dataset.jar = p.id;
+      const svg = $('.jar-svg', orderJar);
+      if (svg) svg.outerHTML = jarSVG(p);
+      if (orderJar.__view) orderJar.__view.variant = p;
+    }
+  }
+  $('#orderHoneys').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-honey]');
+    if (!b) return;
+    order.id = b.dataset.honey;
+    order.size = 0;
+    renderOrder();
+  });
+  $('#orderSizes').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-osize]');
+    if (!b) return;
+    order.size = +b.dataset.osize;
+    renderOrder();
+  });
+  $('#oqDec').addEventListener('click', () => { order.qty = Math.max(1, order.qty - 1); renderOrder(); });
+  $('#oqInc').addEventListener('click', () => { order.qty = Math.min(20, order.qty + 1); renderOrder(); });
+
+  $('#quickOrder').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const f = e.target;
+    const bad = $$('input[required]', f).filter((i) => !i.value.trim());
+    $$('.field', f).forEach((l) => l.classList.remove('invalid'));
+    if (bad.length) {
+      bad.forEach((i) => i.closest('.field').classList.add('invalid'));
+      $('#orderMsg').textContent = 'Popuni označena polja.';
+      bad[0].focus();
+      return;
+    }
+    // No backend yet: confirm locally.
+    const p = byId(order.id);
+    const [size, price] = p.sizes[order.size];
+    const sub = price * order.qty;
+    const total = sub + (sub >= FREE_SHIP ? 0 : SHIP);
+    $('#orderDoneText').textContent =
+      `${p.name}, ${size} × ${order.qty} — ukupno ${rsd(total)}, plaćanje pouzećem. Javićemo ti se na ${f.phone.value.trim()} da potvrdimo dostavu na adresu: ${f.street.value.trim()}, ${f.zip.value.trim()} ${f.city.value.trim()}.`;
+    $('#orderMsg').textContent = '';
+    f.hidden = true;
+    $('#orderDone').hidden = false;
+    $('#orderDone').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+  });
+  $('#orderAgain').addEventListener('click', () => {
+    const f = $('#quickOrder');
+    f.reset();
+    Object.assign(order, { id: 'livadski', size: 0, qty: 1 });
+    renderOrder();
+    $('#orderDone').hidden = true;
+    f.hidden = false;
+  });
+  renderOrder();
+
   // ---------- Newsletter ----------
   $('#newsForm').addEventListener('submit', (e) => {
     e.preventDefault();

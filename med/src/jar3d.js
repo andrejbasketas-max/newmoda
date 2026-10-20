@@ -92,7 +92,7 @@ function start() {
   // Glass adds only its reflections (black diffuse + additive blend), so the honey behind stays saturated
   const glassOuter = new MeshPhysicalMaterial({
     color: 0x000000, metalness: 0, roughness: 0.03, transparent: true, blending: AdditiveBlending,
-    clearcoat: 1, clearcoatRoughness: 0.02, envMapIntensity: 1.25, side: FrontSide, depthWrite: false,
+    clearcoat: 1, clearcoatRoughness: 0.02, envMapIntensity: 0.95, side: FrontSide, depthWrite: false,
     specularIntensity: 1, ior: 1.5,
   });
   const glassInner = glassOuter.clone();
@@ -145,10 +145,10 @@ function start() {
           // slow viscous swirls, tiny glints and a bright meniscus on the surface.
           // Light honeys glow gold; dark ones (chestnut, forest) glow deep red-amber instead of turning olive
           float lightness = clamp((clarity - 0.1) / 0.32, 0.0, 1.0);
-          float lift = 0.1 + 0.55 * lightness;
+          float lift = 0.08 + 0.4 * lightness;
           vec3 glowTint = mix(vec3(0.62, 0.17, 0.02), vec3(1.0, 0.6, 0.06), lightness);
           vec3 gold = mix(honeyCol, glowTint, lift);
-          vec3 core = mix(gold, mix(vec3(0.85, 0.36, 0.06), vec3(1.0, 0.8, 0.3), lightness), lift);
+          vec3 core = mix(gold, mix(vec3(0.85, 0.36, 0.06), vec3(1.0, 0.74, 0.22), lightness), lift + 0.1);
           vec3 amber = honeyCol * vec3(0.72, 0.36, 0.08);
           vec3 glow = core;
           vec3 col;
@@ -171,15 +171,17 @@ function start() {
           // surface: golden top with a bright rim where honey meets the glass
           float top = smoothstep(0.8, 0.97, vObjN.y);
           float rim = top * smoothstep(0.62, 0.9, length(vObj.xz));
-          col = mix(col, core * 1.08, top * 0.55);
-          col += vec3(1.0, 0.86, 0.5) * rim * 0.55;` : `
+          col = mix(col, gold * 1.05, top * 0.45);
+          col += vec3(1.0, 0.8, 0.4) * rim * 0.3;
+          // warm light pooling in the lower third, like sun through a jar on a table
+          col += core * 0.22 * smoothstep(0.5, 0.0, t) * pow(facing, 2.0) * (0.6 + 0.4 * swirl);` : `
           col = mix(gold, core, 0.3 + 0.5 * pow(facing, 2.0));
           col *= 0.95 + 0.1 * vnoise(vObj * 6.0);`}
           #ifdef ENVMAP_TYPE_CUBE_UV
             // the studio lights refracted through the liquid, tinted by it
             vec3 inc = normalize(-vViewPosition);
             vec3 refr = inverseTransformDirection(refract(-inc, normal, 0.67), viewMatrix);
-            col += textureCubeUV(envMap, envMapRotation * refr, 0.1).rgb * honeyCol * honeyCol * 0.35;
+            col += textureCubeUV(envMap, envMapRotation * refr, 0.18).rgb * honeyCol * 0.32;
           #endif
           float lumC = dot(col, vec3(0.2126, 0.7152, 0.0722));
           col = max(mix(vec3(lumC), col, 1.18), 0.0);
@@ -351,29 +353,6 @@ function start() {
   }
 
   // Honey running down the outside of the jar from under the lid
-  // Honey that seeped out from under the lid and ran down the shoulder: wide where it leaves the lid,
-  // thinning as it runs, then gathering into a heavy drop.
-  const DRIPS = [[0.62, 1.52, 1], [1.95, 1.2, 0.9], [3.05, 1.78, 0.8], [-1.55, 1.36, 1.1], [-0.35, 2.0, 0.75]];
-  const dripRadius = (t) => 0.024 + 0.05 * Math.pow(1 - t, 3) + 0.012 * MathUtils.smoothstep(t, 0.75, 1);
-  function dripMeshes(mat) {
-    const g = new Group();
-    for (const [theta, yEnd, w] of DRIPS) {
-      const pts = [];
-      for (let k = 0; k <= 30; k++) {
-        const y = 2.27 - (2.27 - yEnd) * k / 30;
-        const r = rAt(y) + 0.03;
-        pts.push(new Vector3(Math.sin(theta) * r, y, Math.cos(theta) * r));
-      }
-      const curve = new CatmullRomCurve3(pts);
-      g.add(new Mesh(taperTube(curve, 60, (t) => dripRadius(t) * w), mat));
-      const end = curve.getPointAt(1);
-      const bulb = new Mesh(dropGeo, mat);
-      bulb.position.set(end.x * 1.012, end.y - 0.04, end.z * 1.012);
-      bulb.scale.set(0.05 * w, 0.072 * w, 0.05 * w);
-      g.add(bulb);
-    }
-    return g;
-  }
 
   // ---------- Assembly ----------
   const jar = new Group();   // whole object (tilt, bob)
@@ -384,7 +363,6 @@ function start() {
   const label = new Mesh(labelGeo, labelMat(PRODUCTS[1]));
   label.position.y = 1.08;
   label.renderOrder = 1;
-  let drips = dripMeshes(honeyMat(C.amber, 'stream'));
 
   // Glass thickness: the silhouette of a real jar goes dark where you look through the wall edge-on
   const edge = new Mesh(glassOuterGeo, new ShaderMaterial({
@@ -420,7 +398,7 @@ function start() {
   }
   bubbles.renderOrder = 1;
 
-  body.add(honey, bubbles, label, edge, gIn, gOut, drips);
+  body.add(honey, bubbles, label, edge, gIn, gOut);
 
   // Soft contact shadow for jars that stand on something (shop, tiles)
   const shC = document.createElement('canvas');
@@ -493,7 +471,6 @@ function start() {
     honey.material = honeyMat(p.honey);
     const s = honeyMat(p.honey, 'stream');
     thread.material = drop.material = coat.material = stream.material = pool.material = streamDrop.material = s;
-    drips.traverse((o) => { if (o.isMesh) o.material = s; });
     label.material = labelMat(p);
   }
 
@@ -537,7 +514,7 @@ function start() {
       el, canvas, ctx: canvas.getContext('2d'), visible: false,
       variant: byId(el.dataset.jar), mode: el.dataset.mode || 'idle',
       phase: Math.random() * Math.PI * 2, hover: 0, hoverT: 0, spin: 0,
-      grounded: !!el.closest('.product, .tile'),
+      grounded: !!el.closest('.product, .tile, .order-summary'),
       slot: views.length % 3,
     };
     el.__view = v;

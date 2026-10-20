@@ -99,6 +99,8 @@ if (!reduce) {
     });
   };
   reveal('.products', { children: '.product', y: 70, stagger: 0.1, amount: 0.05 });
+  reveal('.order-honeys', { children: '.honey-opt', y: 40, stagger: 0.06, amount: 0.1 });
+  reveal('.order-grid', { children: '.order-card', y: 60, amount: 0.05 });
   reveal('.why-cols', { children: 'article', y: 60, stagger: 0.12, amount: 0.1 });
   reveal('.facts', { children: 'li', y: 30, stagger: 0.1 });
   reveal('.icon-row', { children: 'li', y: 30, stagger: 0.1 });
