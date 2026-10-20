@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<title>LogoForge baner</title>
+<style>
+  :root {
+    --bg: #070a1c;
+    --ink: #ffffff;
+    --muted: #aab3d6;
+    --blue: #1f8bff;
+    --cyan: #19c3ff;
+    --violet: #8b2cf5;
+    --pink: #ff2d9a;
+    --orange: #ff8a1f;
+    --grad: linear-gradient(100deg, var(--cyan) 0%, var(--blue) 22%, var(--violet) 50%, var(--pink) 75%, var(--orange) 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); }
+  body { font-family: "Inter", system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+  .banner {
+    position: relative; overflow: hidden;
+    width: 1920px; height: 1080px;
+    background:
+      radial-gradient(1200px 800px at 85% 10%, #1a1150 0%, transparent 60%),
+      radial-gradient(900px 700px at 0% 100%, #0b2a5c 0%, transparent 60%),
+      var(--bg);
+  }
+
+  /* Pozadinske svetlosne mrlje u bojama logoa */
+  .orb { position: absolute; border-radius: 50%; filter: blur(110px); opacity: .55; }
+  .orb.a { width: 620px; height: 620px; background: var(--violet); right: 120px; top: -160px; }
+  .orb.b { width: 520px; height: 520px; background: var(--pink); right: -140px; bottom: -120px; opacity: .45; }
+  .orb.c { width: 560px; height: 560px; background: var(--blue); left: -220px; top: 380px; opacity: .35; }
+  .orb.d { width: 360px; height: 360px; background: var(--orange); right: 520px; bottom: -200px; opacity: .3; }
+
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 70% 70% at 70% 45%, #000 20%, transparent 75%);
+  }
+
+  /* ---------- Leva strana: poruka ---------- */
+  .copy { position: absolute; z-index: 2; left: 110px; top: 96px; width: 860px; }
+  .brand { display: flex; align-items: center; gap: 22px; }
+  .brand .icon { width: 92px; height: 92px; filter: drop-shadow(0 10px 30px rgba(255,45,154,.35)); }
+  .brand .word { height: 58px; }
+
+  .eyebrow {
+    margin-top: 74px; display: inline-flex; align-items: center; gap: 12px;
+    padding: 12px 22px; border-radius: 999px;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+    font-size: 22px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #dfe4ff;
+  }
+  .eyebrow .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--grad); box-shadow: 0 0 14px var(--pink); }
+
+  h1 {
+    margin-top: 30px; font-size: 104px; line-height: .98; font-weight: 800; letter-spacing: -.035em;
+  }
+  h1 .g { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  .lead { margin-top: 30px; font-size: 31px; line-height: 1.45; color: var(--muted); max-width: 780px; }
+  .lead b { color: #fff; font-weight: 600; }
+
+  .chips { margin-top: 40px; display: grid; grid-template-columns: repeat(2, max-content); gap: 16px 34px; }
+  .chip { display: flex; align-items: center; gap: 14px; font-size: 27px; font-weight: 600; color: #eef1ff; }
+  .chip i {
+    width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; font-style: normal;
+    background: linear-gradient(135deg, rgba(31,139,255,.25), rgba(255,45,154,.25)); border: 1px solid rgba(255,255,255,.18);
+  }
+  .chip svg { width: 20px; height: 20px; }
+
+  .cta-row { margin-top: 54px; display: flex; align-items: center; gap: 30px; }
+  .cta {
+    display: inline-flex; align-items: center; gap: 16px;
+    padding: 28px 46px; border-radius: 20px;
+    background: var(--grad); font-size: 31px; font-weight: 800; letter-spacing: -.01em;
+    box-shadow: 0 18px 50px rgba(255,45,154,.35), 0 6px 20px rgba(31,139,255,.35), inset 0 1px 0 rgba(255,255,255,.35);
+  }
+  .cta svg { width: 30px; height: 30px; }
+  .cta-note { font-size: 24px; color: var(--muted); line-height: 1.35; }
+  .cta-note b { display: block; color: #fff; font-size: 27px; }
+
+  /* ---------- Desna strana: makete ---------- */
+  .stage { position: absolute; right: 90px; top: 150px; width: 860px; height: 800px; }
+
+  .browser {
+    position: absolute; left: 0; top: 40px; width: 820px; height: 560px;
+    border-radius: 22px; overflow: hidden;
+    background: #0f1430; border: 1px solid rgba(255,255,255,.14);
+    box-shadow: 0 50px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.04);
+    transform: perspective(1800px) rotateY(-12deg) rotateX(4deg);
+  }
+  .bar { height: 50px; display: flex; align-items: center; gap: 10px; padding: 0 20px; background: #161c3d; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .bar span { width: 13px; height: 13px; border-radius: 50%; }
+  .bar span:nth-child(1) { background: #ff5f57; } .bar span:nth-child(2) { background: #febc2e; } .bar span:nth-child(3) { background: #28c840; }
+  .bar .url { margin-left: 18px; flex: 1; height: 28px; border-radius: 8px; background: rgba(255,255,255,.07); font-size: 15px; color: #8d95bd; display: flex; align-items: center; padding-left: 14px; gap: 8px; }
+
+  .site { padding: 26px 32px; }
+  .nav { display: flex; align-items: center; justify-content: space-between; }
+  .nav .logo { width: 110px; height: 16px; border-radius: 6px; background: var(--grad); }
+  .nav .links { display: flex; gap: 18px; }
+  .nav .links i { width: 54px; height: 10px; border-radius: 5px; background: rgba(255,255,255,.18); }
+  .hero { margin-top: 34px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 26px; align-items: center; }
+  .hero .t1 { height: 26px; width: 92%; border-radius: 8px; background: rgba(255,255,255,.85); }
+  .hero .t2 { margin-top: 12px; height: 26px; width: 70%; border-radius: 8px; background: var(--grad); }
+  .hero .p { margin-top: 18px; height: 10px; width: 100%; border-radius: 5px; background: rgba(255,255,255,.16); }
+  .hero .p + .p { width: 84%; margin-top: 10px; }
+  .hero .btns { margin-top: 22px; display: flex; gap: 12px; }
+  .hero .btns i { width: 112px; height: 36px; border-radius: 10px; background: var(--grad); }
+  .hero .btns i + i { background: transparent; border: 1.5px solid rgba(255,255,255,.3); }
+  .hero .img {
+    height: 210px; border-radius: 16px; position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #1f8bff 0%, #8b2cf5 45%, #ff2d9a 75%, #ff8a1f 100%);
+  }
+  .hero .img::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.45), transparent 45%); }
+  .hero .img img { position: absolute; width: 120px; right: 22px; bottom: 22px; opacity: .95; filter: drop-shadow(0 8px 20px rgba(0,0,0,.3)) brightness(1.1); }
+  .cards { margin-top: 28px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .cards div { height: 118px; border-radius: 14px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); padding: 18px; }
+  .cards div::before { content: ""; display: block; width: 34px; height: 34px; border-radius: 10px; background: var(--grad); opacity: .9; }
+  .cards div::after { content: ""; display: block; margin-top: 16px; width: 80%; height: 10px; border-radius: 5px; background: rgba(255,255,255,.2); }
+
+  .phone {
+    position: absolute; right: -10px; top: 300px; width: 250px; height: 500px;
+    border-radius: 40px; padding: 12px; background: #0b0f26;
+    border: 2px solid rgba(255,255,255,.2);
+    box-shadow: 0 40px 100px rgba(0,0,0,.65), 0 0 60px rgba(139,44,245,.25);
+    transform: rotate(6deg);
+  }
+  .phone .screen { height: 100%; border-radius: 30px; overflow: hidden; background: #121a3f; position: relative; }
+  .phone .notch { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 80px; height: 22px; border-radius: 12px; background: #05081a; }
+  .phone .pimg { height: 190px; background: linear-gradient(160deg, #19c3ff, #8b2cf5 50%, #ff2d9a); }
+  .phone .pc { padding: 18px; }
+  .phone .pc i { display: block; height: 12px; border-radius: 6px; background: rgba(255,255,255,.75); width: 85%; }
+  .phone .pc i:nth-child(2) { margin-top: 10px; width: 60%; background: rgba(255,255,255,.25); }
+  .phone .pc i:nth-child(3) { margin-top: 10px; width: 75%; background: rgba(255,255,255,.25); }
+  .phone .pc b { display: block; margin-top: 22px; height: 40px; border-radius: 12px; background: var(--grad); }
+  .phone .pc u { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+  .phone .pc u s { height: 70px; border-radius: 12px; background: rgba(255,255,255,.07); text-decoration: none; }
+
+  .badge {
+    position: absolute; display: flex; align-items: center; gap: 14px;
+    padding: 16px 22px; border-radius: 18px;
+    background: rgba(18, 24, 58, .78); backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,.16);
+    box-shadow: 0 20px 50px rgba(0,0,0,.45);
+  }
+  .badge .ic { width: 50px; height: 50px; border-radius: 14px; display: grid; place-items: center; }
+  .badge .ic svg { width: 26px; height: 26px; }
+  .badge strong { display: block; font-size: 26px; font-weight: 800; letter-spacing: -.01em; }
+  .badge small { display: block; font-size: 17px; color: var(--muted); margin-top: 2px; }
+  .badge.speed { left: -70px; top: 470px; }
+  .badge.speed .ic { background: linear-gradient(135deg, #19c3ff, #1f8bff); }
+  .badge.seo { left: 470px; top: -10px; }
+  .badge.seo .ic { background: linear-gradient(135deg, #ff2d9a, #ff8a1f); }
+
+  /* ---------- Kvadratni format (Instagram) ---------- */
+  .banner.square { width: 1080px; height: 1080px; }
+  .square .copy { left: 72px; top: 64px; width: 940px; height: 946px; }
+  .square .brand .icon { width: 72px; height: 72px; }
+  .square .brand .word { height: 45px; }
+  .square .eyebrow { margin-top: 44px; font-size: 18px; padding: 10px 18px; }
+  .square h1 { margin-top: 22px; font-size: 80px; }
+  .square .lead { margin-top: 20px; font-size: 25px; max-width: 560px; }
+  .square .chips { margin-top: 28px; grid-template-columns: max-content; gap: 14px; }
+  .square .chip { font-size: 23px; }
+  .square .chip i { width: 34px; height: 34px; }
+  .square .cta-row { position: absolute; left: 0; bottom: 0; margin: 0; }
+  .square .cta { font-size: 27px; padding: 24px 38px; }
+  .square .cta-note { display: none; }
+  .square .stage { right: -250px; top: 470px; transform: scale(.72); transform-origin: top left; }
+  .square .badge.seo { left: 520px; top: -40px; }
+  .square .badge.speed { left: -40px; top: 520px; }
+  .square .orb.a { right: -120px; top: 300px; }
+  .square .orb.c { left: -260px; top: 200px; }
+</style>
+</head>
+<body>
+<div class="banner" id="banner">
+  <div class="orb a"></div><div class="orb b"></div><div class="orb c"></div><div class="orb d"></div>
+  <div class="grid"></div>
+
+  <div class="copy">
+    <div class="brand">
+      <img class="icon" src="logo-icon.png" alt="">
+      <img class="word" src="logo-wordmark-light.png" alt="LogoForge">
+    </div>
+
+    <div class="eyebrow"><span class="dot"></span>Izrada veb sajtova</div>
+
+    <h1>Vaš biznis zaslužuje <span class="g">sajt koji prodaje.</span></h1>
+
+    <p class="lead">Moderni, brzi i <b>responzivni sajtovi</b> po meri — od ideje i dizajna do lansiranja i podrške.</p>
+
+    <div class="chips">
+      <div class="chip"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></i>Unikatan, moderan dizajn</div>
+      <div class="chip"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></i>Savršen na telefonu</div>
+      <div class="chip"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></i>SEO — vidljivi na Google-u</div>
+      <div class="chip"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></i>Brza isporuka</div>
+    </div>
+
+    <div class="cta-row">
+      <div class="cta">Zatražite besplatnu ponudu
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </div>
+      <div class="cta-note"><b>Bez obaveza.</b>Odgovor u roku od 24h.</div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="browser">
+      <div class="bar"><span></span><span></span><span></span>
+        <div class="url"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8d95bd" stroke-width="2.4"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>vasbiznis.rs</div>
+      </div>
+      <div class="site">
+        <div class="nav"><div class="logo"></div><div class="links"><i></i><i></i><i></i><i></i></div></div>
+        <div class="hero">
+          <div>
+            <div class="t1"></div><div class="t2"></div>
+            <div class="p"></div><div class="p"></div>
+            <div class="btns"><i></i><i></i></div>
+          </div>
+          <div class="img"><img src="logo-icon.png" alt=""></div>
+        </div>
+        <div class="cards"><div></div><div></div><div></div></div>
+      </div>
+    </div>
+
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="pimg"></div>
+      <div class="pc"><i></i><i></i><i></i><b></b><u><s></s><s></s></u></div>
+    </div></div>
+
+    <div class="badge seo">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+      <div><strong>Više klijenata</strong><small>Veća vidljivost na mreži</small></div>
+    </div>
+    <div class="badge speed">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="#fff"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg></div>
+      <div><strong>Munjevito brz</strong><small>Optimizovan za performanse</small></div>
+    </div>
+  </div>
+</div>
+<script>
+  // ?format=square daje kvadratnu verziju 1080×1080
+  if (new URLSearchParams(location.search).get("format") === "square")
+    document.getElementById("banner").classList.add("square");
+</script>
+</body>
+</html>
