@@ -1,5 +1,5 @@
 (() => {
-  const { PRODUCTS, LEVELS, byId, jarSVG, artSVG } = window.MED;
+  const { PRODUCTS, LEVELS, byId, jarSVG, artSVG, emblemSVG } = window.MED;
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -221,7 +221,7 @@
   const orderJar = $('#orderJar');
   $('#orderHoneys').innerHTML = PRODUCTS.map((p) => `
     <button type="button" class="honey-opt" role="radio" aria-checked="${p.id === order.id}" data-honey="${p.id}">
-      <span class="honey-thumb">${jarSVG(p)}</span>
+      <span class="honey-thumb">${emblemSVG(p)}</span>
       <span class="honey-name">${p.name}</span>
       <span class="honey-from">od ${rsd(p.sizes[0][1])}</span>
     </button>`).join('');
