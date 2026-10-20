@@ -24,3 +24,10 @@ Odvojen, samostalan sajt za kafić — otvori `kafic/index.html`. Bez zavisnosti
 ## Outreach agent (`outreach/`)
 
 Pronalazi Instagram biznis profile bez sajta i priprema personalizovane poruke za ručno slanje. Vidi `outreach/README.md`.
+
+## Tri modela u Slush stilu (`modeli/`)
+
+Isti sajt (sticker-book stil: pastelne pozadine, naduvane plave 3D trake, nalepnice, Anton + Inter), tri imena: **Fizz**, **Glaze**, **Flurry**. Otvori `modeli/index.html` i izaberi model; na dnu svakog sajta je prekidač između modela.
+
+- `modeli/build.mjs` — šablon stranice; ime se menja u `BRANDS` na vrhu fajla, pa `node modeli/build.mjs` ponovo generiše `modeli/<ime>/index.html`.
+- `modeli/shared/styles.css`, `modeli/shared/main.js` — zajednički stilovi (tokeni iz reference) i JS (meni, tabovi, newsletter).

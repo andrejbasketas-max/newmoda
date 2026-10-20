@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tri modela</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared/styles.css">
+  <style>
+    .pick { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .pick a {
+      display: flex; flex-direction: column; justify-content: space-between; gap: 40px; min-height: 340px;
+      border: var(--line); border-radius: var(--r-card-xl); padding: 24px; text-decoration: none;
+      transition: transform .2s ease;
+    }
+    .pick a:hover { transform: rotate(-1.5deg); }
+    .pick a:nth-child(1) { background: var(--lavender); }
+    .pick a:nth-child(2) { background: var(--mint); }
+    .pick a:nth-child(3) { background: var(--blue); }
+    .pick .display { font-size: clamp(70px, 9vw, 160px); }
+    .pick .btn { align-self: flex-start; }
+    @media (max-width: 860px) { .pick { grid-template-columns: 1fr; } .pick a { min-height: 220px; } }
+  </style>
+</head>
+<body>
+  <main class="band band--sky" style="min-height:100svh;border-radius:0">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">Isti sajt, tri imena</p>
+        <h1 class="display display--lg">Izaberi model</h1>
+      </div>
+      <nav class="pick" aria-label="Modeli">
+        <a href="fizz/"><span class="label">Model 01</span><span class="display">Fizz</span><span class="btn">Otvori</span></a>
+        <a href="glaze/"><span class="label">Model 02</span><span class="display">Glaze</span><span class="btn">Otvori</span></a>
+        <a href="flurry/"><span class="label">Model 03</span><span class="display">Flurry</span><span class="btn">Otvori</span></a>
+      </nav>
+    </div>
+  </main>
+</body>
+</html>
