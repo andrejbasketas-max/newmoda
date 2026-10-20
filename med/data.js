@@ -6,22 +6,22 @@ window.MED = (() => {
   };
 
   const PRODUCTS = [
-    { id: 'bagrem', name: 'Bagremov med', label: 'BAGREMOV', honey: '#f2b53a', level: 1,
+    { id: 'bagrem', stage: ['#ffdcad', '#f4c48a'], name: 'Bagremov med', label: 'BAGREMOV', honey: '#f2b53a', level: 1,
       notes: 'Svetao, nežan i blag. Najsporije se kristališe — idealan za čaj i decu.',
       sizes: [['450 g', 950], ['900 g', 1750]] },
-    { id: 'livadski', name: 'Livadski med', label: 'LIVADSKI', honey: '#e98406', level: 2,
+    { id: 'livadski', stage: ['#9ea93f', '#8a942f'], name: 'Livadski med', label: 'LIVADSKI', honey: '#e98406', level: 2,
       notes: 'Cvetni i pun, sa notama divljeg cveća sa šumadijskih livada.',
       sizes: [['450 g', 850], ['900 g', 1550]] },
-    { id: 'lipa', name: 'Lipov med', label: 'LIPOV', honey: '#eb9d1e', level: 2,
+    { id: 'lipa', stage: ['#dbf4ad', '#c4e48c'], name: 'Lipov med', label: 'LIPOV', honey: '#eb9d1e', level: 2,
       notes: 'Svež, skoro mentolast, sa mirisom lipe u junu.',
       sizes: [['450 g', 900], ['900 g', 1650]] },
-    { id: 'kesten', name: 'Kestenov med', label: 'KESTENOV', honey: '#8f3f10', level: 3,
+    { id: 'kesten', stage: ['#ff8e72', '#f0735a'], name: 'Kestenov med', label: 'KESTENOV', honey: '#8f3f10', level: 3,
       notes: 'Taman, gorkast i karakteran. Za one koji vole jak ukus.',
       sizes: [['450 g', 1150], ['900 g', 2100]] },
-    { id: 'suma', name: 'Šumski med', label: 'ŠUMSKI', honey: '#5c260b', level: 3,
+    { id: 'suma', stage: ['#0f4c5c', '#19323c'], name: 'Šumski med', label: 'ŠUMSKI', honey: '#5c260b', level: 3,
       notes: 'Medljikovac iz hrastovih šuma. Bogat mineralima, sa notom karamele.',
       sizes: [['450 g', 1200], ['900 g', 2200]] },
-    { id: 'sace', name: 'Med u saću', label: 'SAĆE', honey: '#f0a62e', level: 2,
+    { id: 'sace', stage: ['#8be4db', '#6fcfc4'], name: 'Med u saću', label: 'SAĆE', honey: '#f0a62e', level: 2,
       notes: 'Netaknut, pravo iz okvira. Jede se zajedno sa voskom.',
       sizes: [['300 g', 1400], ['600 g', 2600]] },
   ];

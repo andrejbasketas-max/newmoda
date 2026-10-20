@@ -10,7 +10,7 @@
   // ---------- Render products ----------
   $('#products').innerHTML = PRODUCTS.map((p) => `
     <li class="product" data-id="${p.id}">
-      <div class="jar" data-jar="${p.id}"></div>
+      <div class="p-stage botanical" style="background-color:${p.stage[0]};--bot:${p.stage[1]}"><div class="jar" data-jar="${p.id}"></div></div>
       <div class="p-tags">
         <span class="badge heat" title="Jačina ukusa">Jačina · ${LEVELS[p.level]} <i aria-hidden="true">${'●'.repeat(p.level)}${'○'.repeat(3 - p.level)}</i></span>
       </div>

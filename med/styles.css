@@ -22,6 +22,19 @@
   --honey-bg: #eea236;
   --gold-fade: #c98526;
   --cream: #ffe9c2;
+  /* Garden accents, from Coolors palettes: "honey" (FB8B24 19323C 826C7F 9EA93F 0F4C5C),
+     "meadow" (DBF4AD A9E190 CDC776 A5AA52 767522) and honey accents FF8E72 8BE4DB FFDCAD */
+  --meadow: #9ea93f;
+  --meadow-deep: #767522;
+  --leaf: #dbf4ad;
+  --forest: #0f4c5c;
+  --forest-deep: #19323c;
+  --sky: #8be4db;
+  --sky-deep: #6fcfc4;
+  --lavender: #826c7f;
+  --lavender-deep: #6c5869;
+  --peach: #ffdcad;
+  --coral: #ff8e72;
   --display: "Telma", "Sentient", Georgia, serif;   /* Telma has no capital Đ; Sentient supplies it */
   --font: "Sentient", Georgia, "Times New Roman", serif;
   --gutter: clamp(16px, 2vw, 28px);
@@ -321,12 +334,13 @@ body.menu-open .nav::after { display: none; }
 }
 
 /* ---------- Šta je unutra ---------- */
-.inside { display: grid; grid-template-columns: 1fr 1fr; background: var(--clove); }
+.inside { display: grid; grid-template-columns: 1fr 1fr; background: var(--forest); --lord-icon-secondary: var(--leaf); }
 .inside-text { padding: 110px var(--gutter) 120px; display: flex; flex-direction: column; gap: 24px; }
 .inside-text .rule { margin: 6px 0; }
 .facts { display: grid; gap: 18px; margin: 18vh 0 18vh clamp(0px, 12vw, 200px); }
 .facts li { display: flex; align-items: center; gap: 14px; font-size: 13px; text-transform: uppercase; max-width: 22em; }
-.inside-text .fill { --off: var(--spice); }
+.inside-text .fill { --off: #2f6b78; }
+.inside .facts .ico { border-color: var(--leaf); background: var(--forest-deep); }
 .inside-text h3 { margin-top: 10vh; }
 .inside-art { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; }
 .inside-jar { grid-area: 1 / 1; width: clamp(150px, 20vw, 290px); }
@@ -347,7 +361,12 @@ body.menu-open .nav::after { display: none; }
 .product { display: flex; flex-direction: column; gap: 12px; padding-top: 28px; position: relative; }
 .product::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
   background: radial-gradient(circle, var(--gold) 1.2px, transparent 1.6px) 0 50% / 8px 3px repeat-x; }
-.product .jar { width: 56%; margin: 6px auto 18px; }
+.p-stage {
+  display: grid; place-items: center; padding: 34px 0 22px; margin-bottom: 8px; border-radius: 6px; overflow: hidden;
+  --bot-o: .55; transition: transform .5s var(--ease);
+}
+.product:hover .p-stage { transform: translateY(-4px); }
+.product .jar { width: 50%; margin: 0 auto; }
 .p-name { font-family: var(--display); font-size: 38px; font-weight: 700; line-height: 1.05; letter-spacing: 0; }
 .sizes { display: flex; gap: 6px; margin-top: 4px; }
 .size { background: transparent; color: var(--gold); }
@@ -383,6 +402,10 @@ body.menu-open .nav::after { display: none; }
 .order-qty output { min-width: 2ch; text-align: center; font: 700 26px var(--display); }
 .order-perks { display: grid; gap: 16px; margin-top: 40px; padding-top: 28px; border-top: 1px solid rgba(250, 174, 51, .25); }
 .order-perks li { display: flex; align-items: center; gap: 16px; font-size: 15px; line-height: 1.4; }
+.order-perks .ico { border: 0; --lord-icon-primary: var(--forest-deep); --lord-icon-secondary: var(--clove); }
+.order-perks li:nth-child(1) .ico { background: var(--leaf); }
+.order-perks li:nth-child(2) .ico { background: var(--sky); }
+.order-perks li:nth-child(3) .ico { background: var(--peach); }
 .order-perks b { display: block; font: 700 22px/1.1 var(--display); margin-bottom: 2px; }
 .order-card { background: var(--spice); border-radius: 6px; padding: 22px; display: grid; gap: 18px; }
 .order-summary { display: grid; grid-template-columns: 110px 1fr; gap: 18px; align-items: center; padding-bottom: 18px; border-bottom: 1px solid var(--cardamom); }
@@ -446,8 +469,8 @@ body.menu-open .nav::after { display: none; }
 .why-cols .micro { min-height: 6.5em; }
 .tile { aspect-ratio: 4 / 3; border-radius: 6px; display: grid; place-items: center; margin-top: auto; overflow: hidden; }
 .tile .jar { width: 34%; }
-.tile-comb { background: var(--rust); }
-.tile-clove { background: var(--clove); }
+.tile-comb { background-color: var(--meadow); --bot: var(--meadow-deep); --bot-o: .6; }
+.tile-clove { background-color: var(--sky); --bot: var(--sky-deep); --bot-o: .5; }
 @media (max-width: 760px) {
   .why-cols { grid-template-columns: 1fr; gap: 36px; }
   .why-cols article { padding: 0; }
@@ -487,6 +510,7 @@ body.menu-open .nav::after { display: none; }
 .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
 .form-msg { margin-top: 12px; max-width: none; }
 .news-art { display: grid; place-items: center; overflow: hidden; }
+.news-art.pink { background-color: var(--lavender); --bot: var(--lavender-deep); --bot-o: .8; }
 .news-jar { width: clamp(200px, 26vw, 380px); transform: rotate(-22deg); animation: bob 6s ease-in-out infinite; }
 @media (max-width: 760px) {
   .news { grid-template-columns: 1fr; }
