@@ -24,3 +24,7 @@ Odvojen, samostalan sajt za kafić — otvori `kafic/index.html`. Bez zavisnosti
 ## Outreach agent (`outreach/`)
 
 Pronalazi Instagram biznis profile bez sajta i priprema personalizovane poruke za ručno slanje. Vidi `outreach/README.md`.
+
+## Most — slanje novca (`most/`)
+
+Samostalan fintech landing sajt za izmišljeni brend „Most“ — otvori `most/index.html`. Dizajn prati „forest ink + lime voltage“ sistem: tamnozelena `#163300`, limeta `#9fe870` samo za glavne akcije, ogromni naslovi u Inter 900, dugmad u obliku pilule, ravne površine bez senki. Sadrži: lepljivu navigaciju sa segmentima, hero sa globusom i novčićima (SVG/CSS), kalkulator transfera (bira valutu i zemlju, računa naknadu i kurs — kursevi su ilustrativni), tabove Šalji/Primaj/Troši/Čuvaj, tamnu sekciju sa brojačima, mrežu od 20 zastava (klik bira zemlju u kalkulatoru), FAQ, prijavu emailom i plutajući QR bedž. Bez zavisnosti; animacije se gase uz `prefers-reduced-motion`.

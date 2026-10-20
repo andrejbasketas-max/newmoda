@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Most — novac bez granica</title>
+  <meta name="description" content="Most je (izmišljena) usluga za slanje novca u inostranstvo po pravom kursu, sa jasnom naknadom unapred.">
+  <meta name="theme-color" content="#163300">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#kalkulator">Preskoči na kalkulator</a>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="logo" href="#top" aria-label="Most — početak">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#9fe870"/><path d="M6 23V17a10 10 0 0 1 20 0v6h-5v-6a5 5 0 0 0-10 0v6z" fill="#163300"/></svg>
+        <span>most</span>
+      </a>
+
+      <nav class="segments" aria-label="Segment">
+        <a href="#top" class="is-active" aria-current="page">Lično</a>
+        <a href="#biznis">Biznis</a>
+        <a href="#platforma">Platforma</a>
+      </nav>
+
+      <div class="nav-right" id="navRight">
+        <a class="nav-flag" href="#" aria-label="Jezik: srpski"><span class="flag flag-sm" data-flag="rs"></span>SR</a>
+        <a class="nav-link" href="#pitanja">Pomoć</a>
+        <a class="nav-link" href="#">Prijava</a>
+        <a class="btn btn-outline btn-sm" href="#registracija">Registruj se</a>
+      </div>
+
+      <button class="burger" id="burger" aria-label="Otvori meni" aria-expanded="false" aria-controls="navRight"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap hero-text">
+        <span class="tag reveal">Novo · Most račun u 40+ valuta</span>
+        <h1 class="display hero-title">
+          <span class="line"><span>NOVAC</span></span>
+          <span class="line"><span>BEZ GRANICA</span></span>
+        </h1>
+        <p class="lead reveal">Šalji, primaj i troši novac u inostranstvu po pravom kursu. Bez skrivenih troškova — naknadu vidiš pre nego što klikneš.</p>
+        <div class="actions reveal">
+          <a class="btn btn-primary" href="#registracija">Otvori račun</a>
+          <a class="btn-text" href="#kalkulator">Pošalji novac odmah</a>
+        </div>
+      </div>
+
+      <div class="globe-stage" aria-hidden="true">
+        <svg class="globe" viewBox="0 0 600 600">
+          <defs>
+            <radialGradient id="gSea" cx="38%" cy="32%" r="75%">
+              <stop offset="0" stop-color="#6fc2d9"/>
+              <stop offset=".55" stop-color="#1f7a9c"/>
+              <stop offset="1" stop-color="#0b4c72"/>
+            </radialGradient>
+            <radialGradient id="gLand" cx="35%" cy="30%" r="80%">
+              <stop offset="0" stop-color="#c6f59e"/>
+              <stop offset=".6" stop-color="#7fcf55"/>
+              <stop offset="1" stop-color="#3f8a2a"/>
+            </radialGradient>
+            <radialGradient id="gShine" cx="32%" cy="26%" r="40%">
+              <stop offset="0" stop-color="#fff" stop-opacity=".55"/>
+              <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="gShade" cx="70%" cy="78%" r="65%">
+              <stop offset=".45" stop-color="#05202f" stop-opacity="0"/>
+              <stop offset="1" stop-color="#05202f" stop-opacity=".55"/>
+            </radialGradient>
+            <clipPath id="gClip"><circle cx="300" cy="300" r="250"/></clipPath>
+          </defs>
+          <circle cx="300" cy="300" r="250" fill="url(#gSea)"/>
+          <g clip-path="url(#gClip)">
+            <g class="land" fill="url(#gLand)">
+              <path d="M120 170c40-40 110-50 150-20 30 22 10 60 40 80 34 22 70 0 90 30 18 28-10 70-50 76-40 6-60 40-100 30-46-12-40-60-80-80-38-20-90-70-50-116z"/>
+              <path d="M380 120c30-14 80-6 110 24 26 26 30 60 6 76-30 20-60-6-90 4-26 9-50-10-52-40-2-28 4-52 26-64z"/>
+              <path d="M330 380c30-10 70 0 86 30 14 28 4 66-26 86-28 18-60 6-74-22-16-30-20-82 14-94z"/>
+              <path d="M90 360c20-8 46 4 52 26 6 24-12 44-34 44-24 0-40-22-34-44 2-12 6-22 16-26z"/>
+              <path d="M720 170c40-40 110-50 150-20 30 22 10 60 40 80 34 22 70 0 90 30 18 28-10 70-50 76-40 6-60 40-100 30-46-12-40-60-80-80-38-20-90-70-50-116z"/>
+              <path d="M980 120c30-14 80-6 110 24 26 26 30 60 6 76-30 20-60-6-90 4-26 9-50-10-52-40-2-28 4-52 26-64z"/>
+              <path d="M930 380c30-10 70 0 86 30 14 28 4 66-26 86-28 18-60 6-74-22-16-30-20-82 14-94z"/>
+              <path d="M690 360c20-8 46 4 52 26 6 24-12 44-34 44-24 0-40-22-34-44 2-12 6-22 16-26z"/>
+            </g>
+          </g>
+          <circle cx="300" cy="300" r="250" fill="url(#gShade)"/>
+          <circle cx="300" cy="300" r="250" fill="url(#gShine)"/>
+        </svg>
+
+        <!-- coins -->
+        <div class="coin c1"><span>€</span></div>
+        <div class="coin c2"><span>$</span></div>
+        <div class="coin c3"><span>дин</span></div>
+        <div class="coin c4"><span>£</span></div>
+        <div class="coin c5"><span>¥</span></div>
+      </div>
+    </section>
+
+    <!-- CALCULATOR (dark card) -->
+    <section class="section" id="kalkulator">
+      <div class="wrap">
+        <div class="dark-card">
+          <div class="dark-copy">
+            <span class="tag tag-dark">Pravi kurs · bez marže</span>
+            <h2 class="display display-md">POŠALJI<br>PAMETNIJE</h2>
+            <p>Koristimo srednji tržišni kurs — isti onaj koji vidiš na pretrazi. Naknada je mala, fiksna i uvek prikazana unapred.</p>
+            <ul class="checks">
+              <li>Garantovan kurs 24 sata</li>
+              <li>Većina transfera stiže istog dana</li>
+              <li>Pratiš svaki korak u aplikaciji</li>
+            </ul>
+          </div>
+
+          <form class="calc" id="calc" autocomplete="off" onsubmit="return false">
+            <div class="calc-recipient">
+              <span class="flag flag-md" data-flag="de" id="recFlag"></span>
+              <span class="calc-recipient-name"><small>Šalješ u</small><strong id="recName">Nemačku</strong></span>
+              <button type="button" class="btn btn-outline btn-xs" id="recChange">Promeni</button>
+            </div>
+
+            <label class="field">
+              <span class="field-label">Šalješ</span>
+              <span class="field-row">
+                <input id="amount" type="text" inputmode="decimal" value="50.000" aria-label="Iznos koji šalješ">
+                <span class="cur-wrap">
+                  <button type="button" class="cur" data-side="from" aria-haspopup="listbox" aria-expanded="false"><span class="flag flag-sm" data-flag="rs"></span><b>RSD</b><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button>
+                </span>
+              </span>
+            </label>
+
+            <ul class="breakdown" aria-live="polite">
+              <li><i class="op">–</i><span id="feeVal">0 RSD</span><em>Naknada</em></li>
+              <li><i class="op">=</i><span id="convVal">0 RSD</span><em>Iznos koji menjamo</em></li>
+              <li><i class="op">×</i><span id="rateVal">0</span><em>Garantovan kurs (24h)</em></li>
+            </ul>
+
+            <label class="field">
+              <span class="field-label">Primalac dobija</span>
+              <span class="field-row">
+                <input id="result" type="text" readonly aria-label="Iznos koji primalac dobija">
+                <span class="cur-wrap">
+                  <button type="button" class="cur" data-side="to" aria-haspopup="listbox" aria-expanded="false"><span class="flag flag-sm" data-flag="eu"></span><b>EUR</b><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button>
+                </span>
+              </span>
+            </label>
+
+            <p class="calc-eta">Stiže <strong>danas</strong> · uštedeo/la si oko <strong id="saveVal">0 RSD</strong> u odnosu na prosečnu banku</p>
+
+            <div class="calc-actions">
+              <a class="btn btn-primary btn-block" href="#registracija">Pošalji novac</a>
+            </div>
+            <p class="fine">Kursevi na ovoj stranici su ilustrativni.</p>
+
+            <ul class="cur-list" id="curList" role="listbox" hidden></ul>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURE ROW -->
+    <section class="section section-tight">
+      <div class="wrap">
+        <div class="features">
+          <article class="feature reveal">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
+            <h3>Sigurno po zakonu</h3>
+            <p>Novac klijenata čuvamo odvojeno, u velikim bankama, i pod nadzorom regulatora.</p>
+          </article>
+          <article class="feature reveal">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <h3>Brzo kao poruka</h3>
+            <p>Većina transfera stigne za par minuta, a ostali najkasnije sledećeg radnog dana.</p>
+          </article>
+          <article class="feature reveal">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h7"/><circle cx="18" cy="16" r="3"/></svg>
+            <h3>Cena bez sitnih slova</h3>
+            <p>Jedna jasna naknada, prikazana unapred. Kurs ne „podešavamo“ u svoju korist.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TABS BAND -->
+    <section class="band" id="biznis">
+      <div class="wrap">
+        <div class="band-head">
+          <h2 class="h-xl">Jedan račun za<br>ceo svet</h2>
+          <div class="seg-tabs" role="tablist" aria-label="Mogućnosti računa">
+            <button role="tab" id="t-salji" aria-controls="p-salji" aria-selected="true">Šalji</button>
+            <button role="tab" id="t-primaj" aria-controls="p-primaj" aria-selected="false" tabindex="-1">Primaj</button>
+            <button role="tab" id="t-trosi" aria-controls="p-trosi" aria-selected="false" tabindex="-1">Troši</button>
+            <button role="tab" id="t-cuvaj" aria-controls="p-cuvaj" aria-selected="false" tabindex="-1">Čuvaj</button>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p-salji" aria-labelledby="t-salji">
+          <div class="panel-copy">
+            <h3 class="h-md">Transfer u 70+ zemalja</h3>
+            <p>Pošalji porodici, platiš školarinu ili fakturu — po kursu koji vidiš na internetu, sa naknadom od samo 0,45%.</p>
+            <a class="btn-text" href="#kalkulator">Izračunaj cenu</a>
+          </div>
+          <div class="panel-visual">
+            <div class="mini-card">
+              <div class="mini-head"><span class="flag flag-md" data-flag="at"></span><div><strong>Ana Marković</strong><small>Beč · EUR</small></div><span class="tag">Stiglo</span></div>
+              <ol class="timeline">
+                <li class="done"><b>Danas, 09:12</b>Uplatio/la si 35.000 RSD</li>
+                <li class="done"><b>Danas, 09:13</b>Zamenili smo u 298,40 EUR</li>
+                <li class="done"><b>Danas, 09:21</b>Novac je na Aninom računu</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p-primaj" aria-labelledby="t-primaj" hidden>
+          <div class="panel-copy">
+            <h3 class="h-md">Lokalni podaci za uplate</h3>
+            <p>Dobij podatke računa u evrima, dolarima i funtama. Klijenti i poslodavci te plaćaju kao da si u njihovoj zemlji.</p>
+            <a class="btn-text" href="#registracija">Otvori besplatno</a>
+          </div>
+          <div class="panel-visual">
+            <div class="mini-card">
+              <div class="mini-head"><span class="flag flag-md" data-flag="eu"></span><div><strong>Račun u evrima</strong><small>Za SEPA uplate</small></div></div>
+              <dl class="details">
+                <div><dt>Vlasnik</dt><dd>Marko Jovanović</dd></div>
+                <div><dt>IBAN</dt><dd>BE00 0000 0000 0000</dd></div>
+                <div><dt>BIC</dt><dd>MOSTBEBB</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p-trosi" aria-labelledby="t-trosi" hidden>
+          <div class="panel-copy">
+            <h3 class="h-md">Kartica koja putuje s tobom</h3>
+            <p>Plaćaj u lokalnoj valuti u preko 150 zemalja. Kartica sama bira valutu sa najboljim kursom iz tvog salda.</p>
+            <a class="btn-text" href="#registracija">Naruči karticu</a>
+          </div>
+          <div class="panel-visual">
+            <div class="debit">
+              <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 23V17a10 10 0 0 1 20 0v6h-5v-6a5 5 0 0 0-10 0v6z" fill="#9fe870"/></svg>
+              <span class="debit-chip"></span>
+              <span class="debit-num">•••• 4821</span>
+              <span class="debit-brand">debit</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p-cuvaj" aria-labelledby="t-cuvaj" hidden>
+          <div class="panel-copy">
+            <h3 class="h-md">Drži 40+ valuta</h3>
+            <p>Menjaj kad je kurs povoljan i drži novac u valuti koja ti treba. Sve na jednom mestu, u jednoj aplikaciji.</p>
+            <a class="btn-text" href="#registracija">Pogledaj kako</a>
+          </div>
+          <div class="panel-visual">
+            <div class="mini-card">
+              <div class="mini-head"><div><small>Ukupno</small><strong class="big">2.418,60 EUR</strong></div></div>
+              <ul class="balances">
+                <li><span class="flag flag-sm" data-flag="eu"></span>Evro<b>1.240,00</b></li>
+                <li><span class="flag flag-sm" data-flag="rs"></span>Dinar<b>96.300,00</b></li>
+                <li><span class="flag flag-sm" data-flag="ch"></span>Švajc. franak<b>310,25</b></li>
+                <li><span class="flag flag-sm" data-flag="us"></span>Dolar<b>145,90</b></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DARK STATEMENT -->
+    <section class="dark" id="platforma">
+      <div class="wrap">
+        <h2 class="display dark-title">
+          <span class="line"><span>BRŽE.</span></span>
+          <span class="line"><span>JEFTINIJE.</span></span>
+          <span class="line"><span>JASNO.</span></span>
+        </h2>
+        <div class="stats">
+          <div class="stat reveal"><b data-count="6">0</b><span>puta jeftinije od prosečne<br>bankarske doznake</span></div>
+          <div class="stat reveal"><b data-count="72" data-suffix="%">0</b><span>transfera stiže za<br>manje od 20 sekundi</span></div>
+          <div class="stat reveal"><b data-count="40" data-suffix="+">0</b><span>valuta u jednom<br>računu</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href="#registracija">Počni besplatno</a>
+          <a class="btn-text btn-text-light" href="#pitanja">Kako to radimo?</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- COUNTRY GRID -->
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 class="h-xl">Gde šalješ?</h2>
+          <p>Izaberi zemlju i pogledaj kurs, rok i naknadu za tu rutu.</p>
+        </div>
+        <ul class="countries" id="countries"></ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section band-fog" id="pitanja">
+      <div class="wrap faq-wrap">
+        <h2 class="h-xl">Česta pitanja</h2>
+        <div class="faq">
+          <details>
+            <summary>Koliko košta slanje novca?</summary>
+            <p>Plaćaš malu procentualnu naknadu plus fiksni iznos koji zavisi od valute. Sve vidiš u kalkulatoru pre slanja — nema dodatnih troškova na kursu.</p>
+          </details>
+          <details>
+            <summary>Za koliko vremena novac stiže?</summary>
+            <p>Većina transfera u evrima stiže za nekoliko minuta. Za neke valute i banke rok je do jednog radnog dana. Tačan rok prikazujemo pre potvrde.</p>
+          </details>
+          <details>
+            <summary>Da li je moj novac siguran?</summary>
+            <p>Novac klijenata držimo odvojeno od sredstava kompanije, kod velikih banaka. Prijava je zaštićena dvostepenom potvrdom.</p>
+          </details>
+          <details>
+            <summary>Šta mi treba da otvorim račun?</summary>
+            <p>Lična karta ili pasoš i par minuta. Verifikacija se uglavnom završi istog dana.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIGN UP -->
+    <section class="section" id="registracija">
+      <div class="wrap">
+        <div class="signup">
+          <div>
+            <h2 class="display display-md">KRENI ZA<br>2 MINUTA</h2>
+            <p>Ostavi email i pošaljemo ti link za otvaranje računa.</p>
+          </div>
+          <form class="signup-form" id="signup" novalidate>
+            <label class="field">
+              <span class="field-label">Email adresa</span>
+              <input class="input" type="email" id="email" placeholder="ime@primer.rs" required>
+            </label>
+            <button class="btn btn-primary" type="submit">Pošalji link</button>
+            <p class="form-msg" id="formMsg" role="status"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="foot-top">
+        <a class="logo logo-light" href="#top" aria-label="Most — početak">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#9fe870"/><path d="M6 23V17a10 10 0 0 1 20 0v6h-5v-6a5 5 0 0 0-10 0v6z" fill="#163300"/></svg>
+          <span>most</span>
+        </a>
+        <div class="foot-cols">
+          <div><h4>Lično</h4><a href="#kalkulator">Slanje novca</a><a href="#biznis">Kartica</a><a href="#biznis">Račun u više valuta</a></div>
+          <div><h4>Biznis</h4><a href="#biznis">Plaćanje faktura</a><a href="#biznis">Isplate zaposlenima</a><a href="#platforma">API</a></div>
+          <div><h4>Kompanija</h4><a href="#">O nama</a><a href="#">Karijera</a><a href="#pitanja">Pomoć</a></div>
+        </div>
+      </div>
+      <p class="foot-note">© 2026 Most. Izmišljen brend — demonstracioni sajt. Kursevi i brojke su ilustrativni.</p>
+    </div>
+  </footer>
+
+  <!-- QR BADGE -->
+  <a class="qr" href="#registracija" aria-label="Preuzmi Most aplikaciju">
+    <svg id="qr" viewBox="0 0 25 25" aria-hidden="true"></svg>
+    <span>Preuzmi Most aplikaciju</span>
+  </a>
+
+  <script src="main.js"></script>
+</body>
+</html>
