@@ -68,3 +68,25 @@ OSM ne pokriva sve firme. Za više firmi pretraži Google Maps po kategoriji i k
 
 Mejlove šalji ručno, 20–30 dnevno, sa svog pravog mejla. Masovno slanje ti brzo pošalje adresu u spam.
 Poruka već sadrži rečenicu „ako vas ne zanima, neću vam više pisati“. Ispoštuj je.
+
+## Facebook stranice bez sajta (`facebook-leads.mjs`)
+
+Iz OpenStreetMap-a izvlači biznise koji imaju link ka Facebook stranici, a nemaju sajt, i za svaki
+napiše drugačiju poruku. Ne treba API ključ.
+
+```bash
+npm run facebook               # Beograd
+npm run facebook -- Q55630     # drugi grad po Wikidata ID-ju (Q55630 = Novi Sad)
+```
+
+- `out/facebook.html`: kartica po biznisu, link ka Facebook stranici, poruka koju možeš da izmeniš,
+  dugme **Kopiraj i otvori Messenger** i oznaka „poslato“.
+- `out/facebook-leads.csv`: ista lista za Excel.
+
+Svaka poruka se sklapa od delova (pozdrav, uvod, zašto sajt, ponuda, poziv, odjava, potpis) koje
+skripta bira po imenu biznisa, i dobija ime, ulicu i ono što bi baš taj biznis imao na sajtu
+(meni za kafić, zakazivanje za salon…). Delove menjaš ili dodaješ u nizovima `OPENERS`, `WHYS`, `OFFERS`, `ASKS`.
+
+Poruke se namerno **ne šalju automatski**: Facebook zabranjuje botove koji šalju poruke nepoznatim
+stranicama, a zvanični API ne dozvoljava da ti prvi pišeš. Takav nalog brzo bude blokiran.
+Šalji ručno, 20–30 dnevno, i pre slanja otvori stranicu: možda su u međuvremenu napravili sajt.

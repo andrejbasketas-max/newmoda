@@ -5,7 +5,8 @@
   "description": "Finds Instagram business profiles without a website and drafts personalized DMs for manual review.",
   "scripts": {
     "start": "node --env-file-if-exists=.env agent.mjs",
-    "emails": "node --env-file-if-exists=.env email-leads.mjs"
+    "emails": "node --env-file-if-exists=.env email-leads.mjs",
+    "facebook": "node --env-file-if-exists=.env facebook-leads.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.133.0"
