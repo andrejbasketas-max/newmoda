@@ -365,7 +365,6 @@ body.menu-open .nav::after { display: none; }
   display: grid; place-items: center; padding: 34px 0 22px; margin-bottom: 8px; border-radius: 6px; overflow: hidden;
   --bot-o: .55; transition: transform .5s var(--ease);
 }
-.product:hover .p-stage { transform: translateY(-4px); }
 .product .jar { width: 50%; margin: 0 auto; }
 .p-name { font-family: var(--display); font-size: 38px; font-weight: 700; line-height: 1.05; letter-spacing: 0; }
 .sizes { display: flex; gap: 6px; margin-top: 4px; }

@@ -518,7 +518,7 @@ function start() {
       slot: views.length % 3,
     };
     el.__view = v;
-    const card = el.closest('.product, .tile');
+    const card = v.mode === 'still' ? null : el.closest('.product, .tile');
     if (card) {
       card.addEventListener('pointerenter', () => { v.hoverT = 1; });
       card.addEventListener('pointerleave', () => { v.hoverT = 0; });
@@ -547,6 +547,10 @@ function start() {
         rotY = (ext?.spin ?? 0) * Math.PI * 2.2 - 0.4;
         lift = ext?.lid ?? 0;
         bob = reduce ? 0 : Math.sin(t * 1.3) * 0.04;
+        break;
+      case 'still':
+        // Shop jars: a fixed three-quarter view with the label facing out, no motion at all
+        rotY = 0.02;
         break;
       default:
         v.spin += dt * (0.25 + v.hover * 2.2);
@@ -632,7 +636,8 @@ function start() {
       // scrolling; the hero, the scroll-driven jar and any jar under the pointer stay at full rate.
       const busy = v.mode === 'hero' || v.mode === 'journey' || v.hoverT > 0 || v.hover > 0.02;
       if (!busy && v.ready && (fastScroll || (frameNo + v.slot) % 3)) continue;
-      if (reduce && v.ready && v.drawnQ === quality) continue;
+      if ((reduce || v.mode === 'still') && v.ready && v.drawnQ === quality
+        && v.canvas.width === Math.round(v.canvas.offsetWidth * quality)) continue; // static: draw once
       const cw = v.canvas.offsetWidth, ch = v.canvas.offsetHeight;
       if (cw < 2 || ch < 2) continue;
       const w = Math.round(cw * quality), h = Math.round(ch * quality);
