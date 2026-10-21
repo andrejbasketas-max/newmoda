@@ -20,6 +20,8 @@ def font(size):
     try: return ImageFont.truetype(FONT, size * SS)
     except OSError: return ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", size * SS)
 
+CUR_TT = 0.0
+
 def ease(x): x = max(0.0, min(1.0, x)); return x * x * (3 - 2 * x)
 
 class Canvas:
@@ -62,7 +64,10 @@ def figure(cv, x, ground, upL=20, loL=10, upR=-20, loR=-10, legs=14, lean=0, smi
     er = pol(sh, upR, arm_u); hr_ = pol(er, loR, arm_l); cv.line(sh, er, c=c); cv.line(er, hr_, c=c)
     head = (neck[0] + math.sin(math.radians(lean)) * 40, neck[1] - hr - 8)
     cv.circle(head, hr, fill=BG, outline=c)
-    for s in (-1, 1): cv.circle((head[0] + s * 20 + look * 6, head[1] - 8), 5, fill=c)
+    blink = (CUR_TT + 1.7) % 3.3 < 0.13
+    for s in (-1, 1):
+        ep = (head[0] + s * 20 + look * 6, head[1] - 8)
+        cv.line((ep[0] - 7, ep[1]), (ep[0] + 7, ep[1]), w=4, c=c) if blink else cv.circle(ep, 5, fill=c)
     cv.arc((head[0] + look * 6, head[1] + 10 - 14 * smile), 22, 20 if smile >= 0 else 200, 160 if smile >= 0 else 340, w=6, c=c) if abs(smile) > 0.05 else cv.line((head[0]-16, head[1]+22), (head[0]+16, head[1]+22), w=6, c=c)
     return hl, hr_, head
 
@@ -77,7 +82,9 @@ def phone(cv, c0, ang=0, scroll=0.0, glow=True):
         a, b = P((-w/2 + 16, yy)), P((w/2 - 16, yy))
         cv.line(a, b, w=10, c=ACC if glow else DIM)
 
-def label(cv, s, y=250, size=110, c=ACC): cv.text((W/2, y), s, size, c=c)
+def label(cv, s, y=250, size=110, c=ACC):
+    k = 0.75 + 0.25 * ease(CUR_TT / 0.25)  # headline pops in
+    cv.text((W/2, y), s, int(size * k), c=c)
 
 # ---- scenes: f(cv, t, tt) with t = 0..1 progress in scene, tt = seconds in scene -------------------
 G = 1280  # ground line
@@ -231,14 +238,29 @@ def prop(cv, name, c0, t, tt, a):
     elif name == "text":
         cv.text(c0, a.get("word", ""), a.get("size", 120), c=tuple(a["color"]) if a.get("color") else ACC)
 
+BASE = dict(upL=20, loL=10, upR=-20, loR=-10, legs=14, lean=0, smile=0.4, look=0)
+
+def pose_vals(name, tt):
+    if name == "wave":
+        return dict(upL=20, loL=10, upR=-135 + 20 * math.sin(tt * 9), loR=-160 + 30 * math.sin(tt * 9), smile=0.9)
+    return POSES[name]
+
+def get_pose(a, b, t, tt):
+    """Blend pose a -> b with easing, then add breathing and small talking gestures."""
+    pa, pb = {**BASE, **pose_vals(a, tt)}, {**BASE, **pose_vals(b or a, tt)}
+    k = ease(t)
+    p = {key: pa[key] + (pb[key] - pa[key]) * k for key in BASE}
+    p["lean"] += 1.2 * math.sin(tt * 2.2)
+    if a not in ("wave", "happy", "shock"):
+        p["upR"] += 5 * math.sin(tt * 3.1); p["upL"] += 4 * math.sin(tt * 2.3 + 1)
+    return p
+
 def sc_beat(cv, t, tt, a):
     """headline + stickman (pose) + one prop. a: headline, sub, pose, prop, side, from, to, color."""
     if a.get("headline"): label(cv, a["headline"], 230, a.get("hsize", 120), tuple(a["hcolor"]) if a.get("hcolor") else ACC)
     if a.get("sub"): cv.text((W/2, 380), a["sub"], 60, c=WARN)
     side = -1 if a.get("side", "right") == "left" else 1
-    pose = dict(POSES[a.get("pose", "idle")])
-    wob = 4 * math.sin(tt * 2.2)
-    pose["lean"] = pose.get("lean", 0) + wob * 0.4
+    pose = get_pose(a.get("pose", "idle"), a.get("pose_end"), t, tt)
     figure(cv, W/2 - side * 190, G, **pose)
     if a.get("prop"): prop(cv, a["prop"], (W/2 + side * 250, a.get("py", 760)), t, tt, a)
 
@@ -270,6 +292,8 @@ SCENES = {"intro": sc_intro, "day1": sc_day1, "mood": sc_mood, "hours": sc_hours
           "beat": sc_beat, "compare": sc_compare, "bullets": sc_bullets, "counter": sc_counter}
 
 def run_scene(sc, cv, t, tt):
+    global CUR_TT
+    CUR_TT = tt
     fn = SCENES[sc["scene"]]
     fn(cv, t, tt, sc) if fn.__code__.co_argcount == 4 else fn(cv, t, tt)
 
@@ -316,19 +340,34 @@ def plan(spec, dur, sil=None):
             d = (b - a) * w / tw; sc["caps"].append((c0, c0 + d, t)); c0 += d
     return [(v["a"], v["b"], spec["scenes"][si], v["caps"]) for si, v in sorted(scenes.items())]
 
+def draw_caption(im, text):
+    from PIL import ImageDraw, ImageFont
+    sz = 92
+    while True:
+        f = ImageFont.truetype(FONT, sz)
+        if sz <= 50 or f.getlength(text) <= W - 100: break
+        sz -= 4
+    ImageDraw.Draw(im).text((W / 2, 1560), text, font=f, fill=FG, anchor="mm", stroke_width=8, stroke_fill=(0, 0, 0))
+
 def frame(args):
     i, tl = args; T = i / FPS
-    cv = Canvas()
-    for a, b, name, caps in tl:
+    cv = Canvas(); caption, zoom, fade = None, 1.0, 1.0
+    for idx, (a, b, name, caps) in enumerate(tl):
         if a <= T < b or (name is tl[-1][2] and T >= b):
-            run_scene(name, cv, min(1.0, (T - a) / max(b - a, 1e-6)), T - a)
+            t = min(1.0, (T - a) / max(b - a, 1e-6)); tt = T - a
+            run_scene(name, cv, t, tt)
+            zoom = 1.0 + 0.06 * (t if idx % 2 == 0 else 1 - t)
+            fade = ease(tt / 0.18)
             for c0, c1, ch in caps:
-                if c0 <= T < c1 or (T >= c1 and (c0, c1, ch) == caps[-1] and name is tl[-1][2]):
-                    sz = 92
-                    while sz > 50 and font(sz).getlength(ch.upper()) / SS > W - 100: sz -= 4
-                    cv.text((W/2, 1560), ch.upper(), sz, c=FG, stroke=8)
+                if c0 <= T < c1 or (T >= c1 and (c0, c1, ch) == caps[-1] and name is tl[-1][2]): caption = ch.upper()
             break
-    return cv.out().tobytes()
+    im = cv.out()
+    if zoom > 1.001:
+        cw, chh = W / zoom, H / zoom; top = min(max(0, 760 - chh / 2), H - chh)
+        im = im.crop((int(W / 2 - cw / 2), int(top), int(W / 2 + cw / 2), int(top + chh))).resize((W, H), Image.BICUBIC)
+    if fade < 1: im = Image.blend(Image.new("RGB", (W, H), BG), im, fade)
+    if caption: draw_caption(im, caption)
+    return im.tobytes()
 
 def main():
     spec = json.load(open(sys.argv[1])); voice, out = sys.argv[2], sys.argv[3]
