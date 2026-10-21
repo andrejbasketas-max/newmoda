@@ -6,6 +6,16 @@
       "headers": {
         "x-api-key": "${API_KEY_21ST}"
       }
+    },
+    "nano-banana": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "nano-banana-mcp@1.0.3"
+      ],
+      "env": {
+        "GEMINI_API_KEY": "${GEMINI_API_KEY}"
+      }
     }
   }
 }

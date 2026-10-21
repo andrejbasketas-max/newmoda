@@ -1,2 +1,4 @@
 node_modules/
 __pycache__/
+.nano-banana-config.json
+generated_imgs/
