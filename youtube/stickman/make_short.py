@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""make_short.py spec.json  -> youtube/out/<id>.mp4, <id>-thumb-16x9.png, <id>-upload.md
+"""make_short.py spec.json [voice.mp3]  -> youtube/out/<id>.mp4, <id>-thumb-16x9.png, <id>-upload.md
 
 Spec: {"id","title","description","tags","thumb":{"words":[..],"prop":"phone","pose":"point","slash":true},"scenes":[{scene params, "text": narration}]}
 Voice is local Piper TTS (free). Each segment (split at . ? ! ,) is synthesised alone and joined with fixed pauses,
@@ -34,10 +34,12 @@ def thumb(spec, path):
 
 def main():
     spec = json.load(open(sys.argv[1])); sid = spec["id"]; os.makedirs(OUT, exist_ok=True)
+    ext = sys.argv[2] if len(sys.argv) > 2 else None  # optional ready-made voiceover (mp3/wav); timing from its pauses
     with tempfile.TemporaryDirectory() as tmp:
-        wav, starts = synth(spec, tmp)
+        wav, starts = (os.path.abspath(ext), None) if ext else synth(spec, tmp)
         json.dump(spec, open(f"{tmp}/spec.json", "w"))
-        subprocess.check_call([sys.executable, os.path.join(HERE, "render.py"), f"{tmp}/spec.json", wav, f"{OUT}/{sid}.mp4", starts])
+        cmd = [sys.executable, os.path.join(HERE, "render.py"), f"{tmp}/spec.json", wav, f"{OUT}/{sid}.mp4"] + ([starts] if starts else [])
+        subprocess.check_call(cmd)
     thumb(spec, f"{OUT}/{sid}-thumb-16x9.png")
     open(f"{OUT}/{sid}-upload.md", "w").write(
         f"# {sid}\n\n**Title:** {spec['title']}\n\n**Description:**\n```\n{spec['description']}\n```\n\n**Tags:** {', '.join(spec.get('tags', []))}\n")

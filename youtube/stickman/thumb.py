@@ -37,11 +37,11 @@ def make_generic(t, w, h, path):
     words = t.get("words", ["WATCH", "THIS"])
     cols = [FG, ACC, WARN]
     for i, wd in enumerate(words[:3]):
-        cv.text((60, 230 + i * 200), wd, 175 if len(max(words, key=len)) <= 6 else 140, c=cols[i], anchor="lm")
+        cv.text((60, 230 + i * 200), wd, 175 if len(max(words, key=len)) <= 6 else 118, c=cols[i], anchor="lm")
     gx, ground = 1110, 700
-    pose = dict(R.POSES[t.get("pose", "point")])
+    pose = dict(R.POSES[t.get("pose", "point")]); pose.update(t.get("pose_over", {}))
     hl, hr_, hd = figure(cv, gx, ground, **pose)
-    pos = (hr_[0] - 30, hr_[1] - 70) if t.get("pose", "point") == "point" else (gx - 280, 330)
+    pos = (hr_[0] - 30, hr_[1] - 70) if t.get("pose", "point") == "point" else (gx - 250, 110)
     prop_name = t.get("prop")
     if prop_name:
         R.prop(cv, prop_name, pos, 1.0, 0.3, t)

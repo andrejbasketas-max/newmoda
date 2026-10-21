@@ -11,7 +11,7 @@ Izlaz: `youtube/out/<ID>.mp4`, `<ID>-thumb-16x9.png`, `<ID>-upload.md`. Primer s
 ## Raspored (dan 1 = 22. oktobar; izračunaj dan iz današnjeg datuma)
 | Dan | Datum | Napravi |
 |---|---|---|
-| 1 | 22.10 | B1, A3 |
+| 1 | 22.10 | B1 (A3 je već gotov) |
 | 2 | 23.10 | A4 |
 | 3 | 24.10 | B2, A5 |
 | 4 | 25.10 | A6 |
@@ -27,7 +27,7 @@ Izlaz: `youtube/out/<ID>.mp4`, `<ID>-thumb-16x9.png`, `<ID>-upload.md`. Primer s
 | 14 | 4.11 | DUGI 2 (Stone Age brain) + onemogući zakazani zadatak |
 
 Teme su u `youtube/plan-14-dana.md` (serija A „What happens to your brain if you…“, serija B „Why you…“).
-A1 i A2 su već gotovi.
+A1, A2 i A3 su već gotovi. Za bolji glas: VidIQ voiceover (Brian) pa `make_short.py spec.json glas.mp3`; besplatan lokalni glas je podrazumevan.
 
 ## Pravila za svaki video
 1. **Svaka činjenica mora imati izvor** koji znaš (autor, godina, časopis) i koji staje u opis. Ako nisi siguran u

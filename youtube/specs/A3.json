@@ -1,0 +1,104 @@
+{
+ "id": "A3",
+ "title": "What happens to your brain if you stay awake for 24 hours?",
+ "description": "After 24 hours awake, your attention and coordination can be as impaired as if you were over the legal driving limit. Here is the short version.\n\nSource: Dawson & Reid, 1997, Nature (\"Fatigue, alcohol and performance impairment\").\n\n#shorts #psychology #sleep",
+ "tags": [
+  "sleep deprivation",
+  "brain",
+  "psychology",
+  "all nighter",
+  "awake 24 hours",
+  "shorts"
+ ],
+ "thumb": {
+  "words": [
+   "DRUNK",
+   "NO ALCOHOL"
+  ],
+  "prop": "brain",
+  "pose": "think",
+  "pose_over": {
+   "lean": 14
+  }
+ },
+ "scenes": [
+  {
+   "scene": "beat",
+   "headline": "24 HOURS",
+   "pose": "idle",
+   "pose_end": "tired",
+   "prop": "clock",
+   "side": "right",
+   "py": 700,
+   "text": "What happens to your brain if you stay awake for twenty-four hours?"
+  },
+  {
+   "scene": "counter",
+   "from": 0,
+   "to": 17,
+   "unit": "HOURS AWAKE",
+   "label": "like a blood alcohol of 0.05",
+   "pose": "tired",
+   "text": "By hour seventeen, your performance on attention and coordination tests drops to what you'd see at a blood alcohol level of point zero five."
+  },
+  {
+   "scene": "counter",
+   "from": 17,
+   "to": 24,
+   "unit": "HOURS AWAKE",
+   "label": "like a blood alcohol of 0.10",
+   "pose": "tired",
+   "color": [
+    251,
+    146,
+    60
+   ],
+   "text": "Keep going to twenty-four hours, and it looks like point one zero."
+  },
+  {
+   "scene": "beat",
+   "headline": "ABOVE THE LIMIT",
+   "pose": "tired",
+   "pose_end": "shock",
+   "prop": "meter",
+   "label": "IMPAIRMENT",
+   "from": 0.4,
+   "to": 0.92,
+   "color": [
+    239,
+    68,
+    68
+   ],
+   "py": 800,
+   "text": "That's above the legal driving limit in many countries."
+  },
+  {
+   "scene": "compare",
+   "headline": "SAME RESULT?",
+   "left": "A FEW DRINKS",
+   "right": "NO SLEEP",
+   "left_pose": "happy",
+   "right_pose": "tired",
+   "text": "You wouldn't drive after a few drinks. A sleepless night can make you just as impaired."
+  },
+  {
+   "scene": "beat",
+   "headline": "SO WHAT HAPPENS?",
+   "pose": "think",
+   "prop": "q",
+   "side": "right",
+   "py": 760,
+   "text": "So what happens if you stay awake for twenty-four hours?"
+  },
+  {
+   "scene": "beat",
+   "headline": "DRUNK BRAIN",
+   "pose": "tired",
+   "pose_end": "shock",
+   "prop": "brain",
+   "side": "right",
+   "py": 720,
+   "text": "Your brain acts drunk, without a drop of alcohol."
+  }
+ ]
+}

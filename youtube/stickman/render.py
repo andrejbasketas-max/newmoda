@@ -84,7 +84,9 @@ def phone(cv, c0, ang=0, scroll=0.0, glow=True):
 
 def label(cv, s, y=250, size=110, c=ACC):
     k = 0.75 + 0.25 * ease(CUR_TT / 0.25)  # headline pops in
-    cv.text((W/2, y), s, int(size * k), c=c)
+    size = int(size * k)
+    while size > 40 and font(size).getlength(s) / SS > W - 100: size -= 4  # never wider than the frame
+    cv.text((W/2, y), s, size, c=c)
 
 # ---- scenes: f(cv, t, tt) with t = 0..1 progress in scene, tt = seconds in scene -------------------
 G = 1280  # ground line
@@ -306,7 +308,8 @@ def silences(voice):
                        capture_output=True, text=True).stderr
     st = [float(x) for x in re.findall(r"silence_start: ([\d.]+)", r)]
     en = [float(x) for x in re.findall(r"silence_end: ([\d.]+)", r)]
-    return [(a + b) / 2 for a, b in zip(st, en)]
+    d = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", voice]))
+    return [(a + b) / 2 for a, b in zip(st, en) if a > 0.3 and b < d - 0.05]  # drop leading/trailing silence
 
 def chunk(words):
     ww = [weight(x) + 3 for x in words]; out, cur, cw = [], [], 0
