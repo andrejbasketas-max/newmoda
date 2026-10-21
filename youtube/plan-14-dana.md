@@ -90,3 +90,9 @@ Dugi se skuplja iz materijala koji već snimiš za Shortove. Tvoj srpski dugi (�
 ## Šta mi još treba
 - Dan i sat kad ti je publika aktivna (Studio → Analytics → Audience), pa objavljuješ tad.
 - Kad me pozoveš, pišem skriptu za svaki Short pomoću `/yt-script`.
+
+
+## Ažuriranje (21. okt)
+- Glas je sada lokalni (Piper), pa više ne troši VidIQ kredite. Pipeline: `youtube/stickman/make_short.py`.
+- A2 je promenjen na „6 hours a night“ da odgovara istraživanju (Van Dongen i sar., 2003).
+- Dnevni raspored i pravila su u `youtube/DAILY.md`. A1 i A2 su gotovi.

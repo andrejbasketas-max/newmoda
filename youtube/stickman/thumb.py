@@ -28,3 +28,22 @@ def make(w, h, path):
 if __name__ == "__main__":
     out = sys.argv[1]
     make(1280, 720, f"{out}/A1-thumb-16x9.png"); make(1080, 1920, f"{out}/A1-thumb-9x16.png")
+
+
+def make_generic(t, w, h, path):
+    """t: {"words": ["PHONE","DOWN"], "prop": "phone", "pose": "point", "slash": false}"""
+    R.W, R.H = w, h
+    cv = Canvas()
+    words = t.get("words", ["WATCH", "THIS"])
+    cols = [FG, ACC, WARN]
+    for i, wd in enumerate(words[:3]):
+        cv.text((60, 230 + i * 200), wd, 175 if len(max(words, key=len)) <= 6 else 140, c=cols[i], anchor="lm")
+    gx, ground = 1110, 700
+    pose = dict(R.POSES[t.get("pose", "point")])
+    hl, hr_, hd = figure(cv, gx, ground, **pose)
+    pos = (hr_[0] - 30, hr_[1] - 70) if t.get("pose", "point") == "point" else (gx - 280, 330)
+    prop_name = t.get("prop")
+    if prop_name:
+        R.prop(cv, prop_name, pos, 1.0, 0.3, t)
+        if t.get("slash"): slash(cv, pos, 140)
+    cv.out().save(path)

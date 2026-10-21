@@ -1,0 +1,19 @@
+{"id": "A2",
+ "title": "What happens to your brain if you sleep 6 hours a night?",
+ "description": "You feel fine on six hours of sleep. That is exactly the problem. In one well-known study, people kept to six hours a night for two weeks tested like people who had skipped sleep for up to two nights.\n\nSource: Van Dongen et al., 2003, Sleep (\"The cumulative cost of additional wakefulness\").\n\n#shorts #psychology #sleep",
+ "tags": ["sleep", "brain", "psychology", "sleep deprivation", "focus", "shorts"],
+ "thumb": {"words": ["YOU", "CAN'T", "TELL"], "prop": "moon", "pose": "tired"},
+ "scenes": [
+  {"scene": "beat", "headline": "6 HOURS", "pose": "idle", "prop": "moon", "side": "right", "py": 700,
+   "text": "What happens to your brain if you sleep only six hours a night for two weeks?"},
+  {"scene": "beat", "headline": "FEELS FINE", "pose": "happy", "prop": "meter", "label": "HOW YOU FEEL", "from": 0.8, "to": 0.8, "py": 800,
+   "text": "You feel fine. That's the trap."},
+  {"scene": "counter", "from": 0, "to": 14, "unit": " DAYS", "label": "6 hours a night", "pose": "tired",
+   "text": "In one well-known study, people limited to six hours a night for two weeks performed on attention tests like people who had skipped sleep for up to two nights."},
+  {"scene": "beat", "headline": "NOT AWARE", "pose": "tired", "prop": "meter", "label": "FOCUS", "from": 0.85, "to": 0.3, "py": 800,
+   "text": "And they didn't feel that impaired."},
+  {"scene": "beat", "headline": "FOCUS SLIPS", "pose": "tired", "prop": "brain", "side": "right", "py": 720,
+   "text": "Your focus slips, your reactions slow, and you don't notice."},
+  {"scene": "beat", "headline": "YOU CAN'T TELL", "pose": "think", "prop": "q", "side": "right", "py": 760,
+   "text": "So what happens if you sleep six hours? You get worse, and you can't tell."}
+ ]}

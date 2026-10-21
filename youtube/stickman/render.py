@@ -150,7 +150,128 @@ def sc_notice(cv, t, tt):
         for a, b in zip(pts, pts[1:]): cv.line(a, b, w=10, c=ACC)
     cv.circle((ex, ey), 34 * pulse, fill=ACC)
 
-SCENES = {"intro": sc_intro, "day1": sc_day1, "mood": sc_mood, "hours": sc_hours, "reach": sc_reach, "notice": sc_notice}
+# ---- generic, parameter-driven scenes -----------------------------------------------------------------
+POSES = {
+    "idle": dict(upL=20, loL=10, upR=-20, loR=-10, smile=0.4),
+    "happy": dict(upL=-150, loL=-170, upR=150, loR=170, smile=0.9),
+    "tired": dict(upL=8, loL=4, upR=-8, loR=-4, lean=14, smile=-0.7, legs=8),
+    "shock": dict(upL=-120, loL=-100, upR=120, loR=100, smile=-0.9),
+    "think": dict(upL=20, loL=10, upR=-35, loR=-165, smile=0.0),
+    "point": dict(upL=20, loL=10, upR=-95, loR=-95, smile=0.3),
+    "calm": dict(upL=35, loL=45, upR=-35, loR=-45, smile=0.8),
+}
+YEL, GRN, RED = (253, 224, 71), (74, 222, 128), (239, 68, 68)
+
+def heart(cv, c0, r, col):
+    pts = []
+    for k in range(60):
+        a = k / 60 * 2 * math.pi
+        pts.append((c0[0] + r * 16 * math.sin(a) ** 3 / 16 * 1.0, c0[1] - r * (13 * math.cos(a) - 5 * math.cos(2*a) - 2 * math.cos(3*a) - math.cos(4*a)) / 16))
+    cv.d.polygon([(x * SS, y * SS) for x, y in pts], fill=col)
+
+def prop(cv, name, c0, t, tt, a):
+    x, y = c0
+    lo, hi = a.get("from", 0.5), a.get("to", 0.5)
+    v = lo + (hi - lo) * ease(t)
+    if name == "phone": phone(cv, c0, ang=-8, scroll=tt)
+    elif name == "clock":
+        cv.circle(c0, 150, outline=FG, w=12)
+        for k in range(12):
+            q = math.radians(k * 30); cv.line((x + math.sin(q) * 125, y - math.cos(q) * 125), (x + math.sin(q) * 142, y - math.cos(q) * 142), w=7)
+        am = tt * 220
+        cv.line(c0, (x + math.sin(math.radians(am)) * 115, y - math.cos(math.radians(am)) * 115), w=9, c=ACC)
+        cv.line(c0, (x + math.sin(math.radians(tt * 18)) * 75, y - math.cos(math.radians(tt * 18)) * 75), w=12)
+    elif name == "moon":
+        cv.circle(c0, 110, fill=YEL); cv.circle((x + 55, y - 35), 98, fill=BG)
+        for i, z in enumerate("ZZZ"): cv.text((x + 150 + i * 45, y - 60 - i * 55 - 8 * math.sin(tt * 3 + i)), z, 60 + i * 18, c=ACC)
+    elif name == "brain":
+        pulse = 1 + 0.04 * math.sin(tt * 4)
+        for sx in (-1, 1): cv.circle((x + sx * 52, y), 85 * pulse, outline=ACC, w=12)
+        cv.line((x, y - 80), (x, y + 80), w=6, c=ACC)
+        for k in range(3):
+            cv.arc((x - 52, y + k * 30 - 30), 40, 200, 340, w=6, c=ACC); cv.arc((x + 52, y + k * 30 - 30), 40, 200, 340, w=6, c=ACC)
+    elif name == "bulb":
+        cv.circle((x, y - 20), 80, fill=YEL); cv.rect((x - 35, y + 50, x + 35, y + 100), r=10, fill=DIM)
+        for k in range(8):
+            q = math.radians(k * 45 + tt * 20); cv.line((x + math.cos(q) * 105, y - 20 + math.sin(q) * 105), (x + math.cos(q) * 135, y - 20 + math.sin(q) * 135), w=8, c=YEL)
+    elif name == "battery":
+        cv.rect((x - 90, y - 150, x + 90, y + 150), r=24, outline=FG, w=10); cv.rect((x - 35, y - 175, x + 35, y - 150), r=6, fill=FG)
+        col = GRN if v > 0.5 else (WARN if v > 0.25 else RED)
+        cv.rect((x - 72, y + 132 - 264 * v, x + 72, y + 132), r=14, fill=col)
+    elif name == "meter":
+        cv.rect((x - 40, y - 200, x + 40, y + 200), r=30, outline=FG, w=8)
+        cv.rect((x - 28, y + 188 - 376 * v, x + 28, y + 188), r=22, fill=a.get("color") and tuple(a["color"]) or ACC)
+        cv.text((x, y - 245), a.get("label", ""), 56, c=FG)
+    elif name == "heart":
+        heart(cv, c0, 130 * (1 + 0.06 * math.sin(tt * 6)), RED)
+    elif name == "book":
+        cv.rect((x - 150, y - 90, x - 5, y + 90), r=8, fill=(30, 41, 59), outline=ACC, w=8); cv.rect((x + 5, y - 90, x + 150, y + 90), r=8, fill=(30, 41, 59), outline=ACC, w=8)
+        for k in range(4): cv.line((x - 120, y - 50 + k * 35), (x - 30, y - 50 + k * 35), w=6, c=DIM); cv.line((x + 30, y - 50 + k * 35), (x + 120, y - 50 + k * 35), w=6, c=DIM)
+    elif name == "calendar":
+        n = int(a.get("count", 7) * ease(t) + 0.99)
+        for i in range(a.get("count", 7)):
+            xx = x - 3.5 * 125 + i * 125 + 62
+            cv.rect((xx - 50, y - 70, xx + 50, y + 70), r=14, outline=ACC if i < n else DIM, w=8)
+            if i < n: cv.text((xx, y), str(i + 1), 60, c=ACC)
+    elif name == "eye":
+        pulse = 1 + 0.08 * math.sin(tt * 5)
+        for sg in (-1, 1):
+            pts = [(x + k, y + sg * 70 * pulse * (1 - (k / 130) ** 2)) for k in range(-130, 131, 10)]
+            for p, q in zip(pts, pts[1:]): cv.line(p, q, w=10, c=ACC)
+        cv.circle(c0, 34 * pulse, fill=ACC)
+    elif name == "sun":
+        for k in range(10):
+            q = math.radians(k * 36 + tt * 40); cv.line((x + math.cos(q) * 85, y + math.sin(q) * 85), (x + math.cos(q) * 130, y + math.sin(q) * 130), w=10, c=WARN)
+        cv.circle(c0, 62, fill=WARN)
+    elif name == "coffee":
+        cv.rect((x - 70, y - 40, x + 70, y + 90), r=20, outline=FG, w=10); cv.arc((x + 70, y + 20), 40, 270, 90, w=10)
+        for k in range(3): cv.arc((x - 30 + k * 30, y - 80 - 10 * math.sin(tt * 4 + k)), 18, 0, 180, w=6, c=DIM)
+    elif name == "q":
+        for i, s in enumerate("???"): cv.text((x + i * 55, y - i * 45 - 10 * math.sin(tt * 4 + i)), s, 90 + i * 16, c=WARN)
+    elif name == "text":
+        cv.text(c0, a.get("word", ""), a.get("size", 120), c=tuple(a["color"]) if a.get("color") else ACC)
+
+def sc_beat(cv, t, tt, a):
+    """headline + stickman (pose) + one prop. a: headline, sub, pose, prop, side, from, to, color."""
+    if a.get("headline"): label(cv, a["headline"], 230, a.get("hsize", 120), tuple(a["hcolor"]) if a.get("hcolor") else ACC)
+    if a.get("sub"): cv.text((W/2, 380), a["sub"], 60, c=WARN)
+    side = -1 if a.get("side", "right") == "left" else 1
+    pose = dict(POSES[a.get("pose", "idle")])
+    wob = 4 * math.sin(tt * 2.2)
+    pose["lean"] = pose.get("lean", 0) + wob * 0.4
+    figure(cv, W/2 - side * 190, G, **pose)
+    if a.get("prop"): prop(cv, a["prop"], (W/2 + side * 250, a.get("py", 760)), t, tt, a)
+
+def sc_compare(cv, t, tt, a):
+    label(cv, a.get("headline", ""), 230, 100, FG)
+    for k, (key, c) in enumerate((("left", WARN), ("right", ACC))):
+        cx = W/2 + (-1 if k == 0 else 1) * 250
+        cv.text((cx, 400), a.get(key, ""), 72, c=c)
+        pose = dict(POSES[a.get(key + "_pose", "idle")]); figure(cv, cx, G, **pose)
+    cv.line((W/2, 470), (W/2, G), w=6, c=DIM)
+
+def sc_bullets(cv, t, tt, a):
+    label(cv, a.get("headline", ""), 230, 100, ACC)
+    items = a.get("items", []); n = int(t * len(items) + 0.99)
+    for i, s in enumerate(items):
+        y = 520 + i * 190; on = i < n
+        cv.rect((120, y - 70, W - 120, y + 70), r=30, outline=ACC if on else DIM, w=8)
+        cv.text((W/2, y), s if on else "", 64, c=FG)
+    figure(cv, W/2, G + 120, **POSES["think"]) if a.get("figure") else None
+
+def sc_counter(cv, t, tt, a):
+    v = a.get("from", 0) + (a.get("to", 7) - a.get("from", 0)) * ease(t * 1.3)
+    cv.text((W/2, 400), f"{v:.0f}", 330, c=tuple(a["color"]) if a.get("color") else ACC)
+    cv.text((W/2, 590), a.get("unit", "").strip(), 110, c=tuple(a["color"]) if a.get("color") else ACC)
+    cv.text((W/2, 700), a.get("label", ""), 64, c=FG)
+    figure(cv, W/2, G + 60, **POSES[a.get("pose", "idle")])
+
+SCENES = {"intro": sc_intro, "day1": sc_day1, "mood": sc_mood, "hours": sc_hours, "reach": sc_reach, "notice": sc_notice,
+          "beat": sc_beat, "compare": sc_compare, "bullets": sc_bullets, "counter": sc_counter}
+
+def run_scene(sc, cv, t, tt):
+    fn = SCENES[sc["scene"]]
+    fn(cv, t, tt, sc) if fn.__code__.co_argcount == 4 else fn(cv, t, tt)
 
 # ---- timing and captions --------------------------------------------------------------------------
 def weight(s): return len(s) + 6 * sum(s.count(p) for p in ".?!") + 2 * s.count(",")
@@ -171,13 +292,17 @@ def chunk(words):
     if cur: out.append((" ".join(cur), cw))
     return out
 
-def plan(spec, dur, sil=None):
-    """Segments are split at . ? ! , - each ends in a pause. If the voiceover has exactly one detected pause
-    per segment boundary the pauses are the boundaries; otherwise timing falls back to proportional."""
-    segs = []  # (scene index, text)
+def segments(spec):
+    segs = []
     for si, sc in enumerate(spec["scenes"]):
         for m in re.findall(r"[^.?!,]+[.?!,]?", sc["text"]):
             if m.strip(): segs.append((si, m.strip()))
+    return segs
+
+def plan(spec, dur, sil=None):
+    """Segments are split at . ? ! , - each ends in a pause. If the voiceover has exactly one detected pause
+    per segment boundary the pauses are the boundaries; otherwise timing falls back to proportional."""
+    segs = segments(spec)
     if sil is not None and len(sil) == len(segs) - 1:
         bounds = [0.0] + list(sil) + [dur]
     else:
@@ -189,24 +314,30 @@ def plan(spec, dur, sil=None):
         ch = chunk(text.split()); tw = sum(w for _, w in ch); c0 = a
         for t, w in ch:
             d = (b - a) * w / tw; sc["caps"].append((c0, c0 + d, t)); c0 += d
-    return [(v["a"], v["b"], spec["scenes"][si]["scene"], v["caps"]) for si, v in sorted(scenes.items())]
+    return [(v["a"], v["b"], spec["scenes"][si], v["caps"]) for si, v in sorted(scenes.items())]
 
 def frame(args):
     i, tl = args; T = i / FPS
     cv = Canvas()
     for a, b, name, caps in tl:
-        if a <= T < b or (name == tl[-1][2] and T >= b):
-            SCENES[name](cv, min(1.0, (T - a) / max(b - a, 1e-6)), T - a)
+        if a <= T < b or (name is tl[-1][2] and T >= b):
+            run_scene(name, cv, min(1.0, (T - a) / max(b - a, 1e-6)), T - a)
             for c0, c1, ch in caps:
-                if c0 <= T < c1 or (T >= c1 and (c0, c1, ch) == caps[-1] and name == tl[-1][2]):
-                    cv.text((W/2, 1560), ch.upper(), 92, c=FG, stroke=8)
+                if c0 <= T < c1 or (T >= c1 and (c0, c1, ch) == caps[-1] and name is tl[-1][2]):
+                    sz = 92
+                    while sz > 50 and font(sz).getlength(ch.upper()) / SS > W - 100: sz -= 4
+                    cv.text((W/2, 1560), ch.upper(), sz, c=FG, stroke=8)
             break
     return cv.out().tobytes()
 
 def main():
     spec = json.load(open(sys.argv[1])); voice, out = sys.argv[2], sys.argv[3]
     dur = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", voice]))
-    tl = plan(spec, dur, silences(voice)); n = int((dur + 0.5) * FPS)
+    if len(sys.argv) > 4:  # exact segment starts written by make_short.py
+        starts = json.load(open(sys.argv[4])); tl = plan(spec, dur, starts[1:])
+    else:
+        tl = plan(spec, dur, silences(voice))
+    n = int((dur + 0.5) * FPS)
     ff = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
                            "-i", "-", "-i", voice, "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
                            "-af", "apad", "-c:a", "aac", "-b:a", "192k", "-t", f"{n / FPS:.3f}", "-movflags", "+faststart", out], stdin=subprocess.PIPE)
