@@ -6,6 +6,8 @@ sped up/down to fit the narration, cropped to hide browser chrome and sidebars).
 sentence is synthesised alone so captions and scenes follow the voice exactly. Cut/hide decisions live in SECTIONS.
 """
 import json, os, subprocess, sys, tempfile, wave
+CAPSTYLE_OUTLINE = "borderw=9:bordercolor=black"
+CAPSTYLE_BOX = "box=1:boxcolor=black@0.62:boxborderw=22:borderw=0"  # readable over dense screen text
 FILL = "scale=1920:1080:force_original_aspect_ratio=increase:flags=lanczos,crop=1920:1080"
 FIT = "scale=1920:-2:flags=lanczos,pad=1920:1080:0:(1080-ih)/2:black"
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
@@ -103,13 +105,13 @@ def build_screen(sec, raw, tmp):
     for i, (c0, c1, text) in enumerate(caps):
         open(f"{tmp}/cap{i}.txt", "w").write(text.upper())
         nxt = f"c{i}"
-        f.append(f"[{cur}]drawtext=fontfile={FONT}:textfile={tmp}/cap{i}.txt:expansion=none:fontsize=84:fontcolor=white:borderw=9:bordercolor=black"
+        f.append(f"[{cur}]drawtext=fontfile={FONT}:textfile={tmp}/cap{i}.txt:expansion=none:fontsize=84:fontcolor=white:{CAPSTYLE_BOX if sec.get('src') != 'hook' else CAPSTYLE_OUTLINE}"
                  f":x=(w-text_w)/2:y=h-200:enable='between(t,{c0:.3f},{c1 if i < len(caps) - 1 else T + 5:.3f})'[{nxt}]"); cur = nxt
     out = f"{tmp}/{sec['id']}.mp4"
     src = os.environ.get("HOOK_VIDEO") if sec.get("src") == "hook" else raw
     subprocess.check_call(["ffmpeg", "-loglevel", "error", "-y", "-i", src, "-i", wav,
         "-filter_complex", ";".join(f), "-map", f"[{cur}]", "-map", "1:a", "-af", "apad", "-t", f"{T:.3f}", "-r", "30",
-        "-c:v", "libx264", "-preset", "medium", "-crf", "19", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", out])
+        "-c:v", "libx264", "-preset", "medium", "-crf", "23", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", out])
     return out
 
 import contextlib
