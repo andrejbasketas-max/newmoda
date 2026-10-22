@@ -14,19 +14,19 @@ CROPS = {"claude": (225, 90, 1055, 630), "full": (0, 90, 1280, 630), "hook": (0,
 BEAT = dict(scene="beat", side="right", py=480)
 
 SECTIONS = [
- dict(id="intro", kind="screen", src="hook", crop="hook", sh=780, oy=100, badge="FREE METHOD", parts=[(0.5, 3.5), (9, 12), (22, 25), (30, 33)],
+ dict(id="intro", kind="screen", src="hook", crop="hook", sh=780, oy=100, badge="FREE METHOD", bsize=96, parts=[(0.5, 3.5), (9, 12), (22, 25), (30, 33)],
    text="Want to make stickman videos like this, for free? Here's the exact workflow, from idea to finished clips."),
- dict(id="s1", kind="screen", crop="claude", badge="STEP 1  PICK A MODEL", parts=[(55, 72)],
+ dict(id="s1", kind="screen", crop="claude", badge="STEP 1  PICK A MODEL", parts=[(58, 74)],
    text="Step one. Give Claude a model: a video that already works in your niche. It studies the structure and the pacing. You're learning the pattern, never copying the words."),
- dict(id="s2", kind="screen", crop="claude", badge="STEP 2  NICHE AND TITLES", parts=[(78, 95), (108, 122)],
+ dict(id="s2", kind="screen", crop="claude", badge="STEP 2  NICHE AND TITLES", parts=[(85, 100), (113, 125)],
    text="Step two. Claude suggests the niche, the audience and a list of title ideas that follow the same formula. Pick one you can make your own."),
- dict(id="s3", kind="screen", crop="claude", badge="STEP 3  SCRIPT AND BEATS", parts=[(125, 145), (230, 262)],
+ dict(id="s3", kind="screen", crop="claude", badge="STEP 3  SCRIPT AND BEATS", parts=[(130, 150), (246, 270)],
    text="Step three. Choose the length, and Claude writes a short script. Then it splits the script into beats, each with an image prompt, a camera angle, lighting and mood, so every scene keeps the same hand-drawn style."),
- dict(id="s4", kind="screen", crop="full", badge="STEP 4  GENERATE IMAGES", parts=[(171, 176), (272, 276), (290, 300)],
+ dict(id="s4", kind="screen", crop="full", badge="STEP 4  GENERATE IMAGES", parts=[(176, 196), (200, 212), (295, 300), (309, 313)],
    text="Step four. Paste the image prompts into Google Flow and generate. In a minute or two you have a full set of consistent stickman scenes."),
- dict(id="s5a", kind="screen", crop="claude", badge="STEP 5  ANIMATE", parts=[(320, 327)],
+ dict(id="s5a", kind="screen", crop="claude", badge="STEP 5  ANIMATE", parts=[(322, 330)],
    text="Step five. Ask Claude for a short video prompt for every beat."),
- dict(id="s5b", kind="screen", crop="full", badge="STEP 5  ANIMATE", parts=[(341, 351), (385, 470), (480, 486)],
+ dict(id="s5b", kind="screen", crop="full", badge="STEP 5  ANIMATE", parts=[(336, 356), (452, 470), (480, 500)],
    text="Pick a video model in Flow and animate each image into a clip. This takes a while, so let it run, and come back when the clips are ready."),
  dict(id="s6a", kind="screen", crop="full", badge="STEP 6  VOICEOVER", parts=[(545, 560), (570, 578)],
    text="Step six. Turn the script into a voiceover."),
@@ -67,7 +67,7 @@ def build_screen(sec, raw, tmp):
     f.append(f"[1:v][scr]overlay=x={ox}:y={oy}[bg]")
     open(f"{tmp}/badge.txt", "w").write(sec["badge"])
     cur = "bg"
-    f.append(f"[{cur}]drawtext=fontfile={FONT}:textfile={tmp}/badge.txt:expansion=none:fontsize=54:fontcolor=0x38bdf8:x=60:y=28[b0]"); cur = "b0"
+    f.append(f"[{cur}]drawtext=fontfile={FONT}:textfile={tmp}/badge.txt:expansion=none:fontsize={sec.get('bsize', 54)}:fontcolor=0x38bdf8:x=60:y=12[b0]"); cur = "b0"
     for i, (c0, c1, text) in enumerate(caps):
         open(f"{tmp}/cap{i}.txt", "w").write(text.upper())
         nxt = f"c{i}"

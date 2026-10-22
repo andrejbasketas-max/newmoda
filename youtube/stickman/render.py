@@ -90,7 +90,7 @@ def label(cv, s, y=250, size=110, c=ACC):
     cv.text((W/2, y), s, size, c=c)
 
 # ---- scenes: f(cv, t, tt) with t = 0..1 progress in scene, tt = seconds in scene -------------------
-G = 1280 if H > W else H - 120  # ground line
+G = 1280 if H > W else H - 170  # ground line
 
 def sc_intro(cv, t, tt):
     label(cv, "7 DAYS", 250, 150, FG); label(cv, "NO SCROLLING", 400, 96, ACC)
@@ -353,7 +353,7 @@ def draw_caption(im, text):
         f = ImageFont.truetype(FONT, sz)
         if sz <= 50 or f.getlength(text) <= W - 100: break
         sz -= 4
-    ImageDraw.Draw(im).text((W / 2, 1560 if H > W else H - 110), text, font=f, fill=FG, anchor="mm", stroke_width=8, stroke_fill=(0, 0, 0))
+    ImageDraw.Draw(im).text((W / 2, 1560 if H > W else H - 80), text, font=f, fill=FG, anchor="mm", stroke_width=8, stroke_fill=(0, 0, 0))
 
 def frame(args):
     i, tl = args; T = i / FPS
