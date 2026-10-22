@@ -112,15 +112,26 @@ def build_screen(sec, raw, tmp):
         "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", out])
     return out
 
+import contextlib
+
+@contextlib.contextmanager
+def workdir():
+    d = os.environ.get("WORKDIR")  # persistent folder: finished sections are reused after an interruption
+    if d:
+        os.makedirs(d, exist_ok=True); yield d
+    else:
+        with tempfile.TemporaryDirectory() as t: yield t
+
 def main():
     raw, final = os.path.abspath(sys.argv[1]), os.path.abspath(sys.argv[2])
     only = sys.argv[3].split(",") if len(sys.argv) > 3 else None
     parts = []; chapters = []; load_cls()
-    with tempfile.TemporaryDirectory() as tmp:
+    with workdir() as tmp:
         for sec in SECTIONS:
             if only and sec["id"] not in only: continue
-            d = f"{tmp}/{sec['id']}"; os.makedirs(d)
-            p = (build_cut if sec["kind"] == "cut" else build_screen)(sec, raw, d)
+            d = f"{tmp}/{sec['id']}"; os.makedirs(d, exist_ok=True)
+            p = f"{d}/{sec['id']}.mp4"
+            if not os.path.exists(p): p = (build_cut if sec["kind"] == "cut" else build_screen)(sec, raw, d)
             d_ = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", p]))
             chapters.append((sec["id"], d_)); print("built", sec["id"], round(d_, 1), "s", flush=True); parts.append(p)
         open(f"{tmp}/list.txt", "w").write("".join(f"file '{p}'\n" for p in parts))
