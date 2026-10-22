@@ -10,13 +10,12 @@ HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import render as R, make_short as MS
 
 FONT = "/usr/share/fonts/opentype/inter/Inter-ExtraBold.otf"
-CROPS = {"claude": (225, 90, 1055, 630), "full": (0, 90, 1280, 630)}  # x, y, w, h in the 1280x720 source
+CROPS = {"claude": (225, 90, 1055, 630), "full": (0, 90, 1280, 630), "hook": (0, 0, 1080, 720)}  # x, y, w, h in the 1280x720 source
 BEAT = dict(scene="beat", side="right", py=480)
 
 SECTIONS = [
- dict(id="intro", kind="cut", scenes=[
-   dict(BEAT, headline="FREE METHOD", pose="happy", prop="sun", text="Want to make stickman videos for free?"),
-   dict(BEAT, headline="IDEA TO CLIPS", pose="point", prop="bulb", text="Here's the exact workflow, from idea to finished clips.")]),
+ dict(id="intro", kind="screen", src="hook", crop="hook", sh=780, oy=100, badge="FREE METHOD", parts=[(0.5, 3.5), (9, 12), (22, 25), (30, 33)],
+   text="Want to make stickman videos like this, for free? Here's the exact workflow, from idea to finished clips."),
  dict(id="s1", kind="screen", crop="claude", badge="STEP 1  PICK A MODEL", parts=[(55, 72)],
    text="Step one. Give Claude a model: a video that already works in your niche. It studies the structure and the pacing. You're learning the pattern, never copying the words."),
  dict(id="s2", kind="screen", crop="claude", badge="STEP 2  NICHE AND TITLES", parts=[(78, 95), (108, 122)],
@@ -58,14 +57,14 @@ def build_screen(sec, raw, tmp):
     caps = tl[0][3]
     L = sum(b - a for a, b in sec["parts"]); s = max(0.7, L / T)
     cx, cy, cw, ch = CROPS[sec["crop"]]
-    sh = 740; sw = int(round(sh * cw / ch / 2) * 2); ox = (1920 - sw) // 2
+    sh = sec.get("sh", 740); sw = int(round(sh * cw / ch / 2) * 2); ox = (1920 - sw) // 2; oy = sec.get("oy", 110)
     f = []
     for i, (a, b) in enumerate(sec["parts"]):
         f.append(f"[0:v]trim=start={a}:end={b},setpts=PTS-STARTPTS,fps=30[p{i}]")
     n = len(sec["parts"])
     f.append("".join(f"[p{i}]" for i in range(n)) + f"concat=n={n}:v=1:a=0[cat]")
     f.append(f"[cat]setpts=PTS/{s:.4f},crop={cw}:{ch}:{cx}:{cy},scale={sw}:{sh},tpad=stop_mode=clone:stop_duration=3[scr]")
-    f.append(f"[1:v][scr]overlay=x={ox}:y=110[bg]")
+    f.append(f"[1:v][scr]overlay=x={ox}:y={oy}[bg]")
     open(f"{tmp}/badge.txt", "w").write(sec["badge"])
     cur = "bg"
     f.append(f"[{cur}]drawtext=fontfile={FONT}:textfile={tmp}/badge.txt:expansion=none:fontsize=54:fontcolor=0x38bdf8:x=60:y=28[b0]"); cur = "b0"
@@ -75,7 +74,8 @@ def build_screen(sec, raw, tmp):
         f.append(f"[{cur}]drawtext=fontfile={FONT}:textfile={tmp}/cap{i}.txt:expansion=none:fontsize=72:fontcolor=white:borderw=8:bordercolor=black"
                  f":x=(w-text_w)/2:y=930:enable='between(t,{c0:.3f},{c1 if i < len(caps) - 1 else T + 5:.3f})'[{nxt}]"); cur = nxt
     out = f"{tmp}/{sec['id']}.mp4"
-    subprocess.check_call(["ffmpeg", "-loglevel", "error", "-y", "-i", raw, "-f", "lavfi", "-i", f"color=c=0x0f172a:s=1920x1080:r=30:d={T + 3:.3f}", "-i", wav,
+    src = os.environ.get("HOOK_VIDEO") if sec.get("src") == "hook" else raw
+    subprocess.check_call(["ffmpeg", "-loglevel", "error", "-y", "-i", src, "-f", "lavfi", "-i", f"color=c=0x0f172a:s=1920x1080:r=30:d={T + 3:.3f}", "-i", wav,
         "-filter_complex", ";".join(f), "-map", f"[{cur}]", "-map", "2:a", "-af", "apad", "-t", f"{T:.3f}", "-r", "30",
         "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", out])
     return out
