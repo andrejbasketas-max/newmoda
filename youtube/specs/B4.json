@@ -1,0 +1,21 @@
+{"id": "B4",
+ "title": "Why you remember embarrassing moments forever",
+ "description": "You forgot what you ate last Tuesday, but you will never forget that one awkward sentence. Psychologists call part of this negativity bias: bad events tend to weigh more than good ones, and emotional moments are stored more strongly in memory.\n\nSources: Baumeister et al., 2001, Review of General Psychology (\"Bad is stronger than good\"); McGaugh, 2004, Annual Review of Neuroscience (\"The amygdala modulates the consolidation of memories of emotionally arousing experiences\").\n\n#shorts #psychology #memory",
+ "tags": ["embarrassing memories", "negativity bias", "psychology", "memory", "brain", "shorts"],
+ "thumb": {"words": ["CRINGE", "MEMORY"], "prop": "brain", "pose": "think", "pose_over": {"lean": 8}},
+ "scenes": [
+  {"scene": "beat", "headline": "LAST TUESDAY?", "pose": "idle", "prop": "q", "side": "right", "py": 760,
+   "text": "You forgot what you ate last Tuesday, but you'll never forget that one awkward sentence."},
+  {"scene": "beat", "headline": "WHY FOREVER?", "pose": "think", "prop": "clock", "side": "right", "py": 700,
+   "text": "Why do embarrassing moments last forever?"},
+  {"scene": "beat", "headline": "NEGATIVITY BIAS", "pose": "point", "prop": "bulb", "side": "right", "py": 700,
+   "text": "Psychologists have a name for it: negativity bias."},
+  {"scene": "compare", "headline": "WHAT STICKS", "left": "GOOD EVENT", "right": "BAD EVENT", "left_pose": "calm", "right_pose": "shock",
+   "text": "In a famous review, researchers found that bad events tend to have a stronger effect on us than good ones."},
+  {"scene": "beat", "headline": "STAMPED IN", "pose": "think", "pose_end": "shock", "prop": "meter", "label": "MEMORY", "from": 0.2, "to": 0.95, "color": [251, 146, 60], "py": 800,
+   "text": "And emotional moments get stamped into memory more strongly, because your brain flags them as important."},
+  {"scene": "beat", "headline": "ONCE USEFUL", "pose": "calm", "prop": "heart", "side": "right", "py": 700,
+   "text": "One idea is that remembering mistakes once helped us avoid danger."},
+  {"scene": "beat", "headline": "SO WHY?", "pose": "think", "prop": "eye", "side": "right", "py": 720,
+   "text": "So why do you remember embarrassing moments forever? Maybe your brain is just trying to keep you safe."}
+ ]}

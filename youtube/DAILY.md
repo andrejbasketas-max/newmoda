@@ -4,6 +4,9 @@ Svakog dana napravi video(e) za taj dan, pa pošalji korisniku ovde (SendUserFil
 za upload (naslov, opis, tagovi). **Ne objavljuj na YouTube** — korisnik ovo traži samo kao pravljenje videa i
 thumbnaila (YouTube upload nije dostupan: dnevna kvota Composio-a).
 
+## VAŽNO: glas
+VidIQ krediti su potrošeni (ostalo 5; jedan glas košta 14+). Obnavljaju se **10. novembra**. Do tada koristi **lokalni glas** (podrazumevan u `make_short.py`) i ne zovi `vidiq_voiceover_generate`. B4 je urađen umesto B1/B4 iz tabele (B1 i B4 gotovi).
+
 ## Priprema (nova sesija/kontejner)
 `bash youtube/stickman/setup.sh` (lokalni glas Piper, besplatan). Zatim `python3 youtube/stickman/make_short.py youtube/specs/<ID>.json`.
 Izlaz: `youtube/out/<ID>.mp4`, `<ID>-thumb-16x9.png`, `<ID>-upload.md`. Primer spec-a: `youtube/specs/A2.json`.
