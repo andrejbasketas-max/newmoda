@@ -270,7 +270,9 @@ def sc_compare(cv, t, tt, a):
     label(cv, a.get("headline", ""), 230, 100, FG)
     for k, (key, c) in enumerate((("left", WARN), ("right", ACC))):
         cx = W/2 + (-1 if k == 0 else 1) * 250
-        cv.text((cx, 400), a.get(key, ""), 72, c=c)
+        txt, sz = a.get(key, ""), 72
+        while sz > 36 and font(sz).getlength(txt) / SS > 480: sz -= 4  # each half is ~500 px wide
+        cv.text((cx, 400), txt, sz, c=c)
         pose = dict(POSES[a.get(key + "_pose", "idle")]); figure(cv, cx, G, **pose)
     cv.line((W/2, 470), (W/2, G), w=6, c=DIM)
 

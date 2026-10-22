@@ -1,0 +1,105 @@
+{
+ "id": "B1",
+ "title": "Why your brain keeps making you check your phone",
+ "description": "Why do you keep checking your phone when nothing new happened? Psychologists point to variable rewards: most checks give you nothing, some give you something good, and that unpredictability keeps the habit going.\n\nSources: Ferster & Skinner, 1957, Schedules of Reinforcement; Oulasvirta et al., 2012, Personal and Ubiquitous Computing (\"Habits make smartphone use more compulsive\").\n\n#shorts #psychology #brain",
+ "tags": [
+  "phone addiction",
+  "psychology",
+  "brain",
+  "variable reward",
+  "habits",
+  "shorts"
+ ],
+ "thumb": {
+  "words": [
+   "NEXT ONE",
+   "PAYS OFF?"
+  ],
+  "prop": "phone",
+  "pose": "point"
+ },
+ "scenes": [
+  {
+   "scene": "beat",
+   "headline": "WHY?",
+   "pose": "think",
+   "prop": "phone",
+   "side": "right",
+   "py": 740,
+   "text": "Why can't you stop reaching for your phone when you know nothing is there?"
+  },
+  {
+   "scene": "beat",
+   "headline": "VARIABLE REWARD",
+   "pose": "point",
+   "prop": "bulb",
+   "side": "right",
+   "py": 700,
+   "text": "Psychologists point to something called a variable reward."
+  },
+  {
+   "scene": "compare",
+   "headline": "EACH CHECK",
+   "left": "NOTHING",
+   "right": "SOMETHING GOOD",
+   "left_pose": "tired",
+   "right_pose": "happy",
+   "text": "Most checks give you nothing. Some give you something good."
+  },
+  {
+   "scene": "beat",
+   "headline": "CAN'T PREDICT",
+   "pose": "shock",
+   "prop": "meter",
+   "label": "URGE",
+   "from": 0.3,
+   "to": 0.9,
+   "color": [
+    251,
+    146,
+    60
+   ],
+   "py": 800,
+   "text": "And that unpredictability is exactly what keeps animals pressing a lever in classic experiments."
+  },
+  {
+   "scene": "beat",
+   "headline": "NEXT ONE MIGHT",
+   "pose": "point",
+   "pose_end": "idle",
+   "prop": "phone",
+   "side": "right",
+   "py": 740,
+   "text": "Your brain learns that the next check might be the one."
+  },
+  {
+   "scene": "beat",
+   "headline": "NO DECISION",
+   "pose": "calm",
+   "prop": "brain",
+   "side": "right",
+   "py": 720,
+   "text": "So you reach, without deciding to."
+  },
+  {
+   "scene": "bullets",
+   "headline": "ONE STUDY",
+   "items": [
+    "Checks are brief",
+    "They repeat all day",
+    "Cues trigger them"
+   ],
+   "figure": false,
+   "text": "In one study of smartphone habits, checks were brief, repeated and often triggered by context cues."
+  },
+  {
+   "scene": "beat",
+   "headline": "SO WHY?",
+   "pose": "think",
+   "prop": "eye",
+   "side": "right",
+   "py": 720,
+   "text": "So why can't you stop? Because the next one might pay off."
+  }
+ ]
+}
