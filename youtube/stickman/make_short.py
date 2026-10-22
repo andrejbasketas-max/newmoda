@@ -31,6 +31,7 @@ def synth(spec, tmp):
 def thumb(spec, path):
     import thumb as T
     T.make_generic(spec["thumb"], 1280, 720, path)
+    T.make_generic(spec["thumb"], 1080, 1920, path.replace("16x9", "9x16"))  # Shorts cover
 
 def main():
     spec = json.load(open(sys.argv[1])); sid = spec["id"]; os.makedirs(OUT, exist_ok=True)

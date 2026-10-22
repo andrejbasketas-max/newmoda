@@ -32,6 +32,9 @@ Izlaz: `youtube/out/<ID>.mp4`, `<ID>-thumb-16x9.png`, `<ID>-upload.md`. Primer s
 Teme su u `youtube/plan-14-dana.md` (serija A „What happens to your brain if you…“, serija B „Why you…“).
 A1, A2 i A3 su već gotovi. Za bolji glas: VidIQ voiceover (Brian) pa `make_short.py spec.json glas.mp3`; besplatan lokalni glas je podrazumevan.
 
+## Thumbnail
+`make_short.py` sada pravi **oba**: `<ID>-thumb-9x16.png` (1080×1920, za Shorts, šalji ovaj) i `<ID>-thumb-16x9.png` (za dugi video).
+
 ## Pravila za svaki video
 1. **Svaka činjenica mora imati izvor** koji znaš (autor, godina, časopis) i koji staje u opis. Ako nisi siguran u
    istraživanje, zameni ugao ili temu, ne izmišljaj. Nema brojeva koje ne možeš da potkrepiš.

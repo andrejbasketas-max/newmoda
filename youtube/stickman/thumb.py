@@ -31,10 +31,12 @@ if __name__ == "__main__":
 
 
 def make_generic(t, w, h, path):
-    """t: {"words": ["PHONE","DOWN"], "prop": "phone", "pose": "point", "slash": false}"""
+    """t: {"words": ["PHONE","DOWN"], "prop": "phone", "pose": "point", "slash": false}. Landscape if w > h, else vertical (Shorts)."""
     R.W, R.H = w, h
     cv = Canvas()
     words = t.get("words", ["WATCH", "THIS"])
+    if h > w:
+        return make_vertical(cv, t, words, w, h, path)
     cols = [FG, ACC, WARN]
     for i, wd in enumerate(words[:3]):
         cv.text((60, 230 + i * 200), wd, 175 if len(max(words, key=len)) <= 6 else 118, c=cols[i], anchor="lm")
@@ -45,5 +47,22 @@ def make_generic(t, w, h, path):
     prop_name = t.get("prop")
     if prop_name:
         R.prop(cv, prop_name, pos, 1.0, 0.3, t)
+        if t.get("slash"): slash(cv, pos, 140)
+    cv.out().save(path)
+
+
+def make_vertical(cv, t, words, w, h, path):
+    """9:16 cover: headline words stacked at the top, stickman + prop below. No text outside the safe middle."""
+    n = min(len(words), 3); cols = [FG, ACC, WARN]; step = 250 if n <= 2 else 195; y0 = 330 if n <= 2 else 250
+    for i, wd in enumerate(words[:3]):
+        sz = 330
+        while sz > 60 and R.font(sz).getlength(wd) / R.SS > w - 120: sz -= 6
+        cv.text((w / 2, y0 + i * step), wd, min(sz, 300 if n <= 2 else 215), c=cols[i])
+    ground = 1650
+    pose = dict(R.POSES[t.get("pose", "point")]); pose.update(t.get("pose_over", {}))
+    hl, hr_, hd = figure(cv, w / 2 + 40, ground, **pose)
+    pos = (hr_[0] - 30, hr_[1] - 70) if t.get("pose", "point") == "point" else (w / 2 + 40, 940 if n <= 2 else 985)
+    if t.get("prop"):
+        R.prop(cv, t["prop"], pos, 1.0, 0.3, t)
         if t.get("slash"): slash(cv, pos, 140)
     cv.out().save(path)
