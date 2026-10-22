@@ -1,6 +1,6 @@
-# Tutorial (duga verzija, 6:26): Free AI Stickman Videos — Claude + Google Flow Workflow
+# Tutorial (duga verzija, 6:27): Free AI Stickman Videos — Claude + Google Flow Workflow
 
-**Fajl:** `youtube/out/tutorial-long.mp4` (1920x1080, 6:26) · **Thumbnail:** `youtube/out/tutorial-thumb-16x9.png`
+**Fajl:** `youtube/out/tutorial-long.mp4` (1920x1080, 6:27) · **Thumbnail:** `youtube/out/tutorial-thumb-16x9.png`
 
 **Naslov:** Free AI Stickman Videos: Claude + Google Flow Workflow
 
