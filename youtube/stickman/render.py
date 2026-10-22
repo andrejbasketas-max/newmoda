@@ -11,7 +11,8 @@ import json, math, re, subprocess, sys
 from multiprocessing import Pool
 from PIL import Image, ImageDraw, ImageFont
 
-W, H, FPS, SS = 1080, 1920, 30, 2
+import os
+W, H, FPS, SS = int(os.environ.get("YT_W", 1080)), int(os.environ.get("YT_H", 1920)), 30, 2  # YT_W/YT_H=1920/1080 for landscape
 BG, FG, ACC, WARN, DIM = (15, 23, 42), (248, 250, 252), (56, 189, 248), (251, 146, 60), (71, 85, 105)
 FONT = "/usr/share/fonts/opentype/inter/Inter-ExtraBold.otf"
 LW = 14  # stick line width at 1x
@@ -89,7 +90,7 @@ def label(cv, s, y=250, size=110, c=ACC):
     cv.text((W/2, y), s, size, c=c)
 
 # ---- scenes: f(cv, t, tt) with t = 0..1 progress in scene, tt = seconds in scene -------------------
-G = 1280  # ground line
+G = 1280 if H > W else H - 120  # ground line
 
 def sc_intro(cv, t, tt):
     label(cv, "7 DAYS", 250, 150, FG); label(cv, "NO SCROLLING", 400, 96, ACC)
@@ -352,7 +353,7 @@ def draw_caption(im, text):
         f = ImageFont.truetype(FONT, sz)
         if sz <= 50 or f.getlength(text) <= W - 100: break
         sz -= 4
-    ImageDraw.Draw(im).text((W / 2, 1560), text, font=f, fill=FG, anchor="mm", stroke_width=8, stroke_fill=(0, 0, 0))
+    ImageDraw.Draw(im).text((W / 2, 1560 if H > W else H - 110), text, font=f, fill=FG, anchor="mm", stroke_width=8, stroke_fill=(0, 0, 0))
 
 def frame(args):
     i, tl = args; T = i / FPS
@@ -368,7 +369,7 @@ def frame(args):
             break
     im = cv.out()
     if zoom > 1.001:
-        cw, chh = W / zoom, H / zoom; top = min(max(0, 760 - chh / 2), H - chh)
+        cw, chh = W / zoom, H / zoom; top = min(max(0, (760 if H > W else H / 2 - 40) - chh / 2), H - chh)
         im = im.crop((int(W / 2 - cw / 2), int(top), int(W / 2 + cw / 2), int(top + chh))).resize((W, H), Image.BICUBIC)
     if fade < 1: im = Image.blend(Image.new("RGB", (W, H), BG), im, fade)
     if caption: draw_caption(im, caption)
@@ -384,7 +385,7 @@ def main():
     n = int((dur + 0.5) * FPS)
     ff = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
                            "-i", "-", "-i", voice, "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
-                           "-af", "apad", "-c:a", "aac", "-b:a", "192k", "-t", f"{n / FPS:.3f}", "-movflags", "+faststart", out], stdin=subprocess.PIPE)
+                           "-af", "apad", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", "-t", f"{n / FPS:.3f}", "-movflags", "+faststart", out], stdin=subprocess.PIPE)
     with Pool(4) as p:
         for k, buf in enumerate(p.imap(frame, ((i, tl) for i in range(n)), chunksize=4)):
             ff.stdin.write(buf)
