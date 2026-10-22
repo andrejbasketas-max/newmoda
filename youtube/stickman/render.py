@@ -281,7 +281,7 @@ def sc_bullets(cv, t, tt, a):
     label(cv, a.get("headline", ""), 230, 100, ACC)
     items = a.get("items", []); n = int(t * len(items) + 0.99)
     for i, s in enumerate(items):
-        y = 520 + i * 190; on = i < n
+        y = (520 + i * 190) if H > W else (400 + i * 170); on = i < n
         cv.rect((120, y - 70, W - 120, y + 70), r=30, outline=ACC if on else DIM, w=8)
         cv.text((W/2, y), s if on else "", 64, c=FG)
     figure(cv, W/2, G + 120, **POSES["think"]) if a.get("figure") else None
