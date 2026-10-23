@@ -1,0 +1,19 @@
+{"id": "A4",
+ "title": "What happens to your brain after 10 hours alone?",
+ "description": "What happens to your brain after ten hours with no social contact? In a brain imaging study, people who were isolated showed a craving-like response in the midbrain when they saw pictures of people together, similar to the response to food after fasting.\n\nSource: Tomova et al., 2020, Nature Neuroscience (\"Acute social isolation evokes midbrain craving responses similar to hunger\").\n\n#shorts #psychology #loneliness",
+ "tags": ["social isolation", "loneliness", "brain", "psychology", "social craving", "shorts"],
+ "thumb": {"words": ["SOCIAL", "HUNGER?"], "prop": "brain", "pose": "think", "pose_over": {"lean": 8}},
+ "scenes": [
+  {"scene": "beat", "headline": "10 HOURS ALONE", "pose": "idle", "pose_end": "tired", "prop": "clock", "side": "right", "py": 700,
+   "text": "What happens to your brain after ten hours completely alone?"},
+  {"scene": "beat", "headline": "NO CONTACT", "pose": "tired", "prop": "phone", "side": "right", "py": 740,
+   "text": "In a study published in Nature Neuroscience, people spent ten hours in a room with no social contact and no phone."},
+  {"scene": "beat", "headline": "BRAIN SCAN", "pose": "think", "prop": "brain", "side": "right", "py": 720,
+   "text": "Afterwards, brain scans showed that a region deep in the midbrain lit up when they saw pictures of people having fun together."},
+  {"scene": "compare", "headline": "SAME REGION", "left": "FOOD, WHEN HUNGRY", "right": "PEOPLE, AFTER ISOLATION", "left_pose": "happy", "right_pose": "shock",
+   "text": "The same region reacts to food when you're hungry."},
+  {"scene": "beat", "headline": "SOCIAL CRAVING", "pose": "shock", "prop": "heart", "side": "right", "py": 700,
+   "text": "Researchers described it as social craving."},
+  {"scene": "beat", "headline": "LIKE HUNGER?", "pose": "think", "prop": "eye", "side": "right", "py": 720,
+   "text": "So when you feel lonely, your brain may be reading it like hunger."}
+ ]}
