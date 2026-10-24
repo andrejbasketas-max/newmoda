@@ -289,7 +289,9 @@ def sc_bullets(cv, t, tt, a):
 def sc_counter(cv, t, tt, a):
     v = a.get("from", 0) + (a.get("to", 7) - a.get("from", 0)) * ease(t * 1.3)
     cv.text((W/2, 400), f"{v:.0f}", 330, c=tuple(a["color"]) if a.get("color") else ACC)
-    cv.text((W/2, 590), a.get("unit", "").strip(), 110, c=tuple(a["color"]) if a.get("color") else ACC)
+    unit = a.get("unit", "").strip(); usz = 110
+    while usz > 40 and font(usz).getlength(unit) / SS > W - 120: usz -= 4  # keep the unit inside the frame
+    cv.text((W/2, 590), unit, usz, c=tuple(a["color"]) if a.get("color") else ACC)
     cv.text((W/2, 700), a.get("label", ""), 64, c=FG)
     figure(cv, W/2, G + 60, **POSES[a.get("pose", "idle")])
 

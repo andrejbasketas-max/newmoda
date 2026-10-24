@@ -1,0 +1,19 @@
+{"id": "A5",
+ "title": "What happens if you end every shower with cold water?",
+ "description": "Dutch researchers asked more than three thousand adults to end their showers with 30 to 90 seconds of cold water for a month. They took about 29% fewer sick days off work, but they were not actually sick less often. One idea: the cold may simply have helped people feel able to get on with their day.\n\nSource: Buijze et al., 2016, PLOS ONE (\"The Effect of Cold Showering on Health and Work: A Randomized Controlled Trial\").\n\n#shorts #psychology #health",
+ "tags": ["cold shower", "cold water", "health", "psychology", "sick days", "shorts"],
+ "thumb": {"words": ["THE", "TWIST"], "prop": "q", "pose": "shock"},
+ "scenes": [
+  {"scene": "beat", "headline": "COLD ENDING", "pose": "idle", "prop": "meter", "label": "WATER TEMP", "from": 0.75, "to": 0.12, "py": 800,
+   "text": "What happens if you end every shower with cold water?"},
+  {"scene": "counter", "from": 0, "to": 3018, "unit": "ADULTS", "label": "30 days of cold endings", "pose": "idle",
+   "text": "Dutch researchers asked more than three thousand adults to finish their showers with thirty to ninety seconds of cold water for a month."},
+  {"scene": "counter", "from": 0, "to": 29, "unit": "% FEWER SICK DAYS", "label": "off work", "pose": "happy", "color": [74, 222, 128],
+   "text": "Afterwards, they took about twenty nine percent fewer sick days off work."},
+  {"scene": "beat", "headline": "THE TWIST", "pose": "shock", "prop": "q", "side": "right", "py": 760,
+   "text": "But here's the twist: they weren't actually sick less often."},
+  {"scene": "beat", "headline": "MINDSET?", "pose": "think", "prop": "brain", "side": "right", "py": 720,
+   "text": "One idea is that the cold simply helped people feel able to get on with their day."},
+  {"scene": "beat", "headline": "SO WHAT?", "pose": "calm", "prop": "sun", "side": "right", "py": 700,
+   "text": "So a cold shower may be less about your body, and more about your mindset."}
+ ]}

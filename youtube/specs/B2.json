@@ -1,0 +1,17 @@
+{"id": "B2",
+ "title": "Why you overthink at 3 a.m.",
+ "description": "Why does a small worry feel enormous in the middle of the night? Researchers have proposed the \"mind after midnight\" hypothesis: in the early hours, thinking tends to lean negative and judgment gets weaker. It is a hypothesis, not a settled fact.\n\nSource: Tubbs, Perlis & Basner, \"Mind After Midnight: Nocturnal Wakefulness, Behavioral Dysregulation, and Psychopathology\", Frontiers in Network Physiology.\n\n#shorts #psychology #sleep",
+ "tags": ["overthinking", "3am thoughts", "mind after midnight", "sleep", "psychology", "shorts"],
+ "thumb": {"words": ["MIND AFTER", "MIDNIGHT"], "prop": "moon", "pose": "tired"},
+ "scenes": [
+  {"scene": "beat", "headline": "3 A.M.", "pose": "idle", "pose_end": "tired", "prop": "moon", "side": "right", "py": 700,
+   "text": "Why does a small worry feel enormous at three in the morning?"},
+  {"scene": "beat", "headline": "MIND AFTER MIDNIGHT", "pose": "think", "prop": "brain", "side": "right", "py": 720,
+   "text": "Researchers have proposed an idea called the mind after midnight hypothesis."},
+  {"scene": "compare", "headline": "NIGHT VS MORNING", "left": "3 A.M.", "right": "AFTER SLEEP", "left_pose": "tired", "right_pose": "happy",
+   "text": "In the early hours, thinking seems to lean negative and judgment gets weaker, while you're tired and alone with your thoughts."},
+  {"scene": "beat", "headline": "JUST A HYPOTHESIS", "pose": "point", "prop": "q", "side": "right", "py": 760,
+   "text": "It's a hypothesis, not a settled fact."},
+  {"scene": "beat", "headline": "SLEEP ON IT", "pose": "calm", "prop": "sun", "side": "right", "py": 700,
+   "text": "So if a problem feels huge at night, give it a night's sleep before you decide how big it really is."}
+ ]}
