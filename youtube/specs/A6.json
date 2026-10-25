@@ -1,0 +1,17 @@
+{"id": "A6",
+ "title": "What happens to your brain after reading a novel for 9 days?",
+ "description": "What happens to your brain when you read a novel for nine days? In one small study, 21 students read the same novel over nine evenings while researchers scanned their brains each morning. The scans showed stronger connectivity in a part of the left temporal cortex linked to language and in a region linked to bodily sensation, and some of the changes were still there days after the book ended. It is a small study, so treat it as a promising sign, not proof.\n\nSource: Berns, Blaine, Prietula & Pye, 2013, Brain Connectivity (\"Short- and Long-Term Effects of a Novel on Connectivity in the Brain\").\n\n#shorts #psychology #reading",
+ "tags": ["reading", "brain", "psychology", "neuroscience", "novel", "shorts"],
+ "thumb": {"words": ["PAGES", "STAY"], "prop": "book", "pose": "happy"},
+ "scenes": [
+  {"scene": "beat", "headline": "9 DAYS", "pose": "idle", "pose_end": "happy", "prop": "book", "side": "right", "py": 700,
+   "text": "What happens to your brain when you read a novel for nine days?"},
+  {"scene": "counter", "from": 0, "to": 21, "unit": "STUDENTS", "label": "one novel, nine evenings", "pose": "idle",
+   "text": "In one small study, twenty one students read the same novel over nine evenings, while researchers scanned their brains each morning."},
+  {"scene": "beat", "headline": "LANGUAGE AREAS", "pose": "think", "prop": "brain", "side": "right", "py": 720,
+   "text": "The scans showed stronger connectivity in a part of the left temporal cortex linked to language, and in a region linked to bodily sensation."},
+  {"scene": "beat", "headline": "STILL THERE", "pose": "shock", "prop": "calendar", "count": 5, "side": "right", "py": 700,
+   "text": "Some of those changes were still there five days after the book ended."},
+  {"scene": "beat", "headline": "A TRACE", "pose": "calm", "prop": "heart", "side": "right", "py": 700,
+   "text": "So reading may leave a trace in your brain for days. A small study, but a promising one."}
+ ]}
