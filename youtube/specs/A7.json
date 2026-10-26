@@ -1,0 +1,17 @@
+{"id": "A7",
+ "title": "What happens to your taste after cutting sugar for 3 months?",
+ "description": "What happens to your sense of sweetness when you eat less sugar for three months? In one small study, 13 people cut the sugar in their diet by about 40 percent while 16 kept eating normally. By the third month the low-sugar group rated puddings about 40 percent sweeter than the comparison group did, but they did not find the sweetness more or less pleasant. When they went back to their usual diet, their sugar intake and their taste ratings returned to normal. It is a small study, so treat it as a sign, not proof.\n\nSource: Wise et al., 2016, American Journal of Clinical Nutrition, \"Reduced dietary intake of simple sugars alters perceived sweet taste intensity but not perceived pleasantness\".\n\n#shorts #psychology #sugar",
+ "tags": ["sugar", "quit sugar", "taste", "sweet tooth", "psychology", "shorts"],
+ "thumb": {"words": ["40%", "SWEETER"], "prop": "meter", "pose": "shock"},
+ "scenes": [
+  {"scene": "beat", "headline": "3 MONTHS", "pose": "idle", "pose_end": "think", "prop": "coffee", "side": "right", "py": 700,
+   "text": "What happens to your sense of sweetness when you eat less sugar for three months?"},
+  {"scene": "counter", "from": 0, "to": 13, "unit": "PEOPLE", "label": "cut sugar by about 40%", "pose": "idle",
+   "text": "In one small study, thirteen people cut the sugar in their diet by about forty percent, while sixteen kept eating normally."},
+  {"scene": "beat", "headline": "40% SWEETER", "pose": "shock", "prop": "meter", "side": "right", "py": 700,
+   "text": "By the third month, the low sugar group rated puddings about forty percent sweeter than the comparison group did."},
+  {"scene": "beat", "headline": "NOT MORE PLEASANT", "pose": "point", "prop": "q", "side": "right", "py": 760,
+   "text": "But they did not find the sweetness any more or less pleasant."},
+  {"scene": "beat", "headline": "BACK TO NORMAL", "pose": "calm", "prop": "calendar", "side": "right", "py": 700,
+   "text": "When they went back to their usual diet, their sugar intake and their taste ratings returned to normal. A small study, but a clear sign."}
+ ]}
