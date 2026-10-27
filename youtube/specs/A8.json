@@ -1,0 +1,17 @@
+{"id": "A8",
+ "title": "What happens to your brain after just 4 days of meditation?",
+ "description": "Can a few days of meditation change how your brain works? In one study, 49 students either learned mindfulness meditation or listened to The Hobbit read aloud, in four 20-minute sessions over four days. Both groups felt better in mood, but only the meditation group improved on tests of working memory and executive function. It is a small study and the author said you need to keep practicing, so treat it as a promising sign, not proof.\n\nSource: Zeidan, Johnson, Diamond, David & Goolkasian, 2010, Consciousness and Cognition, \"Mindfulness meditation improves cognition: Evidence of brief mental training\".\n\n#shorts #psychology #meditation",
+ "tags": ["meditation", "mindfulness", "brain", "focus", "psychology", "shorts"],
+ "thumb": {"words": ["4 DAYS", "FOCUS"], "prop": "brain", "pose": "calm"},
+ "scenes": [
+  {"scene": "beat", "headline": "4 DAYS", "pose": "idle", "pose_end": "calm", "prop": "calendar", "count": 4, "side": "right", "py": 700,
+   "text": "What can four days of meditation do to your brain?"},
+  {"scene": "counter", "from": 0, "to": 49, "unit": "STUDENTS", "label": "meditate or listen to a story", "pose": "idle",
+   "text": "In one study, forty nine students either learned mindfulness meditation, or listened to The Hobbit read aloud."},
+  {"scene": "beat", "headline": "20 MINUTES", "pose": "point", "prop": "clock", "side": "right", "py": 700,
+   "text": "They had four sessions of about twenty minutes, over four days."},
+  {"scene": "beat", "headline": "SHARPER FOCUS", "pose": "think", "prop": "brain", "side": "right", "py": 720,
+   "text": "Both groups felt better, but only the meditation group improved on tests of working memory and executive function."},
+  {"scene": "beat", "headline": "KEEP PRACTICING", "pose": "calm", "prop": "sun", "side": "right", "py": 700,
+   "text": "A small study, and the author said you need to keep practicing. But it suggests that even a short start can matter."}
+ ]}
