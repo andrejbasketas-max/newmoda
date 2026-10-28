@@ -297,7 +297,9 @@ def sc_counter(cv, t, tt, a):
     unit = a.get("unit", "").strip(); usz = 110
     while usz > 40 and font(usz).getlength(unit) / SS > (W * 0.7 if wide else W) - 120: usz -= 4  # keep the unit inside the frame
     cv.text((cx, 590 + ymov), unit, usz, c=tuple(a["color"]) if a.get("color") else ACC)
-    cv.text((cx, 700 + ymov), a.get("label", ""), 64, c=FG)
+    lab, lsz = a.get("label", ""), 64
+    while lsz > 30 and font(lsz).getlength(lab) / SS > (W * 0.7 if wide else W) - 100: lsz -= 4  # long labels shrink to fit
+    cv.text((cx, 700 + ymov), lab, lsz, c=FG)
     figure(cv, W * 0.8 if wide else W/2, G if wide else G + 60, **POSES[a.get("pose", "idle")])
 
 SCENES = {"intro": sc_intro, "day1": sc_day1, "mood": sc_mood, "hours": sc_hours, "reach": sc_reach, "notice": sc_notice,

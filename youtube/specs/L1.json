@@ -133,7 +133,7 @@
    "from": 0,
    "to": 60,
    "unit": "% STRONGER ALARM",
-   "label": "amygdala response, after about 35 hours awake",
+   "label": "amygdala, after ~35 hours awake",
    "pose": "shock",
    "text": "About sixty percent stronger. And the part of the brain that normally calms that alarm was less connected to it. So bad news feels worse, and small problems feel bigger."
   },
@@ -279,7 +279,7 @@
    "from": 23,
    "to": 59,
    "unit": "% FOUND THE SHORTCUT",
-   "label": "after a night of sleep vs staying awake: 59% vs 23%",
+   "label": "slept: 59%  ·  stayed awake: 23%",
    "pose": "happy",
    "text": "Sleep also seems to help you find solutions. In a German study, people practiced a number task with a hidden shortcut. After a night of sleep, nearly sixty percent found it, compared with about twenty three percent of people who stayed awake."
   },
