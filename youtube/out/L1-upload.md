@@ -6,7 +6,22 @@
 ```
 You skip sleep tonight. What actually happens to your brain, hour by hour? We follow the research from a normal evening to eleven days awake, and from one short night to two weeks of too little sleep. Every number below comes from a real study. Most are small lab studies, and this is an explanation of research, not medical advice.
 
-CHAPTERS_PLACEHOLDER
+Chapters:
+0:00 Intro
+0:26 Why this matters
+0:57 Hours 0 to 16
+1:20 Hour 17: like a little alcohol
+1:43 Hour 24 and attention
+2:25 Hour 35: emotions and memory
+3:17 Hour 48 and microsleeps
+3:29 Randy Gardner: 264 hours
+3:57 What about sleeping a little less?
+4:26 You feel fine, but test scores drop
+4:56 Your body and catch-up sleep
+5:20 The brain's cleaning system
+5:45 Sleep and insight
+6:13 Recap
+6:41 Sleep well
 
 Sources:
 - Porkka-Heiskanen et al., 1997, Science, "Adenosine: a mediator of the sleep-inducing effects of prolonged wakefulness".
