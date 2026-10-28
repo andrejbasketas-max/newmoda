@@ -1,0 +1,326 @@
+{
+ "id": "L1",
+ "title": "What Happens to Your Brain When You Don't Sleep, Hour by Hour",
+ "description": "You skip sleep tonight. What actually happens to your brain, hour by hour? We follow the research from a normal evening to eleven days awake, and from one short night to two weeks of too little sleep. Every number below comes from a real study. Most are small lab studies, and this is an explanation of research, not medical advice.\n\nCHAPTERS_PLACEHOLDER\n\nSources:\n- Porkka-Heiskanen et al., 1997, Science, \"Adenosine: a mediator of the sleep-inducing effects of prolonged wakefulness\".\n- Dawson & Reid, 1997, Nature, \"Fatigue, alcohol and performance impairment\".\n- Williamson & Feyer, 2000, Occupational and Environmental Medicine, \"Moderate sleep deprivation produces impairments in cognitive and motor performance equivalent to legally prescribed levels of alcohol intoxication\".\n- Lim & Dinges, 2010, Psychological Bulletin, \"A meta-analysis of the impact of short-term sleep deprivation on cognitive variables\".\n- Poudel et al., 2014, Human Brain Mapping, \"Losing the struggle to stay awake: divergent thalamic and cortical activity during microsleeps\".\n- Yoo, Gujar, Hu, Jolesz & Walker, 2007, Current Biology, \"The human emotional brain without sleep: a prefrontal amygdala disconnect\".\n- Yoo, Hu, Gujar, Jolesz & Walker, 2007, Nature Neuroscience, \"A deficit in the ability to form new human memories without sleep\".\n- Gulevich, Dement & Johnson, 1966, Archives of General Psychiatry, \"Psychiatric and EEG observations on a case of prolonged (264 hours) wakefulness\".\n- Van Dongen, Maislin, Mullington & Dinges, 2003, Sleep, \"The cumulative cost of additional wakefulness\".\n- Spiegel, Leproult & Van Cauter, 1999, The Lancet, \"Impact of sleep debt on metabolic and endocrine function\".\n- Xie et al., 2013, Science, \"Sleep drives metabolite clearance from the adult brain\".\n- Wagner, Gais, Haider, Verleger & Born, 2004, Nature, \"Sleep inspires insight\".\n- Liu et al., 2016, MMWR, \"Prevalence of Healthy Sleep Duration among Adults, United States, 2014\".\n- Carskadon & Dement, Principles and Practice of Sleep Medicine (sleep cycles and stages).\n- Tefft, 2016, AAA Foundation for Traffic Safety, \"Acute sleep deprivation and risk of motor vehicle crash involvement\".\n- Diekelmann & Born, 2010, Nature Reviews Neuroscience, \"The memory function of sleep\".\n- Fredholm et al., 1999, Pharmacological Reviews, \"Actions of caffeine in the brain\".\n- Depner et al., 2019, Current Biology, \"Ad libitum Weekend Recovery Sleep Fails to Prevent Metabolic Dysregulation during a Repeating Pattern of Insufficient Sleep and Weekend Recovery Sleep\".\n\n#sleep #psychology #brain",
+ "tags": [
+  "sleep deprivation",
+  "what happens if you don't sleep",
+  "sleep and brain",
+  "hour by hour",
+  "psychology",
+  "neuroscience"
+ ],
+ "thumb": {
+  "words": [
+   "NO SLEEP",
+   "24 HOURS"
+  ],
+  "prop": "clock",
+  "pose": "tired"
+ },
+ "scenes": [
+  {
+   "scene": "beat",
+   "headline": "HOUR BY HOUR",
+   "pose": "idle",
+   "pose_end": "tired",
+   "prop": "clock",
+   "side": "right",
+   "py": 600,
+   "text": "It is midnight, and you decide to skip sleep. Not forever, just tonight. What actually happens to your brain, hour by hour? Today we follow it from a normal evening all the way to eleven days awake, and every number comes from a real study."
+  },
+  {
+   "scene": "beat",
+   "headline": "A QUICK RULE",
+   "pose": "point",
+   "prop": "q",
+   "side": "right",
+   "py": 620,
+   "text": "First, a quick rule. This is not medical advice. These are findings from sleep research, mostly from small lab studies, and I will name the source for each one so you can check it yourself."
+  },
+  {
+   "scene": "counter",
+   "from": 0,
+   "to": 35,
+   "unit": "% OF US ADULTS",
+   "label": "sleep under 7 hours a night",
+   "pose": "tired",
+   "text": "Why does this matter? In the United States, about thirty five percent of adults report sleeping less than seven hours a night, according to a large health survey. So this is not a rare experiment. It is how many people live."
+  },
+  {
+   "scene": "beat",
+   "headline": "A NIGHT OF CYCLES",
+   "pose": "calm",
+   "prop": "moon",
+   "side": "right",
+   "py": 560,
+   "text": "Before we go hour by hour, a quick look at a normal night. Sleep comes in cycles of roughly ninety minutes, moving between light sleep, deep sleep, and dream sleep. Each stage seems to do different jobs, which is why cutting a night short removes more than just time."
+  },
+  {
+   "scene": "beat",
+   "headline": "HOURS 0 TO 16",
+   "pose": "happy",
+   "prop": "sun",
+   "side": "right",
+   "py": 560,
+   "text": "Hours zero to sixteen are the easy part. You wake up, you feel fine, and your brain works normally. But quietly, something is building up."
+  },
+  {
+   "scene": "beat",
+   "headline": "ADENOSINE",
+   "pose": "think",
+   "prop": "battery",
+   "side": "right",
+   "py": 620,
+   "text": "A chemical called adenosine builds up in your brain the longer you stay awake, and it pushes you toward sleep. In animal experiments, it rose during long wakefulness. Caffeine works partly by blocking its receptors."
+  },
+  {
+   "scene": "counter",
+   "from": 0,
+   "to": 17,
+   "unit": "HOURS AWAKE",
+   "label": "this is where it starts",
+   "pose": "tired",
+   "text": "Around hour seventeen, things start to change. In a classic study, people who had been awake for seventeen to nineteen hours performed as badly as, or worse than, people with a blood alcohol level of point zero five percent."
+  },
+  {
+   "scene": "compare",
+   "headline": "SAME IMPAIRMENT",
+   "left": "17 HOURS AWAKE",
+   "right": "0.05% ALCOHOL",
+   "left_pose": "tired",
+   "right_pose": "calm",
+   "text": "That is a level at which many countries already say you should not drive. Your reactions slow down, and you start missing things you would normally catch."
+  },
+  {
+   "scene": "beat",
+   "headline": "HOUR 24",
+   "pose": "tired",
+   "prop": "clock",
+   "side": "right",
+   "py": 600,
+   "text": "By around hour twenty four, the gap gets bigger. Another study found that performance after a long stretch awake fell to about the level of point one percent blood alcohol, which is over the legal driving limit in most countries."
+  },
+  {
+   "scene": "beat",
+   "headline": "ATTENTION FAILS FIRST",
+   "pose": "think",
+   "prop": "eye",
+   "side": "right",
+   "py": 620,
+   "text": "What fails first is attention. A large review of dozens of studies found that simple attention, just staying alert and responding on time, is the thing most affected by a short stretch without sleep."
+  },
+  {
+   "scene": "counter",
+   "from": 0,
+   "to": 11,
+   "unit": "TIMES THE CRASH RISK",
+   "label": "under 4 hours of sleep vs 7 or more",
+   "pose": "shock",
+   "text": "Driving shows what this means in real life. A large American study of crash data found that drivers who had slept four to five hours in the past day had about four times the crash risk of drivers who slept seven or more. Under four hours, it was about eleven times."
+  },
+  {
+   "scene": "beat",
+   "headline": "EMOTIONS RUN HOT",
+   "pose": "shock",
+   "prop": "heart",
+   "side": "right",
+   "py": 600,
+   "text": "Then your emotions change. In an imaging study, researchers kept people awake for about thirty five hours, then showed them upsetting pictures. The amygdala, the brain's alarm system, reacted much more strongly than in people who had slept."
+  },
+  {
+   "scene": "counter",
+   "from": 0,
+   "to": 60,
+   "unit": "% STRONGER ALARM",
+   "label": "amygdala response, after about 35 hours awake",
+   "pose": "shock",
+   "text": "About sixty percent stronger. And the part of the brain that normally calms that alarm was less connected to it. So bad news feels worse, and small problems feel bigger."
+  },
+  {
+   "scene": "beat",
+   "headline": "NEW MEMORIES",
+   "pose": "think",
+   "prop": "brain",
+   "side": "right",
+   "py": 620,
+   "text": "Sleep loss also hits memory. Another imaging study from the same lab found that after a night without sleep, the hippocampus, a region that helps save new memories, was less active while people tried to learn."
+  },
+  {
+   "scene": "beat",
+   "headline": "MEMORY REPLAY",
+   "pose": "think",
+   "prop": "brain",
+   "side": "right",
+   "py": 620,
+   "text": "Why does sleep matter for memory? Researchers think that during deep sleep, the brain replays what you learned during the day, which helps move it into long term storage. Cut the night short, and that replay gets cut short too."
+  },
+  {
+   "scene": "beat",
+   "headline": "HOUR 48",
+   "pose": "tired",
+   "prop": "calendar",
+   "count": 2,
+   "side": "right",
+   "py": 560,
+   "text": "Push on to forty eight hours, and attention lapses get more frequent. Brain scans have even caught microsleeps, brief moments when parts of the brain switch off, while a person is trying to stay awake."
+  },
+  {
+   "scene": "beat",
+   "headline": "HOUR 72 AND BEYOND",
+   "pose": "tired",
+   "prop": "moon",
+   "side": "right",
+   "py": 560,
+   "text": "Beyond seventy two hours is territory researchers only study under careful supervision. The best known case is Randy Gardner, a teenager who stayed awake for two hundred sixty four hours in nineteen sixty three and sixty four."
+  },
+  {
+   "scene": "counter",
+   "from": 0,
+   "to": 264,
+   "unit": "HOURS AWAKE",
+   "label": "Randy Gardner, 1963 to 1964",
+   "pose": "tired",
+   "text": "Sleep researchers observed him. In the later days he had trouble concentrating and remembering, his speech slurred, and he showed signs of paranoia and hallucinations. Then he slept for around fourteen hours, and mostly recovered."
+  },
+  {
+   "scene": "beat",
+   "headline": "THE REAL QUESTION",
+   "pose": "idle",
+   "prop": "q",
+   "side": "right",
+   "py": 620,
+   "text": "Now the twist. Almost nobody stays awake for eleven days. The real question is what happens when you sleep just a little less than you need, night after night."
+  },
+  {
+   "scene": "beat",
+   "headline": "6 HOURS A NIGHT",
+   "pose": "tired",
+   "prop": "moon",
+   "side": "right",
+   "py": 560,
+   "text": "In one famous experiment, healthy adults were allowed to spend four, six, or eight hours in bed every night for two weeks, while researchers tested their attention and memory every day."
+  },
+  {
+   "scene": "counter",
+   "from": 0,
+   "to": 14,
+   "unit": "NIGHTS",
+   "label": "of six hours in bed",
+   "pose": "tired",
+   "text": "After two weeks, the six hour group tested about as badly as people who had been kept awake for up to two full nights."
+  },
+  {
+   "scene": "beat",
+   "headline": "THE CATCH",
+   "pose": "point",
+   "prop": "q",
+   "side": "right",
+   "py": 640,
+   "text": "Here is the catch. The six hour group rated themselves as only slightly sleepy. How they felt stopped changing, while their test scores kept getting worse."
+  },
+  {
+   "scene": "compare",
+   "headline": "FEELING VS REALITY",
+   "left": "I FEEL FINE",
+   "right": "TEST SCORES",
+   "left_pose": "calm",
+   "right_pose": "shock",
+   "text": "That gap is one reason short sleepers often say they are used to it. The data suggests they may be worse judges of their own tiredness than they think."
+  },
+  {
+   "scene": "beat",
+   "headline": "COFFEE IS A MASK",
+   "pose": "point",
+   "prop": "coffee",
+   "side": "right",
+   "py": 620,
+   "text": "Coffee does not fix this. Caffeine blocks the receptors that adenosine uses, so the sleepy signal gets muted. But it does not remove the need for sleep, it only hides the feeling."
+  },
+  {
+   "scene": "beat",
+   "headline": "YOUR BODY TOO",
+   "pose": "tired",
+   "prop": "battery",
+   "side": "right",
+   "py": 620,
+   "text": "It is not only the brain. In a small study of eleven young men, sleeping only four hours a night for six nights made their bodies worse at clearing sugar from the blood."
+  },
+  {
+   "scene": "beat",
+   "headline": "CATCH UP SLEEP?",
+   "pose": "idle",
+   "prop": "calendar",
+   "count": 2,
+   "side": "right",
+   "py": 560,
+   "text": "Can you pay it back on the weekend? In a small laboratory study, people who slept five hours on weekdays and then slept in on the weekend still showed a drop in how well their bodies respond to insulin. Weekend sleep did not prevent it."
+  },
+  {
+   "scene": "beat",
+   "headline": "A CLEANING SYSTEM",
+   "pose": "think",
+   "prop": "brain",
+   "side": "right",
+   "py": 620,
+   "text": "So what is sleep doing? One discovery is that the brain may have a cleaning system. In mice, the space between brain cells grew by about sixty percent during sleep, letting fluid wash waste out faster, including a protein linked to Alzheimer's disease."
+  },
+  {
+   "scene": "beat",
+   "headline": "ONLY IN MICE",
+   "pose": "point",
+   "prop": "q",
+   "side": "right",
+   "py": 640,
+   "text": "But that was in mice. Whether humans clear waste the same way is still being studied, so treat it as an exciting idea, not a settled fact."
+  },
+  {
+   "scene": "counter",
+   "from": 23,
+   "to": 59,
+   "unit": "% FOUND THE SHORTCUT",
+   "label": "after a night of sleep vs staying awake: 59% vs 23%",
+   "pose": "happy",
+   "text": "Sleep also seems to help you find solutions. In a German study, people practiced a number task with a hidden shortcut. After a night of sleep, nearly sixty percent found it, compared with about twenty three percent of people who stayed awake."
+  },
+  {
+   "scene": "beat",
+   "headline": "MAINTENANCE MODE",
+   "pose": "calm",
+   "prop": "bulb",
+   "side": "right",
+   "py": 620,
+   "text": "Put it together, and sleep looks less like downtime and more like maintenance. Your brain seems to reset its alarm system, save what you learned, clear waste, and get ready to think clearly."
+  },
+  {
+   "scene": "bullets",
+   "headline": "THE RECAP",
+   "figure": true,
+   "items": [
+    "17 HOURS: LIKE 0.05% ALCOHOL",
+    "35 HOURS: STRONGER ALARM",
+    "6 HOUR NIGHTS: SCORES DROP",
+    "SLEEP: MEMORY AND INSIGHT"
+   ],
+   "text": "Let us recap. After seventeen hours, attention drops like it does with a little alcohol. After thirty five, emotions run hotter. After two weeks of six hour nights, performance falls and you may not notice. And sleep helps memory and insight."
+  },
+  {
+   "scene": "beat",
+   "headline": "NOT ADVICE",
+   "pose": "calm",
+   "prop": "heart",
+   "side": "right",
+   "py": 600,
+   "text": "None of this is medical advice. Sleep needs vary, and if you struggle with sleep, a doctor is the right person to ask. This video only explains what a few studies found."
+  },
+  {
+   "scene": "beat",
+   "headline": "SLEEP WELL",
+   "pose": "happy",
+   "prop": "moon",
+   "side": "right",
+   "py": 560,
+   "text": "So tonight, if you are about to skip sleep, remember the hour by hour clock. Your brain is not getting a break, it is losing its maintenance window. Thanks for watching, and subscribe for the next brain study."
+  }
+ ]
+}

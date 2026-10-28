@@ -268,32 +268,37 @@ def sc_beat(cv, t, tt, a):
     if a.get("prop"): prop(cv, a["prop"], (W/2 + side * 250, a.get("py", 760)), t, tt, a)
 
 def sc_compare(cv, t, tt, a):
-    label(cv, a.get("headline", ""), 230, 100, FG)
+    wide = W > H  # landscape: heads start higher, so headline and labels move up
+    label(cv, a.get("headline", ""), 130 if wide else 230, 100, FG)
     for k, (key, c) in enumerate((("left", WARN), ("right", ACC))):
-        cx = W/2 + (-1 if k == 0 else 1) * 250
+        cx = W/2 + (-1 if k == 0 else 1) * (300 if wide else 250)
         txt, sz = a.get(key, ""), 72
-        while sz > 36 and font(sz).getlength(txt) / SS > 480: sz -= 4  # each half is ~500 px wide
-        cv.text((cx, 400), txt, sz, c=c)
+        while sz > 36 and font(sz).getlength(txt) / SS > (560 if wide else 480): sz -= 4  # each half is ~500 px wide
+        cv.text((cx, 290 if wide else 400), txt, sz, c=c)
         pose = dict(POSES[a.get(key + "_pose", "idle")]); figure(cv, cx, G, **pose)
-    cv.line((W/2, 470), (W/2, G), w=6, c=DIM)
+    cv.line((W/2, 340 if wide else 470), (W/2, G), w=6, c=DIM)
 
 def sc_bullets(cv, t, tt, a):
-    label(cv, a.get("headline", ""), 230, 100, ACC)
+    wide = W > H  # landscape: list on the left, stickman on the right
+    label(cv, a.get("headline", ""), 150 if wide else 230, 100, ACC)
     items = a.get("items", []); n = int(t * len(items) + 0.99)
+    x0, x1 = (120, int(W * 0.64)) if wide else (120, W - 120)
     for i, s in enumerate(items):
-        y = (520 + i * 190) if H > W else (400 + i * 170); on = i < n
-        cv.rect((120, y - 70, W - 120, y + 70), r=30, outline=ACC if on else DIM, w=8)
-        cv.text((W/2, y), s if on else "", 64, c=FG)
-    figure(cv, W/2, G + 120, **POSES["think"]) if a.get("figure") else None
+        y = (520 + i * 190) if H > W else (330 + i * 170); on = i < n
+        cv.rect((x0, y - 70, x1, y + 70), r=30, outline=ACC if on else DIM, w=8)
+        cv.text(((x0 + x1) / 2, y), s if on else "", 64, c=FG)
+    if a.get("figure"): figure(cv, W * 0.82 if wide else W/2, G if wide else G + 120, **POSES["think"])
 
 def sc_counter(cv, t, tt, a):
     v = a.get("from", 0) + (a.get("to", 7) - a.get("from", 0)) * ease(t * 1.3)
-    cv.text((W/2, 400), f"{v:.0f}", 330, c=tuple(a["color"]) if a.get("color") else ACC)
+    wide = W > H  # landscape: number and text on the left, stickman on the right
+    cx = W * 0.38 if wide else W/2; ymov = -60 if wide else 0
+    cv.text((cx, 400 + ymov), f"{v:.0f}", 330, c=tuple(a["color"]) if a.get("color") else ACC)
     unit = a.get("unit", "").strip(); usz = 110
-    while usz > 40 and font(usz).getlength(unit) / SS > W - 120: usz -= 4  # keep the unit inside the frame
-    cv.text((W/2, 590), unit, usz, c=tuple(a["color"]) if a.get("color") else ACC)
-    cv.text((W/2, 700), a.get("label", ""), 64, c=FG)
-    figure(cv, W/2, G + 60, **POSES[a.get("pose", "idle")])
+    while usz > 40 and font(usz).getlength(unit) / SS > (W * 0.7 if wide else W) - 120: usz -= 4  # keep the unit inside the frame
+    cv.text((cx, 590 + ymov), unit, usz, c=tuple(a["color"]) if a.get("color") else ACC)
+    cv.text((cx, 700 + ymov), a.get("label", ""), 64, c=FG)
+    figure(cv, W * 0.8 if wide else W/2, G if wide else G + 60, **POSES[a.get("pose", "idle")])
 
 SCENES = {"intro": sc_intro, "day1": sc_day1, "mood": sc_mood, "hours": sc_hours, "reach": sc_reach, "notice": sc_notice,
           "beat": sc_beat, "compare": sc_compare, "bullets": sc_bullets, "counter": sc_counter}

@@ -38,6 +38,11 @@ def main():
     ext = sys.argv[2] if len(sys.argv) > 2 else None  # optional ready-made voiceover (mp3/wav); timing from its pauses
     with tempfile.TemporaryDirectory() as tmp:
         wav, starts = (os.path.abspath(ext), None) if ext else synth(spec, tmp)
+        if not ext:  # scene start times (s), for chapters in long videos
+            st = json.load(open(starts)); first = {}
+            for k, (si, _) in enumerate(R.segments(spec)): first.setdefault(si, st[k])
+            json.dump([[si, spec["scenes"][si].get("headline") or spec["scenes"][si].get("unit", ""), round(first[si], 1)] for si in sorted(first)],
+                      open(f"{OUT}/{sid}-scenes.json", "w"))
         json.dump(spec, open(f"{tmp}/spec.json", "w"))
         cmd = [sys.executable, os.path.join(HERE, "render.py"), f"{tmp}/spec.json", wav, f"{OUT}/{sid}.mp4"] + ([starts] if starts else [])
         subprocess.check_call(cmd)
