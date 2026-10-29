@@ -1,0 +1,19 @@
+{"id": "A9",
+ "title": "A year of walking: what happens to your brain?",
+ "description": "What happens to your brain if you walk for 40 minutes, three days a week, for a whole year? In one randomized trial, 120 older adults either walked or did stretching and toning. Scans showed the hippocampus, a region that helps form memories, grew by about 2 percent in the walking group, while it shrank by about 1.4 percent in the stretching group, which is roughly the normal loss with age. Both groups improved on a spatial memory test, but the walking group improved more. It is one study of older adults, so treat it as a promising sign, not proof for everyone.\n\nSource: Erickson et al., 2011, PNAS, \"Exercise training increases size of hippocampus and improves memory\".\n\n#shorts #psychology #walking",
+ "tags": ["walking", "exercise and brain", "hippocampus", "memory", "psychology", "shorts"],
+ "thumb": {"words": ["GREW", "+2%"], "prop": "brain", "pose": "happy"},
+ "scenes": [
+  {"scene": "beat", "headline": "1 YEAR", "pose": "idle", "pose_end": "happy", "prop": "calendar", "count": 3, "side": "right", "py": 700,
+   "text": "What happens to your brain if you walk for forty minutes, three days a week, for a whole year?"},
+  {"scene": "counter", "from": 0, "to": 120, "unit": "OLDER ADULTS", "label": "walking vs stretching, one year", "pose": "idle",
+   "text": "In one randomized trial, one hundred twenty older adults either walked, or did stretching and toning, for a year."},
+  {"scene": "beat", "headline": "HIPPOCAMPUS", "pose": "think", "prop": "brain", "side": "right", "py": 720,
+   "text": "Brain scans measured the hippocampus, a region that helps form memories. In the walking group, it grew by about two percent."},
+  {"scene": "compare", "headline": "WALKING VS STRETCHING", "left": "WALKING", "right": "STRETCHING", "left_pose": "happy", "right_pose": "tired",
+   "text": "In the stretching group, it shrank by about one point four percent, which is roughly the normal loss with age."},
+  {"scene": "beat", "headline": "BETTER MEMORY", "pose": "shock", "prop": "bulb", "side": "right", "py": 700,
+   "text": "Both groups improved on a spatial memory test, but the walking group improved more."},
+  {"scene": "beat", "headline": "A PROMISING SIGN", "pose": "calm", "prop": "sun", "side": "right", "py": 700,
+   "text": "It is one study of older adults, so it does not prove the same for everyone. But it suggests a regular walk can do more than burn calories."}
+ ]}

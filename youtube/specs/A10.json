@@ -1,0 +1,19 @@
+{"id": "A10",
+ "title": "Holding a grudge: what happens to your body?",
+ "description": "What happens to your body when you replay an old grudge? In one lab study, 71 volunteers recalled a real hurt and then thought about it in two different ways: nursing the grudge, or trying to see the other person with empathy and imagining forgiving them. While rehearsing the hurt, people felt more negative, angry and sad and less in control, and their blood pressure rose more. This was only a few minutes in a lab, not years, and it is one small study, so treat it as a sign, not proof.\n\nSource: Witvliet, Ludwig & Vander Laan, 2001, Psychological Science, \"Granting Forgiveness or Harboring Grudges: Implications for Emotion, Physiology, and Health\".\n\n#shorts #psychology #forgiveness",
+ "tags": ["grudge", "forgiveness", "stress", "blood pressure", "psychology", "shorts"],
+ "thumb": {"words": ["BLOOD", "PRESSURE"], "prop": "heart", "pose": "shock"},
+ "scenes": [
+  {"scene": "beat", "headline": "OLD GRUDGE", "pose": "idle", "pose_end": "shock", "prop": "heart", "side": "right", "py": 700,
+   "text": "What happens to your body when you replay an old grudge?"},
+  {"scene": "counter", "from": 0, "to": 71, "unit": "VOLUNTEERS", "label": "recalled someone who hurt them", "pose": "idle",
+   "text": "In one lab study, seventy one volunteers recalled a real hurt, and then thought about it in two different ways."},
+  {"scene": "compare", "headline": "TWO WAYS TO THINK", "left": "GRUDGE", "right": "FORGIVENESS", "left_pose": "shock", "right_pose": "calm",
+   "text": "In one, they rehearsed the hurt and nursed the grudge. In the other, they tried to see the person with empathy and imagined forgiving them."},
+  {"scene": "beat", "headline": "THE BODY REACTS", "pose": "shock", "prop": "meter", "label": "BLOOD PRESSURE", "from": 0.25, "to": 0.9, "color": [239, 68, 68], "py": 800,
+   "text": "While nursing the grudge, people felt more negative, angry and sad, felt less in control, and their blood pressure rose more."},
+  {"scene": "beat", "headline": "JUST MINUTES", "pose": "point", "prop": "clock", "side": "right", "py": 700,
+   "text": "That was only a few minutes in a lab, not years. But it shows how replaying a hurt can put your body on alert."},
+  {"scene": "beat", "headline": "A SMALL SIGN", "pose": "calm", "prop": "sun", "side": "right", "py": 700,
+   "text": "The authors suggest forgiving responses may ease that stress. It is one small study, so treat it as a sign, not proof."}
+ ]}
