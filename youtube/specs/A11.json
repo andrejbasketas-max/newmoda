@@ -1,0 +1,19 @@
+{"id": "A11",
+ "title": "Bored out of your mind: what happens to creativity?",
+ "description": "What happens to your creativity after a really boring task? In a pair of experiments, volunteers did a deliberately boring activity, such as copying or reading numbers from a phone book, and then took a creativity test, such as thinking of uses for plastic cups. The bored volunteers came up with more creative ideas than a control group that skipped the boring task. The authors suggest the dull, passive task let people daydream, and the daydreaming fed their creativity. It was a small lab study, so treat it as a sign, not proof.\n\nSource: Mann & Cadman, 2014, Creativity Research Journal, \"Does Being Bored Make Us More Creative?\".\n\n#shorts #psychology #creativity",
+ "tags": ["boredom", "creativity", "daydreaming", "brain", "psychology", "shorts"],
+ "thumb": {"words": ["MORE", "IDEAS"], "prop": "bulb", "pose": "happy"},
+ "scenes": [
+  {"scene": "beat", "headline": "SO BORED", "pose": "idle", "pose_end": "tired", "prop": "clock", "side": "right", "py": 700,
+   "text": "What happens to your creativity after a really boring task?"},
+  {"scene": "beat", "headline": "THE BORING TASK", "pose": "point", "prop": "book", "side": "right", "py": 700,
+   "text": "In one study, volunteers did a deliberately boring activity, copying or reading numbers from a phone book."},
+  {"scene": "beat", "headline": "THE TEST", "pose": "think", "prop": "q", "side": "right", "py": 760,
+   "text": "Then they were asked to think of as many uses as they could for a pair of plastic cups."},
+  {"scene": "beat", "headline": "MORE CREATIVE", "pose": "shock", "pose_end": "happy", "prop": "bulb", "side": "right", "py": 700,
+   "text": "The bored volunteers came up with more creative ideas than a control group that skipped the boring task."},
+  {"scene": "beat", "headline": "DAYDREAMING", "pose": "think", "prop": "brain", "side": "right", "py": 720,
+   "text": "The authors suggest the dull, passive task let people daydream, and the daydreaming fed their creativity."},
+  {"scene": "beat", "headline": "A SMALL SIGN", "pose": "calm", "prop": "sun", "side": "right", "py": 700,
+   "text": "It was a small lab study, so it is a sign, not proof. But a bored moment may not be wasted."}
+ ]}

@@ -1,0 +1,19 @@
+{"id": "B5",
+ "title": "Alone with your thoughts: why it feels so hard",
+ "description": "Could you sit alone in a quiet room for 15 minutes with nothing to do but think? In a famous set of 11 studies, most people did not enjoy it. In one of them, volunteers could press a button to give themselves a mild electric shock, even though they had said earlier they would pay to avoid it. About two thirds of the men and about a quarter of the women shocked themselves at least once. Other researchers argue the study shows less than it seems, because the shock was rated only mildly unpleasant, so the idea is still debated.\n\nSources: Wilson et al., 2014, Science, \"Just think: The challenges of the disengaged mind\"; Fox, Thompson, Andrews-Hanna & Christoff, 2014, Frontiers in Psychology, \"Is thinking really aversive? A commentary on Wilson et al.'s 'Just think: The challenges of the disengaged mind'\".\n\n#shorts #psychology #mindfulness",
+ "tags": ["alone with your thoughts", "silence", "electric shock study", "psychology", "boredom", "shorts"],
+ "thumb": {"words": ["15 MIN", "SHOCKS"], "prop": "battery", "pose": "shock"},
+ "scenes": [
+  {"scene": "beat", "headline": "15 MINUTES", "pose": "idle", "pose_end": "tired", "prop": "clock", "side": "right", "py": 700,
+   "text": "Could you sit alone in a quiet room for fifteen minutes, with nothing to do but think?"},
+  {"scene": "beat", "headline": "THE STUDIES", "pose": "think", "prop": "brain", "side": "right", "py": 720,
+   "text": "In a famous set of eleven studies, researchers asked people to do exactly that, and most did not enjoy it."},
+  {"scene": "beat", "headline": "THE BUTTON", "pose": "point", "prop": "battery", "side": "right", "py": 700,
+   "text": "In one study, people could press a button to give themselves a mild electric shock. They had said earlier they would pay to avoid it."},
+  {"scene": "counter", "from": 0, "to": 67, "unit": "% OF MEN", "label": "shocked themselves at least once", "pose": "shock",
+   "text": "About two thirds of the men, and about a quarter of the women, shocked themselves at least once."},
+  {"scene": "beat", "headline": "STILL DEBATED", "pose": "point", "prop": "q", "side": "right", "py": 760,
+   "text": "Other researchers argue it shows less than it seems, because the shock was rated only mildly unpleasant."},
+  {"scene": "beat", "headline": "DOING OVER NOTHING", "pose": "calm", "prop": "sun", "side": "right", "py": 700,
+   "text": "The authors' takeaway: many of us would rather do something than nothing. So a silent minute may feel strange, and that seems to be normal."}
+ ]}
