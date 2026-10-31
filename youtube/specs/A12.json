@@ -1,0 +1,19 @@
+{"id": "A12",
+ "title": "Learning to juggle: what happens to your brain?",
+ "description": "What happens to your brain when you practice a brand new skill for three months? In one study, 24 volunteers who had never juggled were split into two groups, and one group learned a three-ball juggling routine over three months. Brain scans were taken before training, after three months, and after three more months without practice. After training, the jugglers showed a temporary increase in grey matter in regions involved in processing visual motion and space. That increase decreased again after they stopped practicing. It is a small study, so treat it as a sign, not proof.\n\nSource: Draganski, Gaser, Busch, Schuierer, Bogdahn & May, 2004, Nature, \"Neuroplasticity: changes in grey matter induced by training\".\n\n#shorts #psychology #learning",
+ "tags": ["learning", "juggling", "neuroplasticity", "grey matter", "psychology", "shorts"],
+ "thumb": {"words": ["GREY", "MATTER"], "prop": "brain", "pose": "happy"},
+ "scenes": [
+  {"scene": "beat", "headline": "3 MONTHS", "pose": "idle", "pose_end": "happy", "prop": "calendar", "count": 3, "side": "right", "py": 700,
+   "text": "What happens to your brain when you practice a brand new skill for three months?"},
+  {"scene": "counter", "from": 0, "to": 24, "unit": "VOLUNTEERS", "label": "none had ever juggled", "pose": "idle",
+   "text": "In one study, twenty four volunteers who had never juggled were split into two groups. One group learned a three ball juggling routine over three months."},
+  {"scene": "beat", "headline": "THREE SCANS", "pose": "think", "prop": "brain", "side": "right", "py": 720,
+   "text": "Brain scans were taken before training, after three months, and after three more months without practice."},
+  {"scene": "beat", "headline": "MORE GREY MATTER", "pose": "shock", "pose_end": "happy", "prop": "meter", "label": "GREY MATTER", "from": 0.25, "to": 0.85, "color": [56, 189, 248], "py": 800,
+   "text": "After training, the jugglers showed a temporary increase in grey matter, in regions involved in processing visual motion and space."},
+  {"scene": "beat", "headline": "THEN IT SHRANK", "pose": "tired", "prop": "calendar", "count": 3, "side": "right", "py": 700,
+   "text": "When they stopped practicing, that increase decreased again."},
+  {"scene": "beat", "headline": "A SMALL SIGN", "pose": "calm", "prop": "sun", "side": "right", "py": 700,
+   "text": "It was a small study, so it is a sign, not proof. But it suggests your brain keeps changing with practice."}
+ ]}
