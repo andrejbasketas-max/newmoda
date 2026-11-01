@@ -1,0 +1,19 @@
+{"id": "B6",
+ "title": "Why crowds feel stressful: your brain's personal space",
+ "description": "Why does being packed into a crowd feel so stressful? One idea is personal space. Your brain keeps an invisible bubble around you and notices when someone gets too close. In a brain imaging study, healthy volunteers showed more activity in the amygdala, the brain's alarm system, when another person was brought closer. And a woman with damage to both amygdalae had almost no sense of personal space and was comfortable standing far closer than most people. A crowd breaks that bubble again and again, so the alarm may keep firing. These studies did not test crowds directly, so treat this as an explanation, not a diagnosis.\n\nSource: Kennedy, Gläscher, Tyszka & Adolphs, 2009, Nature Neuroscience, \"Personal space regulation by the human amygdala\".\n\n#shorts #psychology #anxiety",
+ "tags": ["crowds", "personal space", "amygdala", "anxiety", "psychology", "shorts"],
+ "thumb": {"words": ["TOO", "CLOSE"], "prop": "eye", "pose": "shock"},
+ "scenes": [
+  {"scene": "beat", "headline": "PACKED IN", "pose": "idle", "pose_end": "tired", "prop": "q", "side": "right", "py": 760,
+   "text": "Why does being packed into a crowd feel so stressful?"},
+  {"scene": "beat", "headline": "PERSONAL SPACE", "pose": "think", "prop": "brain", "side": "right", "py": 720,
+   "text": "One idea is that your brain keeps an invisible bubble around you, and notices when someone gets too close."},
+  {"scene": "beat", "headline": "THE ALARM", "pose": "shock", "prop": "meter", "label": "AMYGDALA", "from": 0.2, "to": 0.9, "color": [239, 68, 68], "py": 800,
+   "text": "In a brain imaging study, healthy volunteers showed more activity in the amygdala, the brain's alarm system, when another person was brought closer."},
+  {"scene": "beat", "headline": "NO BUBBLE", "pose": "calm", "prop": "eye", "side": "right", "py": 720,
+   "text": "And a woman with damage to both amygdalae had almost no sense of personal space, and stood far closer than most people would."},
+  {"scene": "compare", "headline": "BUBBLE BROKEN", "left": "EMPTY STREET", "right": "PACKED TRAIN", "left_pose": "calm", "right_pose": "shock",
+   "text": "A crowd breaks that bubble again and again, so the alarm may keep firing. That is one reason packed places can feel draining."},
+  {"scene": "beat", "headline": "JUST AN IDEA", "pose": "point", "prop": "sun", "side": "right", "py": 700,
+   "text": "The studies did not test crowds directly, so treat this as an explanation, not a diagnosis."}
+ ]}
