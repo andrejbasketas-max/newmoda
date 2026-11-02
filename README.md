@@ -27,19 +27,16 @@ Pronalazi Instagram biznis profile bez sajta i priprema personalizovane poruke z
 
 ## VRANA — streetwear sajt (`vrana/`)
 
-Izmišljen beogradski streetwear brend, napravljen po uzoru na redizajne sa TikToka (tamni editorijal, numerisane liste, tabela veličina, vremenska linija, rotirajuća traka). Bez slika i bez biblioteka: odeća je nacrtana u SVG-u, sve radi u čistom HTML/CSS/JS. Radi: torba sa memorisanjem, boje i veličine, odbrojavanje do dropa, pronalazač kroja, arhiva sa pregledom, zakazivanje termina, newsletter, meni za telefon.
+Izmišljen beogradski streetwear brend. Bez slika i biblioteka: odeća je nacrtana u SVG-u sa ravnim bojama i tvrdim senkama, sve radi u čistom HTML/CSS/JS.
 
-- Izvor: `vrana/index.html`, `styles.css`, `main.js`, `fonts/` (otvori `vrana/index.html` direktno).
-- Produkcija: `npm install && npm run build:vrana` pravi `vrana/dist/` (minifikovan CSS ubačen u HTML, JS sa hešom u imenu, `_headers` i `.htaccess` za keširanje). Postavi sadržaj `vrana/dist/` na bilo koji statički hosting (Netlify, Cloudflare Pages, Vercel, Apache).
-- Test lokalno sa kompresijom: `npm run serve:vrana`.
+**Dizajn:** papir, mastilo i jedna crvena; oštri uglovi, tanke linije, numerisane sekcije, rukopisne beleške, asimetrična mreža. Pet fontova sa jasnom ulogom: Archivo (promenljiva širina i težina, naslovi), Instrument Serif (editorijalni akcenti), Pirata One (gotički logo), DM Mono (oznake) i Caveat (rukopis).
 
-### Optimizacija (Lighthouse, mobilni profil, spora 4G veza)
+**Animacije:** preloader, slova koja se šire pod mišem (osa širine promenljivog fonta), kursor sa oznakama, magnetna dugmad, dve trake koje reaguju na brzinu skrola, reči manifesta koje se otkrivaju skrolom, zakačen horizontalni lookbook, brojači, vremenska linija koja se iscrtava, plutajući pregled u arhivi, maskirani ulazak naslova. Sve se gasi uz `prefers-reduced-motion`.
 
-| | Pre | Posle |
-|---|---|---|
-| Performanse | 72 | 100 |
-| FCP / LCP | 4,5 s / 4,5 s | 1,4 s / 1,5 s |
-| Skok rasporeda (CLS) | 0 | 0 |
-| Pristupačnost / Best practices / SEO | 99 / 96 / 100 | 100 / 100 / 100 |
+**Funkcije:** torba sa pamćenjem, boje i veličine, odbrojavanje do dropa, pronalazač kroja, arhiva, zakazivanje termina, newsletter, meni za telefon.
 
-Šta je urađeno: fontovi hostovani lokalno i isečeni na korišćena slova (228 KB → 76 KB, trajni keš), CSS ubačen u HTML (nema blokirajućih zahteva), JS minifikovan i odložen, rezervni fontovi sa istim metrikama protiv skokova rasporeda, favicon bez 404, ispravljen redosled naslova i naziv dugmeta, `touch-action` bez kašnjenja na dodir, odbrojavanje se pauzira u pozadini.
+- Izvor: `vrana/index.html`, `styles.css`, `main.js`, `fonts/`.
+- Produkcija: `npm install && npm run build:vrana` pravi `vrana/dist/` (CSS ubačen u HTML, JS sa hešom, `_headers` i `.htaccess` za keširanje). Postavi sadržaj `vrana/dist/` na statički hosting.
+- Lokalno sa kompresijom: `npm run serve:vrana`.
+
+**Lighthouse (mobilni profil, spora 4G):** performanse 98–99, pristupačnost 100, best practices 100, SEO 100, CLS 0, LCP oko 1,8 s. Fontovi su hostovani lokalno i isečeni na korišćena slova (latinica + č ć š đ ž), ukupno oko 115 KB.
