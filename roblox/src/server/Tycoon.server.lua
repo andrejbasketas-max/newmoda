@@ -114,6 +114,12 @@ local oresFolder = Instance.new("Folder")
 oresFolder.Name = "Ores"
 oresFolder.Parent = world
 
+-- podrazumevani Baseplate bi treperio (z-fighting) sa nasom zemljom
+local defaultBaseplate = Workspace:FindFirstChild("Baseplate")
+if defaultBaseplate then
+	defaultBaseplate:Destroy()
+end
+
 makePart(world, "Ground", CFrame.new(0, -1, 0), Vector3.new(500, 2, 500), Color3.fromRGB(70, 130, 70), Enum.Material.Grass)
 
 -- centralni spawn za igrace dok nemaju plac
@@ -324,7 +330,9 @@ end
 local debounce: { [Player]: number } = {}
 for _, plot in ipairs(plots) do
 	plot.button.Touched:Connect(function(hit)
-		local player = Players:GetPlayerFromCharacter(hit.Parent)
+		-- hit moze biti deo dodatka (sesir, kosa): trazimo Model lika, ne samo roditelja
+		local character = hit:FindFirstAncestorOfClass("Model")
+		local player = character and Players:GetPlayerFromCharacter(character)
 		if not player or player ~= plot.owner then
 			return
 		end

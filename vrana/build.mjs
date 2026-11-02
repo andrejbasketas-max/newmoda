@@ -18,7 +18,11 @@ const hash = createHash('sha1').update(js).digest('hex').slice(0, 8);
 const jsName = `main.${hash}.js`;
 writeFileSync(join(dist, jsName), js);
 
+// Preload ključnih fontova samo u produkciji (sa file:// izvora ga CORS blokira i pravi buku u konzoli)
+const preload = ['anton-normal-latin', 'anton-normal-latin-ext']
+  .map(n => `<link rel="preload" href="fonts/${n}.woff2" as="font" type="font/woff2" crossorigin>`).join('\n');
 let html = read('index.html')
+  .replace('<link rel="stylesheet" href="styles.css">', () => `${preload}\n<link rel="stylesheet" href="styles.css">`)
   .replace('<link rel="stylesheet" href="styles.css">', () => `<style>${css}</style>`)
   .replace('<script src="main.js" defer></script>', `<script src="${jsName}" defer></script>`)
   .replace(/<!--[\s\S]*?-->/g, '')
