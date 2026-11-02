@@ -1,0 +1,17 @@
+{
+  "name": "GoldTycoon",
+  "tree": {
+    "$className": "DataModel",
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "Tycoon": { "$path": "src/server/Tycoon.server.lua" }
+    },
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+        "Hud": { "$path": "src/client/Hud.client.lua" }
+      }
+    }
+  }
+}
