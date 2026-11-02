@@ -24,3 +24,22 @@ Odvojen, samostalan sajt za kafić — otvori `kafic/index.html`. Bez zavisnosti
 ## Outreach agent (`outreach/`)
 
 Pronalazi Instagram biznis profile bez sajta i priprema personalizovane poruke za ručno slanje. Vidi `outreach/README.md`.
+
+## VRANA — streetwear sajt (`vrana/`)
+
+Izmišljen beogradski streetwear brend, napravljen po uzoru na redizajne sa TikToka (tamni editorijal, numerisane liste, tabela veličina, vremenska linija, rotirajuća traka). Bez slika i bez biblioteka: odeća je nacrtana u SVG-u, sve radi u čistom HTML/CSS/JS. Radi: torba sa memorisanjem, boje i veličine, odbrojavanje do dropa, pronalazač kroja, arhiva sa pregledom, zakazivanje termina, newsletter, meni za telefon.
+
+- Izvor: `vrana/index.html`, `styles.css`, `main.js`, `fonts/` (otvori `vrana/index.html` direktno).
+- Produkcija: `npm install && npm run build:vrana` pravi `vrana/dist/` (minifikovan CSS ubačen u HTML, JS sa hešom u imenu, `_headers` i `.htaccess` za keširanje). Postavi sadržaj `vrana/dist/` na bilo koji statički hosting (Netlify, Cloudflare Pages, Vercel, Apache).
+- Test lokalno sa kompresijom: `npm run serve:vrana`.
+
+### Optimizacija (Lighthouse, mobilni profil, spora 4G veza)
+
+| | Pre | Posle |
+|---|---|---|
+| Performanse | 72 | 100 |
+| FCP / LCP | 4,5 s / 4,5 s | 1,4 s / 1,5 s |
+| Skok rasporeda (CLS) | 0 | 0 |
+| Pristupačnost / Best practices / SEO | 99 / 96 / 100 | 100 / 100 / 100 |
+
+Šta je urađeno: fontovi hostovani lokalno i isečeni na korišćena slova (228 KB → 76 KB, trajni keš), CSS ubačen u HTML (nema blokirajućih zahteva), JS minifikovan i odložen, rezervni fontovi sa istim metrikama protiv skokova rasporeda, favicon bez 404, ispravljen redosled naslova i naziv dugmeta, `touch-action` bez kašnjenja na dodir, odbrojavanje se pauzira u pozadini.

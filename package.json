@@ -4,7 +4,9 @@
   "description": "Newmoda perfume site. Static; only the 3D scene is bundled.",
   "scripts": {
     "build": "esbuild src/scene.js --bundle --minify --format=esm --target=es2020 --outfile=assets/scene.js",
-    "vendor": "mkdir -p assets/vendor && cp node_modules/gsap/dist/gsap.min.js node_modules/gsap/dist/ScrollTrigger.min.js node_modules/gsap/dist/SplitText.min.js node_modules/lenis/dist/lenis.min.js assets/vendor/"
+    "vendor": "mkdir -p assets/vendor && cp node_modules/gsap/dist/gsap.min.js node_modules/gsap/dist/ScrollTrigger.min.js node_modules/gsap/dist/SplitText.min.js node_modules/lenis/dist/lenis.min.js assets/vendor/",
+    "build:vrana": "node vrana/build.mjs",
+    "serve:vrana": "node vrana/serve.mjs dist 8750"
   },
   "devDependencies": {
     "esbuild": "0.25.10",

@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VRANA — Beogradski streetwear</title>
+<meta name="description" content="VRANA je beogradski streetwear brend. Teške pamučne majice, duksevi i jakne, šivene za noć. Drop 03 uskoro.">
+<meta name="theme-color" content="#0a0a0b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%230a0a0b%27/%3E%3Cpath d=%27M16 5l2.6 8.4L27 16l-8.4 2.6L16 27l-2.6-8.4L5 16l8.4-2.6z%27 fill=%27%23ff4a2b%27/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/anton-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/anton-normal-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js');</script>
+<script src="main.js" defer></script>
+</head>
+<body>
+
+<!-- Zajednički crteži odeće i gradijent senke -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="shade" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".18"/>
+      <stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".4"/>
+    </linearGradient>
+    <symbol id="g-tee" viewBox="0 0 200 220">
+      <path style="fill:var(--c)" d="M60 30 L85 20 Q100 36 115 20 L140 30 L176 64 L152 90 L138 76 L138 198 L62 198 L62 76 L48 90 L24 64 Z"/>
+      <path fill="url(#shade)" d="M60 30 L85 20 Q100 36 115 20 L140 30 L176 64 L152 90 L138 76 L138 198 L62 198 L62 76 L48 90 L24 64 Z"/>
+      <path d="M85 20 Q100 36 115 20" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="3"/>
+    </symbol>
+    <symbol id="g-hoodie" viewBox="0 0 200 220">
+      <path style="fill:var(--c)" d="M62 54 L138 54 L152 72 L180 180 L154 188 L138 112 L138 204 L62 204 L62 112 L46 188 L20 180 L48 72 Z"/>
+      <path style="fill:var(--c)" d="M66 56 Q100 -2 134 56 Q100 78 66 56 Z"/>
+      <path fill="url(#shade)" d="M62 54 L138 54 L152 72 L180 180 L154 188 L138 112 L138 204 L62 204 L62 112 L46 188 L20 180 L48 72 Z"/>
+      <path d="M76 56 Q100 20 124 56 Q100 70 76 56Z" fill="#000" fill-opacity=".45"/>
+      <path d="M92 66 v26 M108 66 v26" stroke="#fff" stroke-opacity=".6" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M78 150 h44 l8 30 h-60 z" fill="#000" fill-opacity=".18"/>
+    </symbol>
+    <symbol id="g-jacket" viewBox="0 0 200 220">
+      <path style="fill:var(--c)" d="M58 32 L84 20 L100 36 L116 20 L142 32 L180 176 L154 184 L142 104 L142 204 L58 204 L58 104 L46 184 L20 176 Z"/>
+      <path fill="url(#shade)" d="M58 32 L84 20 L100 36 L116 20 L142 32 L180 176 L154 184 L142 104 L142 204 L58 204 L58 104 L46 184 L20 176 Z"/>
+      <path d="M100 36 V204" stroke="#000" stroke-opacity=".5" stroke-width="2"/>
+      <path d="M84 20 L100 44 L116 20" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="3"/>
+    </symbol>
+    <symbol id="g-pants" viewBox="0 0 200 220">
+      <path style="fill:var(--c)" d="M60 14 L140 14 L152 202 L110 202 L100 78 L90 202 L48 202 Z"/>
+      <path fill="url(#shade)" d="M60 14 L140 14 L152 202 L110 202 L100 78 L90 202 L48 202 Z"/>
+      <rect x="58" y="112" width="26" height="32" rx="3" fill="#000" fill-opacity=".22"/>
+      <rect x="116" y="112" width="26" height="32" rx="3" fill="#000" fill-opacity=".22"/>
+      <path d="M60 24 H140" stroke="#000" stroke-opacity=".4" stroke-width="3"/>
+    </symbol>
+    <symbol id="g-cap" viewBox="0 0 200 220">
+      <path style="fill:var(--c)" d="M38 124 Q38 52 100 52 Q162 52 162 124 Z"/>
+      <path style="fill:var(--c)" d="M26 128 Q100 108 176 130 Q150 160 100 156 Q52 158 26 128 Z"/>
+      <path fill="url(#shade)" d="M38 124 Q38 52 100 52 Q162 52 162 124 Z"/>
+      <path d="M26 128 Q100 108 176 130 Q150 160 100 156 Q52 158 26 128 Z" fill="#000" fill-opacity=".28"/>
+    </symbol>
+    <symbol id="g-beanie" viewBox="0 0 200 220">
+      <path style="fill:var(--c)" d="M48 128 Q48 40 100 40 Q152 40 152 128 Z"/>
+      <path fill="url(#shade)" d="M48 128 Q48 40 100 40 Q152 40 152 128 Z"/>
+      <rect x="44" y="120" width="112" height="38" rx="6" style="fill:var(--c)"/>
+      <path d="M44 132 h112 M44 144 h112" stroke="#000" stroke-opacity=".3" stroke-width="2"/>
+      <circle cx="100" cy="38" r="9" style="fill:var(--c)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="topstrip" role="note">
+  <div class="topstrip__track" aria-hidden="true">
+    <span>Besplatna dostava preko 8.000 RSD</span><i>✦</i><span>Drop 03 — svake subote u 18:00</span><i>✦</i><span>Šiveno u Srbiji</span><i>✦</i><span>Povraćaj 30 dana</span><i>✦</i>
+    <span>Besplatna dostava preko 8.000 RSD</span><i>✦</i><span>Drop 03 — svake subote u 18:00</span><i>✦</i><span>Šiveno u Srbiji</span><i>✦</i><span>Povraćaj 30 dana</span><i>✦</i>
+  </div>
+  <span class="sr-only">Besplatna dostava preko 8.000 RSD. Povraćaj 30 dana.</span>
+</div>
+
+<header class="nav" id="nav">
+  <a class="logo" href="#top" aria-label="VRANA — početak">VRANA<span>✦</span></a>
+  <nav class="nav__links" id="menu" aria-label="Glavni meni">
+    <a href="#drop">Novo</a>
+    <a href="#prica">Priča</a>
+    <a href="#fit">Veličine</a>
+    <a href="#arhiva">Arhiva</a>
+    <a href="#radnje">Radnje</a>
+  </nav>
+  <div class="nav__right">
+    <button class="bagbtn" id="bagBtn">Torba <b id="bagCount">0</b></button>
+    <button class="burger" id="burger" aria-label="Meni" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__grain"></div>
+  <div class="hero__copy">
+    <p class="eyebrow"><span class="dot"></span> Beograd · od 2019 · Drop 03</p>
+    <h1 class="hero__title">
+      <span class="line"><span>Noć je</span></span>
+      <span class="line"><span class="serif">naša.</span></span>
+    </h1>
+    <p class="hero__lead">Teške pamučne majice, duksevi i jakne koje su počele u jednom garažnom lokalu na Dorćolu. Sada su svuda gde grad ne spava.</p>
+    <div class="hero__cta">
+      <a class="btn btn--solid" href="#drop">Pogledaj drop</a>
+      <a class="btn btn--ghost" href="#radnje">Zakaži termin ↗</a>
+    </div>
+    <div class="countdown" aria-live="off">
+      <span class="countdown__label">Sledeći drop za</span>
+      <div class="countdown__nums">
+        <div><b id="cd-d">00</b><small>dana</small></div>
+        <div><b id="cd-h">00</b><small>sati</small></div>
+        <div><b id="cd-m">00</b><small>min</small></div>
+        <div><b id="cd-s">00</b><small>sek</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__art" aria-hidden="true">
+    <div class="moon"></div>
+    <svg class="skyline" viewBox="0 0 800 200" preserveAspectRatio="none">
+      <path fill="#050506" d="M0 200V130h40v-30h30v50h30V80h24v40h36V60h30v70h40V90h28v40h50V50h26v80h34V100h40v30h44V70h30v60h40V110h36v20h40V90h28v110z"/>
+    </svg>
+    <svg class="hero__garment" viewBox="0 0 200 220" style="--c:#16161a">
+      <use href="#g-hoodie"/>
+      <text x="100" y="128" text-anchor="middle" class="print" style="fill:#ff4a2b;font-size:22px">NOĆ</text>
+    </svg>
+    <div class="stars"></div>
+    <span class="tag tag--a">480 g/m² pamuk</span>
+    <span class="tag tag--b">Reflektujući šav</span>
+  </div>
+</section>
+
+<!-- TRAKA -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>Šiveno za noć</span><i>✦</i><span>Dorćol</span><i>✦</i><span>Teški pamuk</span><i>✦</i><span>Mala serija</span><i>✦</i><span>Nikad ponovo</span><i>✦</i>
+    <span>Šiveno za noć</span><i>✦</i><span>Dorćol</span><i>✦</i><span>Teški pamuk</span><i>✦</i><span>Mala serija</span><i>✦</i><span>Nikad ponovo</span><i>✦</i>
+  </div>
+</div>
+
+<!-- NOVO / DROP -->
+<section class="sec" id="drop">
+  <div class="sec__head reveal">
+    <p class="eyebrow">Drop 03 · Jesen 2026</p>
+    <h2 class="h2">Novo u radnji<span class="serif">.</span></h2>
+    <p class="sec__sub">Šest komada. Svaki u dve boje. Kad nestane, nestane.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- PRIČA -->
+<section class="sec story" id="prica">
+  <div class="story__inner">
+    <div class="story__text reveal">
+      <p class="eyebrow">Kuća · Beograd · 2019</p>
+      <h2 class="h2 h2--serif">Počeli smo iz<br>jednog <em>garažnog</em> lokala.</h2>
+      <p>Nikola je 2019. na Dorćolu otvorio garažu u kojoj je sam šio prve duksere. Tkanina je bila preteška za mašinu, pa su svi šavovi radili dvaput. Tako je nastao potpis VRANE: komad koji se ne cepa.</p>
+      <p>I danas svaki komad prolazi kroz iste ruke u maloj radionici u Zemunu. Bez masovne proizvodnje, bez ponavljanja serija.</p>
+      <dl class="stats">
+        <div><dt>480</dt><dd>g/m² pamuk</dd></div>
+        <div><dt>6</dt><dd>komada po dropu</dd></div>
+        <div><dt>30</dt><dd>dana povraćaj</dd></div>
+      </dl>
+    </div>
+    <ol class="timeline reveal">
+      <li><span>2019</span><b>Garaža na Dorćolu</b><p>Prvi dukserice, šesnaest komada, prodato za jedno veče.</p></li>
+      <li><span>2022</span><b>Prvi pop-up</b><p>Tri dana u Savamali. Red do ćoška.</p></li>
+      <li><span>2024</span><b>Radnja na Kosančićevom</b><p>Stalna adresa, ista tabla iz garaže.</p></li>
+      <li class="is-now"><span>2026</span><b>Drop 03</b><p>Šest komada, dve boje. Danas.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- FIT FINDER -->
+<section class="sec sec--light" id="fit">
+  <div class="fit">
+    <div class="fit__copy reveal">
+      <p class="eyebrow eyebrow--dark">Pronađi svoju meru</p>
+      <h2 class="h2 h2--serif h2--dark">Koliko <em>široko</em> voliš?</h2>
+      <p class="fit__sub">Izaberi kroj i vidi tačne mere. Merimo ravno, preko grudi, u centimetrima.</p>
+      <div class="fit__tabs" role="tablist" aria-label="Kroj">
+        <button role="tab" class="is-on" data-fit="regular" aria-selected="true">Regular</button>
+        <button role="tab" data-fit="boxy" aria-selected="false">Boxy</button>
+        <button role="tab" data-fit="over" aria-selected="false">Oversized</button>
+      </div>
+      <p class="fit__note" id="fitNote">Klasičan kroj, mera tvoje uobičajene veličine.</p>
+    </div>
+    <div class="fit__viz reveal" aria-hidden="true">
+      <svg viewBox="0 0 200 220" class="fit__tee" id="fitTee" style="--c:#16161a"><use href="#g-tee"/></svg>
+    </div>
+    <table class="fit__table reveal">
+      <caption class="sr-only">Mere majice po veličinama</caption>
+      <thead><tr><th>Veličina</th><th>Grudi</th><th>Dužina</th><th>Rame</th></tr></thead>
+      <tbody id="fitBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- TRI TRAKE -->
+<section class="sec lanes">
+  <div class="sec__head reveal">
+    <p class="eyebrow">Zašto VRANA</p>
+    <h2 class="h2">Pravljeno za<br>sve što se desi posle ponoći<span class="serif">.</span></h2>
+  </div>
+  <div class="lane reveal"><b>1</b><div><h3>Teški pamuk</h3><p>480 g/m² češljani pamuk. Pada kao jakna, ne kao majica.</p></div><a href="#drop">Pogledaj komade →</a></div>
+  <div class="lane reveal"><b>2</b><div><h3>Reflektujući šav</h3><p>Šav na leđima hvata svetlo farova. Vidi te i vozač taksija u 3 ujutru.</p></div><a href="#drop">Vidi detalj →</a></div>
+  <div class="lane reveal"><b>3</b><div><h3>Mala serija</h3><p>Šest komada po dropu, nikada ponovo. Svaka etiketa je numerisana.</p></div><a href="#arhiva">Arhiva →</a></div>
+</section>
+
+<!-- LOOKBOOK -->
+<section class="sec look">
+  <div class="sec__head reveal">
+    <p class="eyebrow">Lookbook</p>
+    <h2 class="h2 h2--serif">Grad posle <em>ponoći</em></h2>
+  </div>
+  <div class="look__row" tabindex="0" aria-label="Lookbook, listaj ulevo i udesno">
+    <article class="look__card" style="--a:#ff4a2b;--b:#2a0d08"><span>01</span><svg viewBox="0 0 200 220" style="--c:#16161a"><use href="#g-hoodie"/></svg><h3>Kosančićev venac, 01:40</h3></article>
+    <article class="look__card" style="--a:#d6ff3f;--b:#16200a"><span>02</span><svg viewBox="0 0 200 220" style="--c:#e9e2d1"><use href="#g-tee"/></svg><h3>Pristanište 17, 02:15</h3></article>
+    <article class="look__card" style="--a:#6aa3ff;--b:#0a1530"><span>03</span><svg viewBox="0 0 200 220" style="--c:#13233d"><use href="#g-jacket"/></svg><h3>Kalemegdan, 03:05</h3></article>
+    <article class="look__card" style="--a:#ffb454;--b:#2c1a05"><span>04</span><svg viewBox="0 0 200 220" style="--c:#4a4d33"><use href="#g-pants"/></svg><h3>Dorćol, 04:30</h3></article>
+    <article class="look__card" style="--a:#ff4a2b;--b:#2a0d08"><span>05</span><svg viewBox="0 0 200 220" style="--c:#b3261e"><use href="#g-cap"/></svg><h3>Zemun, 05:10</h3></article>
+  </div>
+</section>
+
+<!-- ARHIVA -->
+<section class="sec archive" id="arhiva">
+  <div class="sec__head reveal">
+    <p class="eyebrow">Arhiva · 2019–2026</p>
+    <h2 class="h2">Prošli dropovi<span class="serif">.</span></h2>
+    <p class="sec__sub">Prelazi mišem preko reda da vidiš komad. Ono što je označeno kao pre-order vraćamo samo jednom.</p>
+  </div>
+  <div class="archive__wrap">
+    <ul class="alist" id="alist"></ul>
+    <div class="apreview" id="apreview" aria-live="polite">
+      <svg viewBox="0 0 200 220" id="apSvg" style="--c:#16161a"><use href="#g-hoodie"/></svg>
+      <div class="apreview__meta"><span id="apNo">01</span><b id="apName">—</b><em id="apPrice"></em></div>
+    </div>
+  </div>
+</section>
+
+<!-- CENA / HAPPY BLOCK -->
+<section class="sec deal">
+  <div class="deal__card reveal">
+    <div>
+      <p class="eyebrow eyebrow--dark">Paket · samo na dropu</p>
+      <h2 class="deal__price">13.900<small> RSD</small></h2>
+      <p class="deal__sub">Duks + majica + kapa. Uštediš 4.200 RSD.</p>
+    </div>
+    <ul class="deal__list">
+      <li>NOĆ 480 duks, bilo koja boja</li>
+      <li>KROV majica, bilo koja boja</li>
+      <li>KANDŽA kapa</li>
+      <li>Besplatna dostava i kutija za poklon</li>
+    </ul>
+    <button class="btn btn--dark" id="dealBtn">Dodaj paket u torbu</button>
+  </div>
+</section>
+
+<!-- RADNJE -->
+<section class="sec stores" id="radnje">
+  <div class="stores__text reveal">
+    <p class="eyebrow">Po dogovoru</p>
+    <h2 class="h2 h2--serif">Najbolje se <em>proba</em> uživo.</h2>
+    <p>Neke komade ne šaljemo. Zakaži termin u radnji, probaj, razgovaraj sa Nikolom ili Anom.</p>
+  </div>
+  <ul class="slist reveal">
+    <li><div><b>Beograd</b><span>Kosančićev venac 12</span></div><span class="hours">Pon–Sub 12–22</span><button class="btn btn--ghost btn--sm" data-book="Beograd">Zakaži</button></li>
+    <li><div><b>Novi Sad</b><span>Dunavska 7</span></div><span class="hours">Uto–Sub 12–20</span><button class="btn btn--ghost btn--sm" data-book="Novi Sad">Zakaži</button></li>
+    <li><div><b>Niš</b><span>Obrenovićeva 21</span></div><span class="hours">Sre–Sub 14–20</span><button class="btn btn--ghost btn--sm" data-book="Niš">Zakaži</button></li>
+    <li><div><b>Zagreb</b><span>Tkalčićeva 33</span></div><span class="hours">Pet–Ned 12–21</span><button class="btn btn--ghost btn--sm" data-book="Zagreb">Zakaži</button></li>
+  </ul>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="sec news">
+  <div class="news__box reveal">
+    <h2 class="h2">Prvi znaš<span class="serif">.</span></h2>
+    <p>Pošaljemo ti poruku 15 minuta pre svakog dropa i 10% popusta na prvu porudžbinu.</p>
+    <form class="news__form" id="newsForm" novalidate>
+      <label class="sr-only" for="email">Email</label>
+      <input id="email" type="email" placeholder="tvoj@email.com" required autocomplete="email">
+      <button class="btn btn--solid" type="submit">Pošalji</button>
+    </form>
+    <p class="news__msg" id="newsMsg" role="status"></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot__big" aria-hidden="true">VRANA</div>
+  <div class="foot__cols">
+    <div><p class="foot__h">Radnja</p><a href="#drop">Novo</a><a href="#arhiva">Arhiva</a><a href="#fit">Veličine</a></div>
+    <div><p class="foot__h">Pomoć</p><a href="#radnje">Radnje</a><a href="#top">Dostava</a><a href="#top">Povraćaj</a></div>
+    <div><p class="foot__h">Prati</p><a href="#top">Instagram</a><a href="#top">TikTok</a><a href="#top">YouTube</a></div>
+  </div>
+  <p class="foot__legal">© 2026 VRANA. Izmišljen brend, sajt je demo. Sva prava zadržana.</p>
+</footer>
+
+<!-- TORBA -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" aria-hidden="true" aria-label="Torba">
+  <div class="drawer__head"><h3>Torba <span id="drawerCount"></span></h3><button id="drawerClose" aria-label="Zatvori torbu">✕</button></div>
+  <div class="ship"><p id="shipMsg"></p><div class="ship__bar"><i id="shipFill"></i></div></div>
+  <ul class="items" id="items"></ul>
+  <div class="drawer__foot">
+    <div class="total"><span>Ukupno</span><b id="total">0 RSD</b></div>
+    <button class="btn btn--solid btn--full" id="checkout">Naplati</button>
+  </div>
+</aside>
+
+<dialog class="modal" id="bookModal">
+  <form method="dialog" id="bookForm">
+    <h3>Zakaži termin<span id="bookCity"></span></h3>
+    <label>Ime<input name="name" required autocomplete="name"></label>
+    <label>Dan<select name="day" id="bookDay"></select></label>
+    <label>Vreme<select name="time"><option>12:00</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option></select></label>
+    <div class="modal__row"><button class="btn btn--ghost" value="cancel" formnovalidate>Odustani</button><button class="btn btn--solid" value="ok" id="bookOk">Potvrdi</button></div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
