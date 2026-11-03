@@ -64,6 +64,13 @@
     ? `<img src="${car.photo}" alt="${car.make} ${car.model}" loading="lazy" decoding="async">`
     : window.carSVG({ body: car.body, color: car.color, id: `${size}-${car.id}` });
 
+  /* ---------- Saved cars (kept in this browser only) ---------- */
+  const FAV_KEY = 'vektor:saved';
+  const saved = new Set();
+  try { JSON.parse(localStorage.getItem(FAV_KEY) || '[]').forEach((id) => byId[id] && saved.add(id)); } catch { /* storage unavailable */ }
+  const storeSaved = () => { try { localStorage.setItem(FAV_KEY, JSON.stringify([...saved])); } catch { /* storage unavailable */ } };
+  const favCount = $('[data-fav-count]');
+
   /* ---------- Hero numbers ---------- */
   $('[data-count-cars]').textContent = CARS.length;
   $('[data-min-rate]').textContent = nf.format(Math.min(...CARS.map(rateFor)));
@@ -86,6 +93,7 @@
       <article class="card">
         <div class="card-media">
           ${car.badge ? `<span class="badge badge-${car.badge[1]}">${car.badge[0]}</span>` : ''}
+          <button type="button" class="fav" aria-pressed="${saved.has(car.id)}" aria-label="Sačuvaj: ${car.make} ${car.model}" data-fav="${car.id}"><svg class="ic"><use href="#i-heart"/></svg></button>
           ${media(car)}
         </div>
         <div class="card-body">
@@ -107,10 +115,13 @@
   let gridAnim;
   function renderGrid({ animate = true } = {}) {
     const list = CARS
-      .filter((c) => (state.body === 'all' || c.body === state.body) && (state.fuel === 'all' || c.fuel === state.fuel))
+      .filter((c) => (state.body === 'all' || c.body === state.body || (state.body === 'saved' && saved.has(c.id))) && (state.fuel === 'all' || c.fuel === state.fuel))
       .sort(sorters[state.sort]);
     grid.innerHTML = list.map(cardHTML).join('');
     emptyEl.hidden = list.length > 0;
+    $('p', emptyEl).textContent = state.body === 'saved' && !saved.size
+      ? 'Još niste sačuvali nijedno vozilo. Kliknite srce na kartici da ga dodate ovde.'
+      : 'Nema vozila za izabrane filtere.';
     countEl.textContent = `${list.length} ${plural(list.length, 'vozilo', 'vozila')} u ponudi`;
     if (motionOK && animate && list.length) {
       gridAnim?.stop();
@@ -134,7 +145,29 @@
     $$('[data-body]').forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.body === 'all')));
     renderGrid();
   });
+  function syncFav() {
+    favCount.textContent = saved.size;
+    $$('[data-fav]').forEach((b) => b.setAttribute('aria-pressed', String(saved.has(b.dataset.fav))));
+    const mb = $('[data-modal-fav]');
+    if (current) {
+      mb.setAttribute('aria-pressed', String(saved.has(current.id)));
+      $('span', mb).textContent = saved.has(current.id) ? 'Sačuvano' : 'Sačuvaj';
+    }
+  }
+  function toggleFav(id, btn) {
+    saved.has(id) ? saved.delete(id) : saved.add(id);
+    storeSaved();
+    syncFav();
+    if (motionOK && btn) M.animate($('.ic', btn), { transform: ['scale(1)', 'scale(1.35)', 'scale(1)'] }, { duration: 0.35, ease: 'easeOut' });
+    if (state.body === 'saved') renderGrid({ animate: false });
+  }
+  grid.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-fav]');
+    if (btn) toggleFav(btn.dataset.fav, btn);
+  });
+
   renderGrid({ animate: false });
+  favCount.textContent = saved.size;
 
   // The grid enters with the rest of the page the first time it scrolls into view.
   if (motionOK) {
@@ -161,6 +194,7 @@
     ];
     $('[data-modal-specs]', modal).innerHTML = specs.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
     $('[data-modal-features]', modal).innerHTML = car.features.map((f) => `<li><svg class="ic"><use href="#i-check"/></svg>${f}</li>`).join('');
+    syncFav();
     modal.showModal();
     $('.modal-inner', modal).scrollTop = 0;
     if (motionOK) {
@@ -179,6 +213,7 @@
     if (opener) openCar(opener.dataset.openCar);
   });
   $('[data-modal-close]', modal).addEventListener('click', () => modal.close());
+  $('[data-modal-fav]', modal).addEventListener('click', (e) => toggleFav(current.id, e.currentTarget));
   modal.addEventListener('click', (e) => { if (e.target === modal) modal.close(); });
 
   /* ---------- Jumping to the form / calculator ---------- */
@@ -237,7 +272,6 @@
     }
   }
   $('[data-calc]').addEventListener('input', updateCalc);
-  $('[data-calc]').addEventListener('submit', (e) => e.preventDefault());
   updateCalc();
 
   /* ---------- Contact form ---------- */
@@ -324,6 +358,7 @@
   };
   burger.addEventListener('click', () => setMenu(!nav.classList.contains('is-open')));
   $('#navLinks').addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('click', (e) => { if (nav.classList.contains('is-open') && !nav.contains(e.target)) setMenu(false); });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && nav.classList.contains('is-open')) { setMenu(false); burger.focus(); }
   });
@@ -385,7 +420,7 @@
       M.animate(0, to, { duration: 1.4, delay: i * 0.12, ease, onUpdate: (v) => { el.textContent = fmt.format(v); } });
     });
   };
-  const wide = matchMedia('(min-width: 900px)');
+  const wide = matchMedia('(min-width: 900px) and (min-height: 640px)');
   if (wide.matches) {
     M.scroll((p) => {
       const drive = Math.min(p / 0.6, 1);
