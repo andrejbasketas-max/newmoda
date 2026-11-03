@@ -1,0 +1,19 @@
+{"id": "B8",
+ "title": "Why you can't stop reading bad news",
+ "description": "Why does bad news pull you in? In a study across 17 countries, 1,156 volunteers watched news stories while sensors measured the tiny changes in skin conductance that track arousal. Negative stories produced a bigger response than positive or neutral ones. One common explanation is that our brains evolved to pay extra attention to threats, because missing danger cost more than missing good news. But people varied a lot, and a later preregistered replication found only partly similar results, so treat it as a tendency, not a rule.\n\nSources: Soroka, Fournier & Nir, 2019, PNAS, \"Cross-national evidence of a negativity bias in psychophysiological reactions to news\"; Dubèl et al., 2024, Media and Communication (preregistered replication).\n\n#shorts #psychology #news",
+ "tags": ["bad news", "negativity bias", "doomscrolling", "news", "psychology", "shorts"],
+ "thumb": {"words": ["SKIN", "ALARM"], "prop": "phone", "pose": "shock"},
+ "scenes": [
+  {"scene": "beat", "headline": "BAD NEWS", "pose": "idle", "pose_end": "shock", "prop": "phone", "side": "right", "py": 700,
+   "text": "Why is bad news so hard to look away from?"},
+  {"scene": "counter", "from": 0, "to": 1156, "unit": "VOLUNTEERS", "label": "17 countries, 6 continents", "pose": "idle",
+   "text": "In one study across seventeen countries, over a thousand volunteers watched news stories while sensors tracked their skin."},
+  {"scene": "beat", "headline": "SKIN RESPONSE", "pose": "think", "prop": "meter", "label": "AROUSAL", "from": 0.2, "to": 0.7, "color": [56, 189, 248], "py": 800,
+   "text": "Tiny changes in skin conductance track how aroused your body is."},
+  {"scene": "compare", "headline": "WHICH HIT HARDER?", "left": "GOOD NEWS", "right": "BAD NEWS", "left_pose": "calm", "right_pose": "shock",
+   "text": "Negative stories produced a bigger skin response than positive or neutral ones."},
+  {"scene": "beat", "headline": "OLD ALARM", "pose": "point", "prop": "eye", "side": "right", "py": 720,
+   "text": "One common explanation is that our brains evolved to watch for threats, because missing danger cost more than missing good news."},
+  {"scene": "beat", "headline": "A TENDENCY", "pose": "calm", "prop": "q", "side": "right", "py": 760,
+   "text": "But people varied a lot, and a later replication found only partly similar results. So it is a tendency, not a rule."}
+ ]}
