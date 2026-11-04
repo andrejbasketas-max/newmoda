@@ -6,7 +6,19 @@
 ```
 You sit down to focus and thirty seconds later you are checking your phone. Is your brain broken, or built for a different world? We look at a handful of habits from psychology research that look like flaws, and what the studies actually say. The Stone Age idea is a hypothesis, not a proven fact, and I say which parts are study results and which are interpretation. This is an explanation of research, not medical advice.
 
-CHAPTERS_PLACEHOLDER
+Chapters:
+0:00 Intro
+0:38 Mind wandering
+1:12 The Stone Age idea and food
+1:54 Phone checking
+2:37 Bad news and bad memories
+3:08 Crowds and personal space
+3:26 Why quiet feels hard
+3:59 Night, sleep and focus
+4:36 Putting things off
+5:03 The honest part
+5:18 What might help
+6:07 Recap
 
 Sources:
 - Killingsworth & Gilbert, 2010, Science, "A wandering mind is an unhappy mind".
