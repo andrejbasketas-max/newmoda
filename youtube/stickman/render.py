@@ -286,7 +286,9 @@ def sc_bullets(cv, t, tt, a):
     for i, s in enumerate(items):
         y = (520 + i * 190) if H > W else (330 + i * 170); on = i < n
         cv.rect((x0, y - 70, x1, y + 70), r=30, outline=ACC if on else DIM, w=8)
-        cv.text(((x0 + x1) / 2, y), s if on else "", 64, c=FG)
+        isz = 64
+        while isz > 30 and font(isz).getlength(s) / SS > (x1 - x0) - 60: isz -= 4  # long items shrink to fit the box
+        cv.text(((x0 + x1) / 2, y), s if on else "", isz, c=FG)
     if a.get("figure"): figure(cv, W * 0.82 if wide else W/2, G if wide else G + 120, **POSES["think"])
 
 def sc_counter(cv, t, tt, a):
