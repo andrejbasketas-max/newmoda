@@ -1,0 +1,300 @@
+{
+ "id": "L2",
+ "title": "Why You Can't Focus: Is Your Brain Stuck in the Stone Age?",
+ "description": "You sit down to focus and thirty seconds later you are checking your phone. Is your brain broken, or built for a different world? We look at a handful of habits from psychology research that look like flaws, and what the studies actually say. The Stone Age idea is a hypothesis, not a proven fact, and I say which parts are study results and which are interpretation. This is an explanation of research, not medical advice.\n\nCHAPTERS_PLACEHOLDER\n\nSources:\n- Killingsworth & Gilbert, 2010, Science, \"A wandering mind is an unhappy mind\".\n- Mann & Cadman, 2014, Creativity Research Journal, \"Does Being Bored Make Us More Creative?\".\n- Hall et al., 2019, Cell Metabolism, \"Ultra-Processed Diets Cause Excess Calorie Intake and Weight Gain: An Inpatient Randomized Controlled Trial of Ad Libitum Food Intake\".\n- Oulasvirta, Rattenbury, Ma & Raita, 2012, Personal and Ubiquitous Computing, \"Habits make smartphone use more pervasive\".\n- Ferster & Skinner, 1957, Schedules of Reinforcement.\n- Ward, Duke, Gneezy & Bos, 2017, Journal of the Association for Consumer Research, \"Brain Drain: The Mere Presence of One's Own Smartphone Reduces Available Cognitive Capacity\"; and the 2022 preregistered replication in Acta Psychologica, \"Reexamining the brain drain effect\".\n- Soroka, Fournier & Nir, 2019, PNAS, \"Cross-national evidence of a negativity bias in psychophysiological reactions to news\"; Dubèl et al., 2024, Media and Communication (preregistered replication).\n- Baumeister et al., 2001, Review of General Psychology, \"Bad is stronger than good\"; McGaugh, 2004, Annual Review of Neuroscience, \"The amygdala modulates the consolidation of memories of emotionally arousing experiences\".\n- Kennedy, Gläscher, Tyszka & Adolphs, 2009, Nature Neuroscience, \"Personal space regulation by the human amygdala\".\n- Wilson et al., 2014, Science, \"Just think: The challenges of the disengaged mind\"; Fox, Thompson, Andrews-Hanna & Christoff, 2014, Frontiers in Psychology, commentary.\n- Tubbs, Perlis & Basner, Frontiers in Network Physiology, \"Mind After Midnight: Nocturnal Wakefulness, Behavioral Dysregulation, and Psychopathology\".\n- Lim & Dinges, 2010, Psychological Bulletin, \"A meta-analysis of the impact of short-term sleep deprivation on cognitive variables\".\n- Van Dongen, Maislin, Mullington & Dinges, 2003, Sleep, \"The cumulative cost of additional wakefulness\".\n- Erickson et al., 2011, PNAS, \"Exercise training increases size of hippocampus and improves memory\".\n- Tice & Baumeister, 1997, Psychological Science, \"Longitudinal study of procrastination, performance, stress, and health: The costs and benefits of dawdling\".\n- Zeidan et al., 2010, Consciousness and Cognition, \"Mindfulness meditation improves cognition: Evidence of brief mental training\".\n- Draganski et al., 2004, Nature, \"Neuroplasticity: changes in grey matter induced by training\".\n\n#psychology #focus #brain",
+ "tags": [
+  "why you can't focus",
+  "stone age brain",
+  "evolutionary mismatch",
+  "attention",
+  "phone habits",
+  "psychology"
+ ],
+ "thumb": {
+  "words": [
+   "PHONE",
+   "WINS"
+  ],
+  "prop": "phone",
+  "pose": "tired"
+ },
+ "scenes": [
+  {
+   "scene": "beat",
+   "headline": "30 SECONDS",
+   "pose": "idle",
+   "prop": "phone",
+   "side": "right",
+   "py": 600,
+   "text": "You sit down to focus, and thirty seconds later you are checking your phone. Is your brain broken? Maybe it is just built for a different world. Today we look at a handful of habits from research that look like flaws, and what the studies say about them.",
+   "pose_end": "tired"
+  },
+  {
+   "scene": "beat",
+   "headline": "A QUICK RULE",
+   "pose": "point",
+   "prop": "q",
+   "side": "right",
+   "py": 620,
+   "text": "First, a rule. The Stone Age idea in the title is a hypothesis, not a fact. I will say which parts come from studies and which parts are interpretation, and every source is in the description."
+  },
+  {
+   "scene": "beat",
+   "headline": "THE ROUTE",
+   "pose": "idle",
+   "prop": "calendar",
+   "side": "right",
+   "py": 580,
+   "text": "Here is the route. We will look at mind wandering, food, phones, bad news, memory, crowds, quiet, sleep and putting things off, and then at what might help.",
+   "count": 4
+  },
+  {
+   "scene": "counter",
+   "from": 0,
+   "to": 47,
+   "unit": "% MIND WANDERS",
+   "label": "2,250 adults, asked during their day",
+   "pose": "idle",
+   "text": "Start with the basics. In a large study, more than two thousand people used a phone app that pinged them during the day, and asked what they were doing and thinking about. Their minds were wandering about forty seven percent of the time."
+  },
+  {
+   "scene": "beat",
+   "headline": "AN UNHAPPY MIND",
+   "pose": "tired",
+   "prop": "brain",
+   "side": "right",
+   "py": 660,
+   "text": "They also reported feeling less happy when their minds wandered. The authors' analysis suggested the wandering came first, and the unhappiness followed."
+  },
+  {
+   "scene": "beat",
+   "headline": "NOT ALL BAD",
+   "pose": "happy",
+   "prop": "bulb",
+   "side": "right",
+   "py": 620,
+   "text": "But a wandering mind is not all bad. In one study, volunteers who did a deliberately boring task came up with more creative ideas afterwards than a control group, and the authors link it to daydreaming."
+  },
+  {
+   "scene": "beat",
+   "headline": "THE MISMATCH IDEA",
+   "pose": "think",
+   "prop": "brain",
+   "side": "right",
+   "py": 660,
+   "text": "So why does focus feel so hard? One popular idea is evolutionary mismatch. Our brains were shaped over a very long time, in small groups, where noticing a sudden movement mattered more than finishing a spreadsheet. Today's world moves much faster than evolution does."
+  },
+  {
+   "scene": "beat",
+   "headline": "THE FOOD TEST",
+   "pose": "point",
+   "prop": "battery",
+   "side": "right",
+   "py": 640,
+   "text": "The clearest example may be food. In a clinic study at the National Institutes of Health, twenty adults ate ultra processed meals for two weeks, and unprocessed meals for two weeks, with meals matched for sugar, fat, fiber and sodium."
+  },
+  {
+   "scene": "counter",
+   "from": 0,
+   "to": 508,
+   "unit": "EXTRA CALORIES",
+   "label": "per day, ultra processed diet",
+   "pose": "shock",
+   "text": "On the ultra processed diet they ate about five hundred more calories a day, and gained around two pounds. That fits the mismatch idea, but the study itself did not test it."
+  },
+  {
+   "scene": "beat",
+   "headline": "NOW YOUR PHONE",
+   "pose": "idle",
+   "prop": "phone",
+   "side": "right",
+   "py": 620,
+   "text": "Now let us look at attention. A study of smartphone habits found that most checks are very short, usually under thirty seconds, and that people mostly check for email, social media and news."
+  },
+  {
+   "scene": "compare",
+   "headline": "THE REWARD PATTERN",
+   "left": "MOST CHECKS",
+   "right": "SOME CHECKS",
+   "left_pose": "tired",
+   "right_pose": "happy",
+   "text": "The researchers describe these as habits that grow because the rewards are quick. Psychologists also point to reward schedules from classic animal research, where some responses pay off and most do not. That unpredictability may help explain why checking feels so automatic."
+  },
+  {
+   "scene": "beat",
+   "headline": "BRAIN DRAIN?",
+   "pose": "point",
+   "prop": "q",
+   "side": "right",
+   "py": 700,
+   "text": "You may have heard that a phone sitting on your desk drains your brain, even when it is silent. A well known study reported exactly that. But a preregistered replication in twenty twenty two did not find the effect, so the claim is still debated."
+  },
+  {
+   "scene": "counter",
+   "from": 0,
+   "to": 1156,
+   "unit": "VOLUNTEERS",
+   "label": "watched news in 17 countries",
+   "pose": "shock",
+   "text": "Our attention also leans toward the negative. In a study across seventeen countries, over a thousand volunteers watched news stories while sensors tracked their skin. Negative stories produced a bigger response, although a later replication found only partly similar results."
+  },
+  {
+   "scene": "beat",
+   "headline": "BAD IS STRONGER",
+   "pose": "shock",
+   "prop": "heart",
+   "side": "right",
+   "py": 620,
+   "text": "A famous review called bad is stronger than good concluded that bad events tend to have a bigger effect on us than good ones. And emotional moments are stored more strongly in memory, which is one reason an awkward sentence from years ago can still sting."
+  },
+  {
+   "scene": "beat",
+   "headline": "THE ALARM",
+   "pose": "shock",
+   "prop": "eye",
+   "side": "right",
+   "py": 660,
+   "text": "Your brain also keeps an invisible personal space. In a brain imaging study, healthy volunteers showed more activity in the amygdala, the brain's alarm system, when another person was brought closer. A busy room may keep poking that alarm, though these studies did not test crowds directly."
+  },
+  {
+   "scene": "beat",
+   "headline": "QUIET IS HARD",
+   "pose": "tired",
+   "prop": "clock",
+   "side": "right",
+   "py": 620,
+   "text": "And when everything goes quiet, many people do not enjoy it. In a famous set of eleven studies, most people did not enjoy fifteen minutes alone with their thoughts."
+  },
+  {
+   "scene": "counter",
+   "from": 0,
+   "to": 67,
+   "unit": "% OF MEN",
+   "label": "gave themselves a mild shock",
+   "pose": "shock",
+   "text": "In one of them, volunteers could press a button to give themselves a mild electric shock. About two thirds of the men, and about a quarter of the women, did so at least once."
+  },
+  {
+   "scene": "beat",
+   "headline": "STILL DEBATED",
+   "pose": "point",
+   "prop": "q",
+   "side": "right",
+   "py": 700,
+   "text": "Other researchers argue the study shows less than it seems, because the shock was rated only mildly unpleasant. So the honest summary is that many people find quiet hard, and the reason is still debated."
+  },
+  {
+   "scene": "beat",
+   "headline": "3 A.M.",
+   "pose": "tired",
+   "prop": "moon",
+   "side": "right",
+   "py": 580,
+   "text": "Late at night it can get worse. Researchers have proposed the mind after midnight hypothesis, where thinking leans negative and judgment gets weaker in the early hours. It is a hypothesis, not a settled fact."
+  },
+  {
+   "scene": "beat",
+   "headline": "SLEEP AND FOCUS",
+   "pose": "tired",
+   "prop": "eye",
+   "side": "right",
+   "py": 620,
+   "text": "Sleep matters for focus too. A large review of dozens of studies found that simple attention, just staying alert and responding on time, is the thing most affected by a short stretch without sleep."
+  },
+  {
+   "scene": "beat",
+   "headline": "6 HOURS A NIGHT",
+   "pose": "tired",
+   "prop": "moon",
+   "side": "right",
+   "py": 580,
+   "text": "In one famous experiment, adults who slept six hours a night for two weeks tested about as badly as people who had been kept awake for up to two full nights, yet they rated themselves as only slightly sleepy."
+  },
+  {
+   "scene": "beat",
+   "headline": "PUTTING IT OFF",
+   "pose": "idle",
+   "prop": "calendar",
+   "side": "right",
+   "py": 580,
+   "text": "Then there is putting things off. In a classic study, researchers followed college students across a semester. Procrastinators felt less stress early on, but later reported more stress, more symptoms of illness, and lower grades.",
+   "count": 4
+  },
+  {
+   "scene": "compare",
+   "headline": "RELIEF NOW, BILL LATER",
+   "left": "EARLY IN TERM",
+   "right": "LATE IN TERM",
+   "left_pose": "calm",
+   "right_pose": "shock",
+   "text": "The authors called it the costs and benefits of dawdling. Relief now, and a bill later. That pattern fits a brain that favors the present, though the study measured the outcomes, not the brain."
+  },
+  {
+   "scene": "beat",
+   "headline": "THE HONEST PART",
+   "pose": "point",
+   "prop": "q",
+   "side": "right",
+   "py": 700,
+   "text": "Now the honest part. The Stone Age idea is a hypothesis. None of these studies tested it directly, and several are small, or have been replicated only partly. Treat it as a useful way to think, not as something proven."
+  },
+  {
+   "scene": "beat",
+   "headline": "CAN ANYTHING HELP?",
+   "pose": "think",
+   "prop": "brain",
+   "side": "right",
+   "py": 660,
+   "text": "So can anything help? In one study, forty nine students either learned mindfulness meditation, or listened to The Hobbit read aloud, over four days. Only the meditation group improved on tests of working memory and executive function."
+  },
+  {
+   "scene": "beat",
+   "headline": "MOVE YOUR BODY",
+   "pose": "happy",
+   "prop": "heart",
+   "side": "right",
+   "py": 620,
+   "text": "Movement may help too. In a one year trial, a hundred twenty older adults either walked for forty minutes three days a week, or did stretching. The hippocampus, a region that helps form memories, grew about two percent in the walkers, and shrank about one point four percent in the stretching group."
+  },
+  {
+   "scene": "beat",
+   "headline": "KEEP PRACTICING",
+   "pose": "calm",
+   "prop": "sun",
+   "side": "right",
+   "py": 620,
+   "text": "It was a small study, and the author said you need to keep practicing. Still, there is another reason for hope. In a study of twenty four people who had never juggled, learners showed a temporary increase in grey matter after three months, which decreased again after they stopped."
+  },
+  {
+   "scene": "bullets",
+   "headline": "THE RECAP",
+   "figure": true,
+   "items": [
+    "MIND WANDERS ABOUT 47% OF THE TIME",
+    "PHONE CHECKS: QUICK REWARDS",
+    "BAD NEWS: A BIGGER REACTION",
+    "QUIET: HARD FOR MANY PEOPLE"
+   ],
+   "text": "Let us recap. Our minds wander about half the time. Phone checks are short habits with quick rewards. Bad news gets a bigger reaction. And quiet is hard for many people. Whether the Stone Age is the reason is still an open question."
+  },
+  {
+   "scene": "beat",
+   "headline": "NOT ADVICE",
+   "pose": "calm",
+   "prop": "heart",
+   "side": "right",
+   "py": 600,
+   "text": "None of this is medical advice. If focus or anxiety is a real problem for you, a doctor or psychologist is the right person to ask. This video only explains what some studies found."
+  },
+  {
+   "scene": "beat",
+   "headline": "THANKS",
+   "pose": "happy",
+   "prop": "bulb",
+   "side": "right",
+   "py": 620,
+   "text": "So the next time you lose focus after thirty seconds, your brain may not be broken. It may just be doing an old job in a new world. Thanks for watching, and subscribe for the next brain study.",
+   "pose_end": "calm"
+  }
+ ]
+}
