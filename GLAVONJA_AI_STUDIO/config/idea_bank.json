@@ -1,0 +1,465 @@
+{
+ "formats": [
+  {
+   "id": "what_if",
+   "duration_min": 8,
+   "mood": "mystery",
+   "difficulty": "easy",
+   "why_en": "'What if' videos create an instant curiosity gap and are evergreen: they keep getting search + suggested traffic for years.",
+   "why_sr": "'Šta ako' video odmah stvara radoznalost i ne zastareva - dobija pretragu i preporuke godinama.",
+   "thumb": "GLAVONJA shocked in the foreground, the impossible situation huge behind him, 2-3 word text."
+  },
+  {
+   "id": "survive",
+   "duration_min": 10,
+   "mood": "tense",
+   "difficulty": "medium",
+   "why_en": "Survival challenges ('Could you survive...') put the viewer in the character's shoes; high retention because the outcome is unknown.",
+   "why_sr": "Izazovi preživljavanja stavljaju gledaoca u kožu lika; visoko zadržavanje jer je ishod neizvestan.",
+   "thumb": "GLAVONJA in danger (scared face), the threat close behind, red arrow, text like 'DAY 1'."
+  },
+  {
+   "id": "history",
+   "duration_min": 10,
+   "mood": "epic",
+   "difficulty": "medium",
+   "why_en": "Historical mysteries mix education with storytelling; strong for long watch time and older audiences.",
+   "why_sr": "Istorijske misterije spajaju edukaciju i priču; jako dobre za dugo gledanje.",
+   "thumb": "GLAVONJA as an explorer in front of an ancient object with a big question mark."
+  },
+  {
+   "id": "horror",
+   "duration_min": 9,
+   "mood": "horror",
+   "difficulty": "medium",
+   "why_en": "Horror stories have very high retention and comment activity; stickman style keeps them watchable for all ages.",
+   "why_sr": "Horor priče imaju veoma visoko zadržavanje i mnogo komentara; stickman stil ih čini prijatnim za sve uzraste.",
+   "thumb": "Dark background, GLAVONJA terrified, glowing eyes in the darkness, 2-word text."
+  },
+  {
+   "id": "facts",
+   "duration_min": 7,
+   "mood": "upbeat",
+   "difficulty": "easy",
+   "why_en": "Fast fact lists are easy to produce in volume and work well as Shorts spin-offs.",
+   "why_sr": "Brze liste činjenica se lako prave u većem broju i dobre su za Shorts.",
+   "thumb": "GLAVONJA with mind-blown expression, the strangest fact as an image, number in the corner."
+  },
+  {
+   "id": "extreme",
+   "duration_min": 8,
+   "mood": "epic",
+   "difficulty": "medium",
+   "why_en": "Extreme scale comparisons and challenges ('1 vs 100', 'every level of...') are very clickable and easy to visualise.",
+   "why_sr": "Ekstremna poređenja i izazovi su veoma klikabilni i laki za vizualizaciju.",
+   "thumb": "Tiny GLAVONJA next to something gigantic, arrow and number."
+  },
+  {
+   "id": "explainer",
+   "duration_min": 6,
+   "mood": "mystery",
+   "difficulty": "easy",
+   "why_en": "Explainers answer real search questions; good for discoverability.",
+   "why_sr": "Objašnjenja odgovaraju na stvarne pretrage; dobra za otkrivanje kanala.",
+   "thumb": "GLAVONJA pointing at the subject, question mark, short text."
+  }
+ ],
+ "seeds": [
+  {
+   "format": "what_if",
+   "topic_en": "Earth stops spinning",
+   "topic_sr": "Zemlja prestane da se okreće",
+   "title_en": "What If Earth Stopped Spinning for 1 Second?",
+   "title_sr": "Šta ako Zemlja stane na 1 sekundu?",
+   "bg": "space",
+   "mood": "mystery",
+   "competition": "high",
+   "potential": 8
+  },
+  {
+   "format": "what_if",
+   "topic_en": "The Moon disappears",
+   "topic_sr": "Mesec nestane",
+   "title_en": "What If the Moon Disappeared Tonight?",
+   "title_sr": "Šta ako Mesec nestane večeras?",
+   "bg": "night",
+   "mood": "mystery",
+   "competition": "high",
+   "potential": 8
+  },
+  {
+   "format": "what_if",
+   "topic_en": "Humans stop sleeping",
+   "topic_sr": "Ljudi prestanu da spavaju",
+   "title_en": "What If You Never Slept Again?",
+   "title_sr": "Šta ako nikada više ne zaspiš?",
+   "bg": "room",
+   "mood": "tense",
+   "competition": "medium",
+   "potential": 8
+  },
+  {
+   "format": "what_if",
+   "topic_en": "All insects vanish",
+   "topic_sr": "Svi insekti nestanu",
+   "title_en": "What If Every Insect Vanished?",
+   "title_sr": "Šta ako nestanu svi insekti?",
+   "bg": "forest",
+   "mood": "mystery",
+   "competition": "low",
+   "potential": 7
+  },
+  {
+   "format": "what_if",
+   "topic_en": "You fall into a black hole",
+   "topic_sr": "Upadneš u crnu rupu",
+   "title_en": "What Happens If You Fall Into a Black Hole?",
+   "title_sr": "Šta se desi kad upadneš u crnu rupu?",
+   "bg": "space",
+   "mood": "mystery",
+   "competition": "high",
+   "potential": 8
+  },
+  {
+   "format": "what_if",
+   "topic_en": "The internet shuts down forever",
+   "topic_sr": "Internet se ugasi zauvek",
+   "title_en": "What If the Internet Shut Down Forever?",
+   "title_sr": "Šta ako se internet ugasi zauvek?",
+   "bg": "city",
+   "mood": "tense",
+   "competition": "medium",
+   "potential": 8
+  },
+  {
+   "format": "what_if",
+   "topic_en": "You wake up in ancient Rome",
+   "topic_sr": "Probudiš se u starom Rimu",
+   "title_en": "What If You Woke Up in Ancient Rome?",
+   "title_sr": "Šta ako se probudiš u starom Rimu?",
+   "bg": "ancient",
+   "mood": "epic",
+   "competition": "low",
+   "potential": 8
+  },
+  {
+   "format": "what_if",
+   "topic_en": "The oceans dry up",
+   "topic_sr": "Okeani presuše",
+   "title_en": "What If All the Oceans Dried Up?",
+   "title_sr": "Šta ako presuše svi okeani?",
+   "bg": "desert",
+   "mood": "mystery",
+   "competition": "medium",
+   "potential": 7
+  },
+  {
+   "format": "survive",
+   "topic_en": "Surviving 7 days alone on a desert island",
+   "topic_sr": "7 dana sam na pustom ostrvu",
+   "title_en": "I Survived 7 Days Alone on a Desert Island",
+   "title_sr": "Preživeo sam 7 dana sam na pustom ostrvu",
+   "bg": "island",
+   "mood": "tense",
+   "competition": "high",
+   "potential": 8
+  },
+  {
+   "format": "survive",
+   "topic_en": "Surviving the Titanic",
+   "topic_sr": "Preživeti Titanik",
+   "title_en": "Could You Survive the Titanic?",
+   "title_sr": "Da li bi preživeo Titanik?",
+   "bg": "ocean",
+   "mood": "tense",
+   "competition": "medium",
+   "potential": 9
+  },
+  {
+   "format": "survive",
+   "topic_en": "Surviving the Ice Age",
+   "topic_sr": "Preživeti ledeno doba",
+   "title_en": "How Long Would You Survive in the Ice Age?",
+   "title_sr": "Koliko bi preživeo u ledenom dobu?",
+   "bg": "snow",
+   "mood": "tense",
+   "competition": "low",
+   "potential": 8
+  },
+  {
+   "format": "survive",
+   "topic_en": "Surviving a volcano eruption",
+   "topic_sr": "Preživeti erupciju vulkana",
+   "title_en": "Could You Survive Pompeii?",
+   "title_sr": "Da li bi preživeo Pompeju?",
+   "bg": "volcano",
+   "mood": "tense",
+   "competition": "medium",
+   "potential": 8
+  },
+  {
+   "format": "survive",
+   "topic_en": "Surviving 30 days in a jungle",
+   "topic_sr": "30 dana u džungli",
+   "title_en": "I Survived 30 Days in the Amazon Jungle",
+   "title_sr": "Preživeo sam 30 dana u Amazonskoj džungli",
+   "bg": "jungle",
+   "mood": "tense",
+   "competition": "medium",
+   "potential": 7
+  },
+  {
+   "format": "survive",
+   "topic_en": "Surviving on Mars",
+   "topic_sr": "Preživeti na Marsu",
+   "title_en": "How Long Could You Survive on Mars?",
+   "title_sr": "Koliko bi preživeo na Marsu?",
+   "bg": "space",
+   "mood": "tense",
+   "competition": "medium",
+   "potential": 8
+  },
+  {
+   "format": "survive",
+   "topic_en": "Surviving the medieval times as a peasant",
+   "topic_sr": "Život seljaka u srednjem veku",
+   "title_en": "Could You Survive as a Medieval Peasant?",
+   "title_sr": "Da li bi preživeo kao seljak u srednjem veku?",
+   "bg": "ancient",
+   "mood": "epic",
+   "competition": "low",
+   "potential": 8
+  },
+  {
+   "format": "survive",
+   "topic_en": "Surviving a zombie outbreak",
+   "topic_sr": "Preživeti zombi apokalipsu",
+   "title_en": "Your First 24 Hours of a Zombie Apocalypse",
+   "title_sr": "Tvojih prvih 24 sata zombi apokalipse",
+   "bg": "apocalypse",
+   "mood": "tense",
+   "competition": "high",
+   "potential": 7
+  },
+  {
+   "format": "history",
+   "topic_en": "The mystery of the pyramids",
+   "topic_sr": "Misterija piramida",
+   "title_en": "How Were the Pyramids REALLY Built?",
+   "title_sr": "Kako su STVARNO izgrađene piramide?",
+   "bg": "desert",
+   "mood": "mystery",
+   "competition": "high",
+   "potential": 7
+  },
+  {
+   "format": "history",
+   "topic_en": "The Dancing Plague of 1518",
+   "topic_sr": "Plesna kuga 1518.",
+   "title_en": "The Plague That Made People Dance to Death",
+   "title_sr": "Kuga zbog koje su ljudi plesali do smrti",
+   "bg": "ancient",
+   "mood": "mystery",
+   "competition": "low",
+   "potential": 9
+  },
+  {
+   "format": "history",
+   "topic_en": "The lost Roanoke colony",
+   "topic_sr": "Nestala kolonija Roanoke",
+   "title_en": "The Colony That Vanished Without a Trace",
+   "title_sr": "Kolonija koja je nestala bez traga",
+   "bg": "forest",
+   "mood": "mystery",
+   "competition": "low",
+   "potential": 8
+  },
+  {
+   "format": "history",
+   "topic_en": "The Library of Alexandria",
+   "topic_sr": "Aleksandrijska biblioteka",
+   "title_en": "What Was Lost in the Library of Alexandria?",
+   "title_sr": "Šta je izgubljeno u Aleksandrijskoj biblioteci?",
+   "bg": "ancient",
+   "mood": "epic",
+   "competition": "low",
+   "potential": 7
+  },
+  {
+   "format": "history",
+   "topic_en": "The worst jobs in history",
+   "topic_sr": "Najgori poslovi u istoriji",
+   "title_en": "The Worst Jobs in History",
+   "title_sr": "Najgori poslovi u istoriji",
+   "bg": "ancient",
+   "mood": "upbeat",
+   "competition": "medium",
+   "potential": 8
+  },
+  {
+   "format": "history",
+   "topic_en": "Nikola Tesla's strangest inventions",
+   "topic_sr": "Najčudniji izumi Nikole Tesle",
+   "title_en": "Tesla's Strangest Inventions",
+   "title_sr": "Najčudniji izumi Nikole Tesle",
+   "bg": "lab",
+   "mood": "mystery",
+   "competition": "medium",
+   "potential": 8
+  },
+  {
+   "format": "history",
+   "topic_en": "The Great Emu War",
+   "topic_sr": "Veliki rat protiv emua",
+   "title_en": "The War Humans Lost Against Birds",
+   "title_sr": "Rat koji su ljudi izgubili od ptica",
+   "bg": "desert",
+   "mood": "upbeat",
+   "competition": "low",
+   "potential": 9
+  },
+  {
+   "format": "horror",
+   "topic_en": "The Backrooms",
+   "topic_sr": "Backrooms",
+   "title_en": "What If You Got Stuck in the Backrooms?",
+   "title_sr": "Šta ako se zaglaviš u Backrooms?",
+   "bg": "office",
+   "mood": "horror",
+   "competition": "high",
+   "potential": 8
+  },
+  {
+   "format": "horror",
+   "topic_en": "A haunted hotel night shift",
+   "topic_sr": "Noćna smena u ukletom hotelu",
+   "title_en": "My Night Shift at a Haunted Hotel",
+   "title_sr": "Moja noćna smena u ukletom hotelu",
+   "bg": "night",
+   "mood": "horror",
+   "competition": "medium",
+   "potential": 8
+  },
+  {
+   "format": "horror",
+   "topic_en": "Dyatlov Pass incident",
+   "topic_sr": "Incident na prevoju Djatlov",
+   "title_en": "The Scariest Unsolved Mystery: Dyatlov Pass",
+   "title_sr": "Najstrašnija nerešena misterija: Djatlov",
+   "bg": "snow",
+   "mood": "horror",
+   "competition": "medium",
+   "potential": 8
+  },
+  {
+   "format": "horror",
+   "topic_en": "The deepest hole on Earth",
+   "topic_sr": "Najdublja rupa na Zemlji",
+   "title_en": "What's at the Bottom of the Deepest Hole on Earth?",
+   "title_sr": "Šta je na dnu najdublje rupe na Zemlji?",
+   "bg": "cave",
+   "mood": "horror",
+   "competition": "medium",
+   "potential": 8
+  },
+  {
+   "format": "facts",
+   "topic_en": "Weird things your body does",
+   "topic_sr": "Čudne stvari koje tvoje telo radi",
+   "title_en": "Weird Things Your Body Does Every Day",
+   "title_sr": "Čudne stvari koje tvoje telo radi svaki dan",
+   "bg": "lab",
+   "mood": "upbeat",
+   "competition": "medium",
+   "potential": 7
+  },
+  {
+   "format": "facts",
+   "topic_en": "Animals that could kill you",
+   "topic_sr": "Životinje koje mogu da te ubiju",
+   "title_en": "The Most Dangerous Animals You've Never Heard Of",
+   "title_sr": "Najopasnije životinje za koje nisi čuo",
+   "bg": "jungle",
+   "mood": "tense",
+   "competition": "medium",
+   "potential": 7
+  },
+  {
+   "format": "facts",
+   "topic_en": "Things banned in some countries",
+   "topic_sr": "Stvari zabranjene u nekim zemljama",
+   "title_en": "Normal Things That Are Illegal in Other Countries",
+   "title_sr": "Normalne stvari koje su zabranjene u drugim zemljama",
+   "bg": "city",
+   "mood": "upbeat",
+   "competition": "medium",
+   "potential": 8
+  },
+  {
+   "format": "facts",
+   "topic_en": "Why time feels faster as you age",
+   "topic_sr": "Zašto vreme brže prolazi kako starimo",
+   "title_en": "Why Time Speeds Up as You Get Older",
+   "title_sr": "Zašto vreme brže prolazi kako starimo",
+   "bg": "room",
+   "mood": "mystery",
+   "competition": "low",
+   "potential": 8
+  },
+  {
+   "format": "extreme",
+   "topic_en": "Every level of wealth",
+   "topic_sr": "Svaki nivo bogatstva",
+   "title_en": "Every Level of Rich Explained",
+   "title_sr": "Svaki nivo bogatstva objašnjen",
+   "bg": "city",
+   "mood": "upbeat",
+   "competition": "high",
+   "potential": 8
+  },
+  {
+   "format": "extreme",
+   "topic_en": "1 vs 100 dangerous situations",
+   "topic_sr": "Najopasnije situacije rangirane",
+   "title_en": "Ranking the Most Dangerous Situations You Could Survive",
+   "title_sr": "Rangiram najopasnije situacije koje možeš preživeti",
+   "bg": "red_alert",
+   "mood": "tense",
+   "competition": "medium",
+   "potential": 7
+  },
+  {
+   "format": "extreme",
+   "topic_en": "The deepest point of the ocean",
+   "topic_sr": "Najdublja tačka okeana",
+   "title_en": "What If You Went to the Bottom of the Ocean?",
+   "title_sr": "Šta ako odeš na dno okeana?",
+   "bg": "underwater",
+   "mood": "mystery",
+   "competition": "high",
+   "potential": 7
+  },
+  {
+   "format": "explainer",
+   "topic_en": "How a nuclear bunker keeps you alive",
+   "topic_sr": "Kako bunker čuva život",
+   "title_en": "How Long Could You Live in a Nuclear Bunker?",
+   "title_sr": "Koliko dugo bi živeo u nuklearnom bunkeru?",
+   "bg": "cave",
+   "mood": "tense",
+   "competition": "medium",
+   "potential": 7
+  },
+  {
+   "format": "explainer",
+   "topic_en": "Why we dream",
+   "topic_sr": "Zašto sanjamo",
+   "title_en": "Why Do We Actually Dream?",
+   "title_sr": "Zašto zapravo sanjamo?",
+   "bg": "night",
+   "mood": "mystery",
+   "competition": "medium",
+   "potential": 7
+  }
+ ]
+}

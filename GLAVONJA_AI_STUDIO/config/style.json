@@ -1,0 +1,88 @@
+{
+  "status": "PROVISIONAL - not yet verified against real GLAVONJA videos. Run: glavonja style --import references/frames",
+  "verified": false,
+  "character": {
+    "name": "Glavonja",
+    "height_px": 560,
+    "head_ratio": 0.40,
+    "line_width_px": 11,
+    "line_color": "#111111",
+    "head_fill": "#FFFFFF",
+    "body_color": "#111111",
+    "eye_color": "#111111",
+    "eye_style": "dots",
+    "eye_size": 0.11,
+    "eye_spacing": 0.36,
+    "eye_height": -0.05,
+    "brows": true,
+    "mouth_color": "#111111",
+    "mouth_fill": "#7A1F1F",
+    "blush": false,
+    "blush_color": "#FF9AA2",
+    "accessory": "none",
+    "accessory_color": "#E53935",
+    "shirt": false,
+    "shirt_color": "#1E88E5"
+  },
+  "secondary_characters": {
+    "friend": {"head_fill": "#FFFFFF", "accessory": "cap", "accessory_color": "#43A047"},
+    "villain": {"head_fill": "#FFFFFF", "accessory": "none", "line_color": "#111111", "brows_angry": true},
+    "expert": {"head_fill": "#FFFFFF", "accessory": "glasses", "accessory_color": "#111111"}
+  },
+  "palette": {
+    "background_default": "#FFFFFF",
+    "ground": "#E9E9E9",
+    "accent": "#E53935",
+    "accent2": "#FFC107",
+    "accent3": "#1E88E5",
+    "ink": "#111111",
+    "sky_day": ["#BFE6FF", "#EAF7FF"],
+    "sky_night": ["#0B1026", "#1C2541"],
+    "danger": "#D32F2F",
+    "safe": "#43A047"
+  },
+  "backgrounds": {
+    "default_style": "flat",
+    "outline_px": 6,
+    "detail_level": "low",
+    "ground_line": true
+  },
+  "subtitles": {
+    "font": "DejaVuSans-Bold.ttf",
+    "size_px": 64,
+    "color": "#FFFFFF",
+    "outline_color": "#000000",
+    "outline_px": 6,
+    "highlight_color": "#FFD400",
+    "position": "bottom",
+    "max_words_per_line": 6,
+    "uppercase": false
+  },
+  "thumbnail": {
+    "text_font": "DejaVuSans-Bold.ttf",
+    "text_color": "#FFFFFF",
+    "text_outline": "#000000",
+    "text_outline_px": 12,
+    "max_words": 4,
+    "highlight_color": "#FFD400",
+    "bg_style": "radial",
+    "character_scale": 1.25,
+    "arrow": true,
+    "red_circle": true
+  },
+  "animation": {
+    "default_transition": "cut",
+    "transitions": ["cut", "cut", "whip", "zoom", "fade"],
+    "camera_moves": ["slow_zoom_in", "slow_zoom_out", "pan_left", "pan_right", "static", "punch_in"],
+    "max_zoom": 1.25,
+    "shake_on_impact": true,
+    "speed_lines": true,
+    "pace": "fast"
+  },
+  "editing": {
+    "min_scene_sec": 1.6,
+    "max_scene_sec": 7.0,
+    "scene_padding_sec": 0.18
+  },
+  "measured_from_references": null
+}

@@ -1,0 +1,16 @@
+{
+  "_README": "Editable. These numbers are ESTIMATES used only to show you a cost preview before any Google call. Google changes prices and free quotas often - check the links and update this file. Nothing here was verified from this development environment (Google was not reachable).",
+  "gemini_tts": {
+    "last_verified": "UNVERIFIED - check https://ai.google.dev/gemini-api/docs/pricing",
+    "free_tier_requests_per_day": 15,
+    "usd_per_1m_input_tokens": 0.5,
+    "usd_per_1m_audio_output_tokens": 10.0,
+    "audio_tokens_per_second": 25,
+    "words_per_second": 2.6
+  },
+  "flow": {
+    "last_verified": "UNVERIFIED - check the credit counter inside https://labs.google/flow",
+    "default_mode": "fast",
+    "credits_per_clip": {"fast": 20, "quality": 100}
+  }
+}

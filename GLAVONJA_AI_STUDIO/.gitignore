@@ -1,0 +1,25 @@
+# generated / local data (never commit secrets, videos or caches)
+.venv/
+__pycache__/
+*.pyc
+tools/
+models/piper/*.onnx
+models/piper/*.onnx.json
+database/*.db
+database/*.db-journal
+database/asset_license.json
+logs/*.log
+projects/*
+!projects/.gitkeep
+outputs/*
+!outputs/.gitkeep
+thumbnails/*
+!thumbnails/.gitkeep
+assets/backgrounds/cache/
+references/frames/*
+!references/frames/.gitkeep
+references/videos/*
+!references/videos/.gitkeep
+references/signatures.json
+config/settings.json
+*.tmp
