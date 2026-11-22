@@ -134,9 +134,16 @@ def load_style() -> dict:
     """config/style.json is YOUR style (measured/approved, never overwritten by updates).
     It is created from config/style.default.json the first time."""
     p = CONFIG_DIR / "style.json"
+    default = json.loads((CONFIG_DIR / "style.default.json").read_text(encoding="utf-8"))
     if not p.exists():
         shutil.copy2(CONFIG_DIR / "style.default.json", p)
-    return json.loads(p.read_text(encoding="utf-8"))
+    else:  # an old, never measured/approved style file is replaced by the new channel-based default
+        cur = json.loads(p.read_text(encoding="utf-8"))
+        if not cur.get("verified") and "channel_look" not in cur and not cur.get("measured_from_references"):
+            shutil.copy2(p, p.with_suffix(".old.json"))
+            shutil.copy2(CONFIG_DIR / "style.default.json", p)
+    # new keys from updates (e.g. prompt_style) reach existing installations; your own values win
+    return _deep_merge(default, json.loads(p.read_text(encoding="utf-8")))
 
 
 def save_style(style: dict) -> None:

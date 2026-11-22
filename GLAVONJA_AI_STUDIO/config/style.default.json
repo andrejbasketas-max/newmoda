@@ -4,16 +4,16 @@
   "character": {
     "name": "Glavonja",
     "height_px": 560,
-    "head_ratio": 0.40,
-    "line_width_px": 11,
-    "line_color": "#111111",
+    "head_ratio": 0.4,
+    "line_width_px": 5,
+    "line_color": "#2B2423",
     "head_fill": "#FFFFFF",
     "body_color": "#111111",
     "eye_color": "#111111",
     "eye_style": "dots",
-    "eye_size": 0.11,
-    "eye_spacing": 0.36,
-    "eye_height": -0.05,
+    "eye_size": 0.09,
+    "eye_spacing": 0.26,
+    "eye_height": -0.02,
     "brows": true,
     "mouth_color": "#111111",
     "mouth_fill": "#7A1F1F",
@@ -22,12 +22,32 @@
     "accessory": "none",
     "accessory_color": "#E53935",
     "shirt": false,
-    "shirt_color": "#1E88E5"
+    "shirt_color": "#1E88E5",
+    "outfit": true,
+    "vest_color": "#2F7A45",
+    "vest_dark": "#235C34",
+    "scarf_color": "#E0782A",
+    "boot_color": "#A4703F",
+    "glove_color": "#FFFFFF",
+    "head_shade": "#D9D9DE"
   },
   "secondary_characters": {
-    "friend": {"head_fill": "#FFFFFF", "accessory": "cap", "accessory_color": "#43A047"},
-    "villain": {"head_fill": "#FFFFFF", "accessory": "none", "line_color": "#111111", "brows_angry": true},
-    "expert": {"head_fill": "#FFFFFF", "accessory": "glasses", "accessory_color": "#111111"}
+    "friend": {
+      "head_fill": "#FFFFFF",
+      "accessory": "cap",
+      "accessory_color": "#43A047"
+    },
+    "villain": {
+      "head_fill": "#FFFFFF",
+      "accessory": "none",
+      "line_color": "#111111",
+      "brows_angry": true
+    },
+    "expert": {
+      "head_fill": "#FFFFFF",
+      "accessory": "glasses",
+      "accessory_color": "#111111"
+    }
   },
   "palette": {
     "background_default": "#FFFFFF",
@@ -35,9 +55,15 @@
     "accent": "#E53935",
     "accent2": "#FFC107",
     "accent3": "#1E88E5",
-    "ink": "#111111",
-    "sky_day": ["#BFE6FF", "#EAF7FF"],
-    "sky_night": ["#0B1026", "#1C2541"],
+    "ink": "#2B2423",
+    "sky_day": [
+      "#BFE6FF",
+      "#EAF7FF"
+    ],
+    "sky_night": [
+      "#0B1026",
+      "#1C2541"
+    ],
     "danger": "#D32F2F",
     "safe": "#43A047"
   },
@@ -72,8 +98,21 @@
   },
   "animation": {
     "default_transition": "cut",
-    "transitions": ["cut", "cut", "whip", "zoom", "fade"],
-    "camera_moves": ["slow_zoom_in", "slow_zoom_out", "pan_left", "pan_right", "static", "punch_in"],
+    "transitions": [
+      "cut",
+      "cut",
+      "whip",
+      "zoom",
+      "fade"
+    ],
+    "camera_moves": [
+      "slow_zoom_in",
+      "slow_zoom_out",
+      "pan_left",
+      "pan_right",
+      "static",
+      "punch_in"
+    ],
     "max_zoom": 1.25,
     "shake_on_impact": true,
     "speed_lines": true,
@@ -84,5 +123,27 @@
     "max_scene_sec": 7.0,
     "scene_padding_sec": 0.18
   },
-  "measured_from_references": null
+  "measured_from_references": null,
+  "channel_look": {
+    "source": "observed by Claude from 8 real GLAVONJA frames sent by the owner (2026-11-22)",
+    "summary": "Detailed hand-drawn 2D cartoon illustration (storybook / editorial comic look), not a flat minimal stickman.",
+    "characters": "Stickman people with LARGE perfectly round white heads (smooth sphere, soft grey shading on one side), no nose/ears/hair by default; small black oval eyes, thin dark eyebrows, very expressive mouths (open smile with dark-red inside). Thin black stick arms and legs. White cartoon glove hands. Characters often WEAR clothes and props (puffer jacket, scarf, boots, period clothing, bonnets).",
+    "main_character_example": "CONFIRMED on 3 frames (trophy, cellar, stairs): GLAVONJA = big perfectly round white sphere head (~40% of body height), green quilted puffer vest/jacket, orange scarf with hanging end, thin black stick arms and legs, white cartoon glove hands (mittens), brown ankle boots. Same outfit in every scene.",
+    "extras": "Background people are simpler: smaller grey-white round heads, grey stick bodies, minimal faces.",
+    "line": "Thin-to-medium dark brown/black ink outlines (~4 px at 1080p), slightly sketchy hand-drawn, clean shapes.",
+    "color_light": "Warm, earthy, muted palette (browns, ochre, amber); cinematic warm lamp/candle light with glow; darker vignetted edges; daytime scenes use light-blue sky and soft greens.",
+    "backgrounds": "Rich, detailed, textured environments with depth and a clear vanishing point (subway tunnel, cave, park). Cross-section cut-away views for underground/hidden-world topics.",
+    "composition": "Wide 16:9 establishing shots, eye-level camera, main character mid-frame or right third, many small background characters for life.",
+    "uncertain": "Only 3 frames seen: animation style, editing rhythm, typography and thumbnails are NOT observed yet.",
+    "shot_types": "Character shots + pure environment establishing shots WITHOUT characters (ruins, bunker entrance, aerial landscape). Extras wear colourful jackets/sweaters and brown boots."
+  },
+  "prompt_style": {
+    "style": "detailed hand-drawn 2D cartoon illustration, storybook editorial comic style, thin dark-brown ink outlines, soft cel shading, textured detailed background",
+    "characters": "stickman characters with large perfectly round smooth white heads (sphere with soft grey shading), small black oval eyes, thin eyebrows, very expressive mouths, thin black stick arms and legs, white cartoon glove hands, clothing when the story needs it",
+    "palette_light": "warm earthy muted colours (brown, ochre, amber), cinematic warm glowing light, slight dark vignette",
+    "camera": "wide 16:9 shot, eye level, depth with a clear vanishing point",
+    "avoid": "no 3D render, no photorealism, no anime, no flat vector minimalism, no text or letters in the image, no extra fingers",
+    "glavonja": "GLAVONJA, the main character: a stickman with a big perfectly round smooth white head (about 40% of his height), small black oval eyes, thin eyebrows, expressive mouth, green quilted puffer vest, orange scarf with a hanging end, thin black stick arms and legs, white cartoon glove hands, brown ankle boots",
+    "extras": "other people: same round white heads, colourful jackets or sweaters, brown boots, simpler faces"
+  }
 }

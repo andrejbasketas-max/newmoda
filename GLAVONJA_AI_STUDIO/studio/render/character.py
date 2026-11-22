@@ -225,14 +225,64 @@ class Character:
         L("hip", "neck")
         for side in (back, front):
             L(f"sh_{side}", f"elbow_{side}"); L(f"elbow_{side}", f"hand_{side}")
-        # head
+        if s.get("outfit"):
+            self._outfit(d, X, pts, r, S, lw, facing, H)
+        # head (white sphere with soft shading, like the channel)
         hx, hy = X(*pts["head"])
         R = r * S
-        d.ellipse([hx - R, hy - R, hx + R, hy + R], fill=hex2rgb(s["head_fill"]), outline=line, width=lw)
+        d.ellipse([hx - R, hy - R, hx + R, hy + R], fill=hex2rgb(s.get("head_shade", s["head_fill"])))
+        f_ = 1 if facing >= 0 else -1
+        d.ellipse([hx - R * 0.97 - f_ * R * 0.08, hy - R * 0.99, hx + R * 0.9 - f_ * R * 0.08, hy + R * 0.86],
+                  fill=hex2rgb(s["head_fill"]))
+        d.ellipse([hx - R, hy - R, hx + R, hy + R], outline=line, width=lw)
         self._face(d, hx, hy, R, lw, expression, facing, mouth_open, t, blink_seed, head_rot,
                    look=pose.get("look", 0.0))
         self._accessory(d, hx, hy, R, lw, facing)
         return pts
+
+    def _outfit(self, d, X, pts, r, S, lw, facing, H):
+        """GLAVONJA's outfit seen on the channel: green puffer vest, orange scarf, white gloves, brown boots."""
+        s = self.s
+        ink = hex2rgb(s["line_color"])
+        hip, neck = pts["hip"], pts["neck"]
+        # puffer vest: a rounded quad around the torso
+        vx, vy = neck[0] - hip[0], neck[1] - hip[1]
+        L = math.hypot(vx, vy) or 1
+        nx, ny = -vy / L, vx / L
+        w_top, w_bot = 0.085 * H, 0.075 * H
+        top = (neck[0] - vx * 0.05, neck[1] - vy * 0.05)
+        bot = (hip[0] + vx * 0.02, hip[1] + vy * 0.02)
+        poly = [(top[0] + nx * w_top, top[1] + ny * w_top), (top[0] - nx * w_top, top[1] - ny * w_top),
+                (bot[0] - nx * w_bot, bot[1] - ny * w_bot), (bot[0] + nx * w_bot, bot[1] + ny * w_bot)]
+        P = [X(*q) for q in poly]
+        d.polygon(P, fill=hex2rgb(s["vest_color"]))
+        for k in (0.3, 0.55, 0.8):   # quilting
+            a = (top[0] + (bot[0] - top[0]) * k, top[1] + (bot[1] - top[1]) * k)
+            wk = w_top + (w_bot - w_top) * k
+            d.line([X(a[0] + nx * wk * 0.95, a[1] + ny * wk * 0.95), X(a[0] - nx * wk * 0.95, a[1] - ny * wk * 0.95)],
+                   fill=hex2rgb(s["vest_dark"]), width=max(2, lw // 2))
+        d.line(P + [P[0]], fill=ink, width=max(2, int(lw * 0.8)), joint="curve")
+        # scarf: band at the neck + hanging end
+        sc = hex2rgb(s["scarf_color"])
+        n1 = (neck[0] + nx * w_top * 1.1 + vx * -0.12, neck[1] + ny * w_top * 1.1 - vy * 0.12)
+        n2 = (neck[0] - nx * w_top * 1.1 + vx * -0.12, neck[1] - ny * w_top * 1.1 - vy * 0.12)
+        d.line([X(*n1), X(*n2)], fill=sc, width=int(0.035 * H * S))
+        f = 1 if facing >= 0 else -1
+        tail0 = (neck[0] + f * 0.035 * H - vx * 0.12, neck[1] - vy * 0.12)
+        d.line([X(*tail0), X(tail0[0] + f * 0.012 * H, tail0[1] + 0.11 * H)], fill=sc, width=int(0.03 * H * S))
+        # gloves + boots
+        for side in ("l", "r"):
+            gx, gy = X(*pts[f"hand_{side}"])
+            gr = 0.03 * H * S
+            d.ellipse([gx - gr, gy - gr, gx + gr, gy + gr], fill=hex2rgb(s["glove_color"]), outline=ink, width=max(2, lw // 2))
+            fx, fy = pts[f"foot_{side}"]
+            kx, ky = pts[f"knee_{side}"]
+            bx0, by0 = X(fx + (kx - fx) * 0.32, fy + (ky - fy) * 0.32)
+            bx1, by1 = X(fx + f * 0.035 * H, fy + 0.008 * H)
+            bw = int(0.038 * H * S)
+            d.line([bx0, by0, (bx0 + bx1) / 2 - f * bw * 0.2, by1 - bw * 0.3], fill=hex2rgb(s["boot_color"]), width=bw)
+            d.ellipse([min(bx0, bx1) - bw * 0.5, by1 - bw * 0.85, max(bx0, bx1) + bw * 0.4, by1 + bw * 0.15],
+                      fill=hex2rgb(s["boot_color"]))
 
     def _face(self, d, hx, hy, R, lw, expr, facing, mouth_open, t, blink_seed, rot, look=0.0):
         s = self.s

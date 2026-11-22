@@ -1,12 +1,30 @@
 # GLAVONJA STYLE BIBLE
 
-> **Status: PROVISIONAL – the real channel has not been analysed yet.**
+> **Status: PARTLY OBSERVED – 3 real frames analysed (section 0a). More frames + character pictures still needed.**
 > During development the channel https://www.youtube.com/@Theglavonja could not be opened
 > (YouTube was blocked from the build environment and the vidIQ connector had no credits).
 > Nothing in this document describes the real channel from observation. The rules below are the
 > **production rules** the studio enforces. The **visual values** come from `config/style.json`.
 > Those values become real once you add channel frames and run *Style → Measure style*
 > (`glavonja style learn`), then approve them (`glavonja style approve`).
+
+## 0a. Observed from 3 real frames (sent by the owner, 2026-11-22)
+
+- **Not a flat minimal stickman.** Detailed hand-drawn 2D cartoon illustration (storybook / editorial comic look).
+- **Characters:** large, perfectly round **white sphere heads** with soft grey shading, small black oval eyes,
+  thin eyebrows, very expressive mouths. Thin black stick arms/legs, **white cartoon glove hands**.
+  They often **wear clothes**: puffer jacket + scarf + boots, period clothing, bonnets. Background people are simpler grey stickmen.
+- **Example main character (frame 1):** green quilted puffer jacket, orange scarf, brown boots, white gloves.
+  *Not yet confirmed that this is the permanent GLAVONJA outfit.*
+- **Lines:** thin dark-brown ink (~4 px @1080p), slightly hand-drawn. **Colours:** warm, earthy, muted (brown, ochre, amber),
+  cinematic glowing lamp/candle light, dark vignette; daytime = light-blue sky, soft greens.
+- **Backgrounds:** rich and detailed with depth (subway tunnel, cave, park); cross-section cut-aways for "hidden world" topics.
+- **Composition:** wide 16:9, eye-level, main character mid/right, many small background characters.
+- Measured: brightness 0.29–0.43, saturation 0.32–0.40, auto-calibrated consistency limit 0.107.
+  The studio's procedural fallback stickman scores 0.35 against these frames, so it does **not** match and will
+  never be exported as a final video.
+- These rules are written into `config/style.json` (`channel_look`, `prompt_style`) and go into every Flow prompt
+  (an image prompt first, then a motion prompt).
 
 ## 0. What we know for sure (from the channel owner)
 

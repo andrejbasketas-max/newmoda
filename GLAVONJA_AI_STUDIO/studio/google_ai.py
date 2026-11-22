@@ -164,16 +164,28 @@ def audition_voices(sample_text: str, voices: list[str], out_dir: Path, settings
 
 
 # --------------------------------------------------------------------------- Flow bridge
-FLOW_PROMPT = """{shot}
+FLOW_IMAGE_PROMPT = """{shot}
 
-STYLE (must match the GLAVONJA YouTube channel exactly - see attached reference images):
 {style}
+{glavonja}.
+Other characters: {characters}; {extras}.
+Colours and light: {palette}.
+Camera: {camera}.
+Keep GLAVONJA exactly like the attached character reference images (same head, face, outfit, proportions).
+Avoid: {avoid}."""
 
-CHARACTER: the SAME stickman as in the attached character sheet. Do NOT redesign him: same head size,
-same line thickness, same face, same colours, same clothing.  2D flat cartoon, thick clean outlines,
-no 3D, no realistic textures, no text in the image.
-Camera: {camera}.  Duration: {dur:.1f} s.  16:9.
-"""
+FLOW_MOTION_PROMPT = """Animate this image as a short {dur:.0f}-second shot for a YouTube story video: {motion}.
+Keep the exact art style, characters and colours of the image; subtle natural movement, {camera_move}.
+No new characters, no text."""
+
+MOTION = {"idle": "the character breathes and blinks", "talk": "the character talks and gestures",
+          "walk": "the character walks across the scene", "run": "the character runs fast",
+          "jump": "the character jumps", "point": "the character points at the object",
+          "shock": "the character reacts with a shocked jump", "think": "the character thinks, hand on chin",
+          "cheer": "the character cheers with raised arms", "scared": "the character trembles in fear",
+          "fall": "the character falls over", "shrug": "the character shrugs"}
+CAMERA_MOVE = {"slow_zoom_in": "slow camera push-in", "slow_zoom_out": "slow camera pull-out", "pan_left": "slow pan left",
+               "pan_right": "slow pan right", "static": "static camera", "punch_in": "quick camera punch-in"}
 
 
 def flow_requests(project, scenes: list[dict], style: dict) -> Path:
@@ -182,24 +194,35 @@ def flow_requests(project, scenes: list[dict], style: dict) -> Path:
     (folder / "inbox").mkdir(parents=True, exist_ok=True)
     refs = folder / "references"
     refs.mkdir(exist_ok=True)
-    for src in (ROOT / "assets" / "characters").glob("character_sheet*.png"):
-        shutil.copy2(src, refs / src.name)
-    for src in sorted((ROOT / "references" / "frames").glob("*.*"))[:6]:
+    # ONLY real channel material: the GLAVONJA character pictures first, then a few channel frames
+    for src in sorted((ROOT / "references" / "character").glob("*.*"))[:6]:
+        if src.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp"):
+            shutil.copy2(src, refs / ("CHARACTER_" + src.name))
+    for src in sorted((ROOT / "references" / "frames").glob("*.*"))[:4]:
         if src.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp"):
             shutil.copy2(src, refs / src.name)
-    style_txt = "; ".join(f"{k}: {v}" for k, v in (style.get("prompt_style") or {}).items()) or \
-        "flat 2D stickman cartoon, white round head, black thick outlines"
+    ps = style.get("prompt_style") or {}
     lines = ["# Google Flow requests", "",
-             "1. Open https://labs.google/flow  2. For each shot below: upload the images from `references/`,",
-             "paste the prompt, generate.  3. Download the clip and save it into `inbox/` named exactly as shown.",
-             "4. Back in GLAVONJA AI STUDIO press **Continue** - clips are checked and imported automatically.", ""]
+             "For every shot: 1) make the IMAGE in Flow with the image prompt + the pictures from `references/`",
+             "(always add your GLAVONJA character pictures), 2) animate that image with the motion prompt (frames to video),",
+             "3) download the clip and drag it into the studio folder **FLOW_INBOX** - in the same order as the shots below.",
+             "The studio checks every clip against your channel style and asks again for clips that do not match.", ""]
     for sc in scenes:
         if not sc.get("use_flow"):
             continue
         name = f"scene_{sc['id']:03d}.mp4"
-        lines += [f"## {name}  ({sc['duration']:.1f}s)", "```",
-                  FLOW_PROMPT.format(shot=sc.get("description", sc["text"]), style=style_txt,
-                                     camera=sc.get("camera", "static"), dur=sc["duration"]).strip(), "```", ""]
+        main = (sc.get("characters") or [{}])[0]
+        img = FLOW_IMAGE_PROMPT.format(shot=sc.get("description", sc["text"]),
+                                       style=ps.get("style", "detailed hand-drawn 2D cartoon illustration"),
+                                       characters=ps.get("characters", "stickman characters with big round white heads"),
+                                       glavonja=ps.get("glavonja", "GLAVONJA, the main stickman character"),
+                                       extras=ps.get("extras", ""),
+                                       palette=ps.get("palette_light", "warm colours"),
+                                       camera=ps.get("camera", "wide 16:9 shot"), avoid=ps.get("avoid", "no text"))
+        mot = FLOW_MOTION_PROMPT.format(dur=min(8, max(2, sc["duration"])), motion=MOTION.get(main.get("action"), "subtle movement"),
+                                        camera_move=CAMERA_MOVE.get(sc.get("camera"), "static camera"))
+        lines += [f"## Shot {sc['id']} -> {name}  ({sc['duration']:.1f}s)", f"_Narration:_ {sc['text']}", "",
+                  "**1. Image prompt**", "```", img.strip(), "```", "**2. Motion prompt**", "```", mot.strip(), "```", ""]
     out = folder / "FLOW_REQUESTS.md"
     out.write_text("\n".join(lines), encoding="utf-8")
     return out
