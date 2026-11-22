@@ -1,0 +1,7 @@
+# GLAVONJA AI STUDIO - core dependencies (all free / open source). Python 3.10-3.13, 64-bit.
+numpy>=1.26
+Pillow>=10.3
+# espeak-ng library + data (GPL-3) incl. Serbian: always-available local FALLBACK voice
+espeakng-loader>=0.2.4
+# bundled ffmpeg binary, last-resort fallback if the full FFmpeg download fails
+imageio-ffmpeg>=0.5.1

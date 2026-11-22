@@ -84,8 +84,9 @@ CAMERAS = ["slow_zoom_in", "pan_right", "static", "slow_zoom_out", "pan_left", "
 
 
 def _has(text, words):
-    t = " " + text.lower() + " "
-    return any(w in t for w in words)
+    """Stem must start a word ('duh' matches 'duhovi' but not 'vazduh')."""
+    t = text.lower()
+    return any(re.search(r"(?<![\w])" + re.escape(w.strip()), t) for w in words if w.strip())
 
 
 def rule_layout(text: str, i: int, default_bg: str, mood: str) -> dict:
@@ -197,8 +198,12 @@ def build_storyboard(project: Project, log=print) -> dict:
             chars[0]["x"] = 0.3
         props = []
         for k, pn in enumerate(lay["props"]):
-            props.append({"name": pn, "x": 0.7 if not lay.get("second") else 0.52, "y": 0.42 - 0.12 * k + 0.05,
-                          "size": 0.22, "anim": "pop" if k == 0 else "float", "delay": 0.25 + 0.4 * k})
+            if lay.get("second"):
+                px, py = (0.52, 0.34) if k == 0 else (0.52, 0.62)
+            else:
+                px, py = (0.66, 0.46) if k == 0 else (0.86, 0.34)
+            props.append({"name": pn, "x": px, "y": py, "size": 0.22 if k == 0 else 0.17,
+                          "anim": "pop" if k == 0 else "float", "delay": 0.25 + 0.4 * k})
         tr = "cut" if i == 0 else ("whip" if sh[0]["section"] != shots[i - 1][-1]["section"] else transitions[i % len(transitions)])
         sfx = []
         if tr in ("whip", "zoom"):

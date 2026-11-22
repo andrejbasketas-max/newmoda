@@ -256,6 +256,7 @@ def stage_animation(p: Project, log):
     fallback = _approved(p, "flow_fallback_local")
     missing, rejected = [], []
     has_refs = consistency.has_references()
+    refs = consistency.build_signatures(log=lambda *_: None)["refs"] if has_refs else {}
     for sc in sb["scenes"]:
         out = adir / f"scene_{sc['id']:03d}.mp4"
         key = sha([sc, s["video"]])
@@ -264,7 +265,7 @@ def stage_animation(p: Project, log):
             continue
         src = google_ai.flow_inbox_clip(p, sc["id"]) if sc.get("use_flow", True) else None
         if src:
-            checks = [consistency.check_image(im) for im in clip_frames(src)]
+            checks = [consistency.check_image(im, refs) for im in clip_frames(src)]
             status = "unverified" if not has_refs else ("pass" if all(c["status"] == "pass" for c in checks) else "fail")
             if status == "fail":
                 rej = p.path("flow", "rejected")
@@ -312,8 +313,9 @@ def stage_animation(p: Project, log):
                        {"action": "approve", "key": "flow_fallback_local", "label": "Flow nije dostupan - odobri lokalnu animaciju"}],
                       {"missing": [x["id"] for x in need], "requests_file": req.relative_to(ROOT).as_posix(),
                        "rejected": rejected})
+    p.state["notices"] = [n for n in p.state.get("notices", []) if not n.startswith("Flow:")]
     if fallback:
-        p.state.setdefault("notices", []).append("Google Flow NIJE korišćen za sve scene (odobrena lokalna animacija).")
+        p.state["notices"].append("Google Flow NIJE korišćen za sve scene (odobrena lokalna animacija).")
 
 
 # =========================================================================== stage: edit

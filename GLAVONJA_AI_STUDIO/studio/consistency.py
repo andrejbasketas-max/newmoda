@@ -107,7 +107,7 @@ def build_signatures(log=print) -> dict:
     for f in files:
         key = f"{f.name}:{f.stat().st_size}"
         refs[key] = old["refs"].get(key) or {"file": f.name, **signature(Image.open(f))}
-    data = {"updated": now_iso(), "count": len(refs), "refs": refs}
+    data = {"updated": now_iso(), "count": len(refs), "refs": refs, "calibrated_limit": calibrate(refs)}
     atomic_write_json(SIG_PATH, data)
     log(f"  {len(refs)} reference frames analysed")
     return data
@@ -117,14 +117,37 @@ def has_references() -> bool:
     return bool(read_json(SIG_PATH, {"refs": {}})["refs"]) or bool(reference_files())
 
 
+PALETTE_HARD_LIMIT = 0.16   # colours this far from every reference frame = different look, always fail
+
+
+def calibrate(refs: dict) -> float:
+    """Threshold learned from the references themselves: how far is each channel frame from its
+    nearest other channel frame?  New frames may differ a bit more than that, but not much."""
+    vals = list(refs.values())
+    if len(vals) < 3:
+        return 0.12
+    nn = sorted(min(distance(a, b)["total"] for j, b in enumerate(vals) if j != i) for i, a in enumerate(vals))
+    p90 = nn[int(0.9 * (len(nn) - 1))]
+    return round(min(0.2, max(0.08, p90 * 2.0)), 3)
+
+
+def current_limit(refs: dict) -> float:
+    lim = load_settings()["consistency"].get("max_distance", "auto")
+    if isinstance(lim, (int, float)):
+        return float(lim)
+    data = read_json(SIG_PATH, {})
+    return data.get("calibrated_limit") or calibrate(refs)
+
+
 def check_image(img: Image.Image, refs: dict | None = None) -> dict:
     refs = refs or read_json(SIG_PATH, {"refs": {}})["refs"]
     if not refs:
         return {"status": "unverified", "reason": "no channel reference frames (references/frames is empty)"}
     s = signature(img)
     best = min(((distance(s, r), r["file"]) for r in refs.values()), key=lambda x: x[0]["total"])
-    lim = load_settings()["consistency"]["max_distance"]
-    return {"status": "pass" if best[0]["total"] <= lim else "fail", "distance": round(best[0]["total"], 3),
+    lim = current_limit(refs)
+    ok = best[0]["total"] <= lim and best[0]["palette"] <= PALETTE_HARD_LIMIT
+    return {"status": "pass" if ok else "fail", "distance": round(best[0]["total"], 3),
             "closest_reference": best[1], "parts": {k: round(v, 3) for k, v in best[0].items()}, "limit": lim}
 
 

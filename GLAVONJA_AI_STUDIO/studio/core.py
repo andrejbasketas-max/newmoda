@@ -78,7 +78,7 @@ DEFAULT_SETTINGS = {
         "flow_mode": "fast",
         "auto_approve_under_free_tier": False,
     },
-    "consistency": {"max_distance": 0.35, "require_references_for_export": True},
+    "consistency": {"max_distance": "auto", "require_references_for_export": True},
     "shots": {"max_shot_sec": 8.0, "min_shot_sec": 2.0},   # Flow clips are ~8 s, so narration is grouped into shots
 }
 
@@ -130,7 +130,12 @@ def set_setting(dotted: str, value) -> dict:
 
 
 def load_style() -> dict:
-    return json.loads((CONFIG_DIR / "style.json").read_text(encoding="utf-8"))
+    """config/style.json is YOUR style (measured/approved, never overwritten by updates).
+    It is created from config/style.default.json the first time."""
+    p = CONFIG_DIR / "style.json"
+    if not p.exists():
+        shutil.copy2(CONFIG_DIR / "style.default.json", p)
+    return json.loads(p.read_text(encoding="utf-8"))
 
 
 def save_style(style: dict) -> None:

@@ -1,0 +1,88 @@
+{
+ "pipeline_order": [
+  "research",
+  "script",
+  "storyboard",
+  "voice",
+  "visuals",
+  "animation",
+  "edit",
+  "thumbnails",
+  "seo",
+  "qc"
+ ],
+ "agents": [
+  {
+   "id": "viral_researcher",
+   "name": "VIRAL RESEARCHER",
+   "code": "studio.agents.researcher:research_ideas",
+   "input": "Wikipedia most-read, Google Trends RSS, Reddit, YouTube RSS, optional YouTube Data API",
+   "output": "10 ideas (database + dashboard)",
+   "ai_usage": "optional local LLM (Ollama) for wording; numbers only from measured sources"
+  },
+  {
+   "id": "scriptwriter",
+   "name": "SCRIPTWRITER",
+   "code": "studio.agents.scriptwriter:research_topic + write_script",
+   "input": "idea + Wikipedia facts",
+   "output": "projects/<id>/script/script.json|md|txt",
+   "ai_usage": "local LLM (Ollama); offline template draft otherwise"
+  },
+  {
+   "id": "visual_director",
+   "name": "VISUAL DIRECTOR",
+   "code": "studio.agents.visual_director:build_storyboard",
+   "input": "script lines",
+   "output": "storyboard.json/md (shots <= 8 s, Flow prompt + layout)",
+   "ai_usage": "optional LLM, validated against the asset vocabulary"
+  },
+  {
+   "id": "voice_engine",
+   "name": "VOICE ENGINE",
+   "code": "studio.production:stage_voice + studio.google_ai:gemini_tts",
+   "input": "script lines",
+   "output": "voice/line_*.wav, narration.wav/mp3, timing.json",
+   "ai_usage": "Gemini TTS (mandatory, approval) / local fallback after approval"
+  },
+  {
+   "id": "animation_engine",
+   "name": "ANIMATION ENGINE",
+   "code": "studio.production:stage_animation",
+   "input": "storyboard + Flow clips",
+   "output": "animations/scene_*.mp4 + clips.json",
+   "ai_usage": "Google Flow via bridge (mandatory); procedural renderer after approval"
+  },
+  {
+   "id": "video_editor",
+   "name": "VIDEO EDITOR",
+   "code": "studio.production:stage_edit",
+   "input": "clips + narration",
+   "output": "final/<slug>.mp4, subtitles.srt/ass, mix",
+   "ai_usage": "FFmpeg only"
+  },
+  {
+   "id": "thumbnail_designer",
+   "name": "THUMBNAIL DESIGNER",
+   "code": "studio.agents.thumbnails:make_thumbnails",
+   "input": "storyboard + Flow frames",
+   "output": "thumbnails/thumb_A|B|C.png (1280x720)",
+   "ai_usage": "none"
+  },
+  {
+   "id": "seo_agent",
+   "name": "YOUTUBE SEO AGENT",
+   "code": "studio.agents.seo:make_metadata",
+   "input": "script + chapters",
+   "output": "final/metadata.json|md",
+   "ai_usage": "optional local LLM; templates otherwise"
+  },
+  {
+   "id": "quality_control",
+   "name": "QUALITY CONTROL",
+   "code": "studio.production:stage_qc + studio.consistency",
+   "input": "final video + references",
+   "output": "final/production_report.json|md, export or draft",
+   "ai_usage": "none"
+  }
+ ]
+}

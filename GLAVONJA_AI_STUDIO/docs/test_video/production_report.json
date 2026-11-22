@@ -1,0 +1,204 @@
+{
+  "generated": "2026-11-22T17:26:58",
+  "technical_ok": true,
+  "visual_consistency_ok": false,
+  "style_approved_by_user": false,
+  "checks": [
+    {
+      "check": "video file exists",
+      "ok": true,
+      "detail": "sta-ako-zemlja-stane-na-1-sekundu.mp4"
+    },
+    {
+      "check": "playable (decodes fully)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "resolution 1920x1080",
+      "ok": true,
+      "detail": "1920x1080"
+    },
+    {
+      "check": "aspect ratio 16:9",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "codec H.264",
+      "ok": true,
+      "detail": "h264"
+    },
+    {
+      "check": "audio present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "audio not silent",
+      "ok": true,
+      "detail": "mean -19.5 dB"
+    },
+    {
+      "check": "audio/video in sync (durations)",
+      "ok": true,
+      "detail": "video 34.71s / narration 34.67s"
+    },
+    {
+      "check": "scenes cover narration",
+      "ok": true,
+      "detail": "34.67s"
+    },
+    {
+      "check": "subtitles inside video duration",
+      "ok": true,
+      "detail": "last cue 34.49s"
+    },
+    {
+      "check": "no missing scenes",
+      "ok": true,
+      "detail": "7/7"
+    },
+    {
+      "check": "no corrupted images",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "no accidental black frames",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "visual consistency vs GLAVONJA references",
+      "ok": false,
+      "detail": "failed scenes: [5]"
+    }
+  ],
+  "scene_consistency": [
+    {
+      "status": "pass",
+      "distance": 0.023,
+      "closest_reference": "ref_scene_003.png",
+      "parts": {
+        "palette": 0.007,
+        "brightness": 0.021,
+        "saturation": 0.01,
+        "edges": 0.107,
+        "line": 0.0,
+        "total": 0.023
+      },
+      "limit": 0.2,
+      "scene": 1,
+      "source": "google_flow"
+    },
+    {
+      "status": "pass",
+      "distance": 0.025,
+      "closest_reference": "ref_scene_002.png",
+      "parts": {
+        "palette": 0.005,
+        "brightness": 0.011,
+        "saturation": 0.0,
+        "edges": 0.145,
+        "line": 0.0,
+        "total": 0.025
+      },
+      "limit": 0.2,
+      "scene": 2,
+      "source": "procedural"
+    },
+    {
+      "status": "pass",
+      "distance": 0.031,
+      "closest_reference": "ref_scene_001.png",
+      "parts": {
+        "palette": 0.006,
+        "brightness": 0.007,
+        "saturation": 0.006,
+        "edges": 0.178,
+        "line": 0.0,
+        "total": 0.031
+      },
+      "limit": 0.2,
+      "scene": 3,
+      "source": "procedural"
+    },
+    {
+      "status": "pass",
+      "distance": 0.097,
+      "closest_reference": "test_scene_1.png",
+      "parts": {
+        "palette": 0.011,
+        "brightness": 0.022,
+        "saturation": 0.016,
+        "edges": 0.341,
+        "line": 0.182,
+        "total": 0.097
+      },
+      "limit": 0.2,
+      "scene": 4,
+      "source": "procedural"
+    },
+    {
+      "status": "fail",
+      "distance": 0.112,
+      "closest_reference": "test_scene_4.png",
+      "parts": {
+        "palette": 0.186,
+        "brightness": 0.095,
+        "saturation": 0.002,
+        "edges": 0.092,
+        "line": 0.091,
+        "total": 0.112
+      },
+      "limit": 0.2,
+      "scene": 5,
+      "source": "procedural"
+    },
+    {
+      "status": "pass",
+      "distance": 0.009,
+      "closest_reference": "ref_scene_003.png",
+      "parts": {
+        "palette": 0.003,
+        "brightness": 0.002,
+        "saturation": 0.009,
+        "edges": 0.039,
+        "line": 0.0,
+        "total": 0.009
+      },
+      "limit": 0.2,
+      "scene": 6,
+      "source": "procedural"
+    },
+    {
+      "status": "pass",
+      "distance": 0.01,
+      "closest_reference": "ref_scene_003.png",
+      "parts": {
+        "palette": 0.003,
+        "brightness": 0.002,
+        "saturation": 0.009,
+        "edges": 0.049,
+        "line": 0.0,
+        "total": 0.01
+      },
+      "limit": 0.2,
+      "scene": 7,
+      "source": "procedural"
+    }
+  ],
+  "clip_sources": {
+    "google_flow": 1,
+    "procedural": 6
+  },
+  "voice_engines": [
+    "espeak"
+  ],
+  "notices": [
+    "Gemini TTS NIJE korišćen za glas (odobren lokalni fallback).",
+    "Google Flow NIJE korišćen za sve scene (odobrena lokalna animacija)."
+  ],
+  "warnings": []
+}

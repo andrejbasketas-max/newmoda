@@ -1,0 +1,32 @@
+{
+  "created": "2026-11-22T17:24:53",
+  "has_references": false,
+  "library": {
+    "character_sheet": "assets/characters/character_sheet.png",
+    "expressions": "assets/characters/expressions.png",
+    "backgrounds": "assets/backgrounds/library.png",
+    "props": "assets/props/props_library.png"
+  },
+  "checks": [
+    {
+      "frame": "test_scene_1.png",
+      "status": "unverified",
+      "reason": "no channel reference frames (references/frames is empty)"
+    },
+    {
+      "frame": "test_scene_2.png",
+      "status": "unverified",
+      "reason": "no channel reference frames (references/frames is empty)"
+    },
+    {
+      "frame": "test_scene_3.png",
+      "status": "unverified",
+      "reason": "no channel reference frames (references/frames is empty)"
+    },
+    {
+      "frame": "test_scene_4.png",
+      "status": "unverified",
+      "reason": "no channel reference frames (references/frames is empty)"
+    }
+  ]
+}

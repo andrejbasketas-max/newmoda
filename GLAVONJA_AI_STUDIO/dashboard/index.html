@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GLAVONJA AI STUDIO</title>
+<style>
+:root{--bg:#121214;--panel:#1c1c20;--line:#2c2c33;--text:#ececf1;--mute:#9a9aa6;--acc:#ffd400;--red:#ff4d4d;--ok:#3ecf6e;--blue:#4da3ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,Segoe UI,Arial,sans-serif}
+header{display:flex;gap:16px;align-items:center;padding:12px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:5;flex-wrap:wrap}
+h1{font-size:20px;margin:0;letter-spacing:.5px}h1 b{color:var(--acc)}
+#cmd{flex:1;min-width:240px;background:var(--panel);border:1px solid var(--line);color:var(--text);padding:10px 12px;border-radius:8px;font-size:15px}
+button{background:#2a2a31;color:var(--text);border:1px solid #3a3a44;padding:8px 12px;border-radius:7px;cursor:pointer;font-size:14px}
+button:hover{border-color:var(--acc)}button.p{background:var(--acc);color:#111;border-color:var(--acc);font-weight:600}button.r{border-color:var(--red);color:var(--red)}
+main{display:grid;grid-template-columns:380px 1fr;gap:16px;padding:16px 20px}
+@media(max-width:900px){main{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:14px}
+.card h2{font-size:15px;margin:0 0 10px;text-transform:uppercase;letter-spacing:.8px;color:var(--mute)}
+.idea{border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:8px}.idea h3{margin:0 0 4px;font-size:15px}
+.mute{color:var(--mute);font-size:13px}.tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:10px;background:#2a2a31;margin:2px 4px 2px 0}
+.meas{color:var(--ok)}.est{color:#e0a84a}
+.proj{padding:8px;border-radius:7px;cursor:pointer;border:1px solid transparent}.proj:hover,.proj.sel{border-color:var(--acc)}
+.bar{height:8px;background:#2a2a31;border-radius:5px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc)}
+.stages{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.st{font-size:12px;padding:4px 8px;border-radius:6px;background:#2a2a31}
+.st.done{background:#1f3d2a;color:var(--ok)}.st.running{background:#3d3a1f;color:var(--acc)}.st.blocked{background:#3d2f1f;color:#ffb347}.st.failed{background:#3d1f1f;color:var(--red)}
+.block{border:2px solid #ffb347;background:#2b2418;border-radius:10px;padding:12px;margin:10px 0}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.tabs button.on{background:var(--acc);color:#111}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}.grid img{width:100%;border-radius:6px;display:block}
+textarea{width:100%;min-height:380px;background:#101013;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px;font:14px/1.5 Consolas,monospace}
+input,select{background:#101013;color:var(--text);border:1px solid var(--line);border-radius:6px;padding:6px 8px}
+video{width:100%;max-height:60vh;background:#000;border-radius:8px}
+table{border-collapse:collapse;width:100%}td{border-bottom:1px solid var(--line);padding:5px;font-size:13px;vertical-align:top}
+.ok{color:var(--ok)}.bad{color:var(--red)}pre{white-space:pre-wrap;background:#101013;padding:10px;border-radius:8px;font-size:13px}
+.modal{position:fixed;inset:0;background:#000a;display:none;align-items:flex-start;justify-content:center;z-index:9;overflow:auto;padding:30px 10px}
+.modal .card{max-width:820px;width:100%}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0}.row label{min-width:220px;color:var(--mute);font-size:13px}
+#toast{position:fixed;bottom:16px;right:16px;background:var(--acc);color:#111;padding:10px 14px;border-radius:8px;display:none;font-weight:600}
+</style>
+</head>
+<body>
+<header>
+  <h1><b>GLAVONJA</b> AI STUDIO</h1>
+  <input id="cmd" placeholder="/glavonja-ideas  ·  /glavonja-make 12  ·  /glavonja-status  ·  /glavonja-continue  ·  /glavonja-history" onkeydown="if(event.key==='Enter')runCmd()">
+  <button class="p" onclick="runCmd()">Run</button>
+  <button onclick="openModal('style')">🎨 Style</button>
+  <button onclick="openModal('voice')">🎙 Voice</button>
+  <button onclick="openModal('settings')">⚙ Settings</button>
+</header>
+<div id="alerts" style="padding:0 20px"></div>
+<main>
+  <section>
+    <div class="card"><h2>Ideas (Viral Researcher)</h2>
+      <div class="row"><button class="p" onclick="post('/api/ideas',{refresh:true}).then(()=>toast('Istraživanje pokrenuto...'))">/glavonja-ideas</button>
+      <select id="ilang"><option value="">jezik iz settings</option><option value="sr">Srpski</option><option value="en">English</option></select></div>
+      <div id="ideasjob" class="mute"></div><div id="ideas"></div>
+      <div class="row"><input id="freetopic" placeholder="ili upiši svoju temu" style="flex:1"><button onclick="make({topic:val('freetopic')})">Make</button></div>
+    </div>
+    <div class="card"><h2>Projects / history</h2><div id="projects"></div></div>
+  </section>
+  <section><div class="card" id="detail"><h2>Project</h2><p class="mute">Izaberi ideju ili projekat.</p></div></section>
+</main>
+
+<div class="modal" id="m-settings"><div class="card"><h2>Settings</h2><div id="settingsForm"></div>
+  <div class="row"><button class="p" onclick="saveSettings()">Save</button><button onclick="closeModal()">Close</button></div></div></div>
+<div class="modal" id="m-style"><div class="card"><h2>GLAVONJA style</h2><div id="styleBox"></div>
+  <div class="row"><button onclick="closeModal()">Close</button></div></div></div>
+<div class="modal" id="m-voice"><div class="card"><h2>Gemini voice (mandatory)</h2><div id="voiceBox"></div>
+  <div class="row"><button onclick="closeModal()">Close</button></div></div></div>
+<div id="toast"></div>
+
+<script>
+let OV=null, CUR=null, TAB='progress', DET=null;
+const $=id=>document.getElementById(id), val=id=>$(id).value.trim();
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const F=p=>'/files/'+p.split('/').map(encodeURIComponent).join('/');
+function toast(t){$('toast').textContent=t;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',3500)}
+async function post(u,b){const r=await fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b||{})});const j=await r.json();if(j.msg)toast(j.msg);return j}
+async function runCmd(){const t=val('cmd');if(!t)return;const j=await post('/api/command',{text:t});if(j.open)openModal(j.open);if(j.project)select(j.project);$('cmd').value='';refresh()}
+async function make(b){if(!b.topic&&!b.idea_id)return;b.lang=$('ilang').value||undefined;const j=await post('/api/make',b);if(j.project){toast('Produkcija pokrenuta');select(j.project)}refresh()}
+function openModal(n){$('m-'+n).style.display='flex';if(n==='settings')renderSettings();if(n==='style')renderStyle();if(n==='voice')renderVoice()}
+function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.style.display='none')}
+
+async function refresh(){
+  OV=await (await fetch('/api/overview')).json();
+  const al=[];
+  if(!OV.gemini_ready) al.push('⚠ Gemini TTS (obavezan) nije podešen: Settings → Google → API ključ.');
+  else if(!(OV.settings.google.tts_voice_locked)) al.push('⚠ Gemini glas nije zaključan: 🎙 Voice → proba → zaključaj.');
+  if(!OV.references) al.push('⚠ Nema referentnih kadrova kanala: 🎨 Style → ubaci screenshot-ove/video. Bez njih video ostaje NACRT.');
+  else if(!OV.style.verified) al.push('⚠ Stil nije odobren: 🎨 Style → uporedi i odobri.');
+  $('alerts').innerHTML=al.map(a=>`<div class="block" style="margin:10px 0 0">${esc(a)}</div>`).join('');
+  const jb=OV.jobs.ideas; $('ideasjob').textContent=jb&&jb.running?('Istražujem… '+(jb.log.slice(-1)[0]||'')):(jb&&jb.error?'Greška: '+jb.error:'');
+  const I=OV.ideas;
+  $('ideas').innerHTML=!I?'<p class="mute">Još nema ideja. Klikni /glavonja-ideas.</p>':
+   `<p class="mute">Režim: ${esc(I.mode)} · izvori OK: ${esc(I.sources_ok.join(', ')||'nijedan')}${I.sources_failed.length?' · nedostupno: '+esc(I.sources_failed.map(x=>x.split(':')[0]).join(', ')):''}</p>`+
+   I.ideas.map(i=>`<div class="idea"><h3>#${i.id} ${esc(i.title)}</h3>
+     <div class="mute">${esc(i.topic)} · ${esc(i.format||'')} · ~${esc(i.duration_min)} min · težina ${esc(i.difficulty)}</div>
+     <div style="margin:6px 0">${esc(i.why)}</div>
+     <span class="tag est">konkurencija: ${esc(i.competition)}</span><span class="tag est">potencijal: ${esc(i.viral_potential)}</span>
+     ${Object.keys(i.stats_measured||{}).length?`<div class="meas mute">IZMERENO: ${esc(JSON.stringify(i.stats_measured))}</div>`:''}
+     ${(i.comparables||[]).map(c=>`<div class="mute">↳ <a href="${esc(c.url)}" target="_blank" style="color:var(--blue)">${esc(c.title)}</a> · ${esc(c.channel)} · ${c.views??'?'} pregleda${c.views_per_sub?' · '+c.views_per_sub+'× pretplatnika':''}</div>`).join('')}
+     <div class="mute">Thumbnail: ${esc(i.thumbnail_concept)}</div>${i.stats_note?`<div class="mute est">${esc(i.stats_note)}</div>`:''}
+     <div class="row"><button class="p" onclick="make({idea_id:${i.id}})">Izaberi i napravi (/glavonja-make ${i.id})</button></div></div>`).join('');
+  $('projects').innerHTML=OV.projects.map(p=>`<div class="proj ${p.id===CUR?'sel':''}" onclick="select('${p.id}')">
+     <b>${esc(p.title)}</b> <span class="mute">${esc(p.created.slice(0,16))}</span><br>
+     <span class="mute">${esc(p.status)} · ${esc(p.progress.current_label)}</span>${p.approved?' <span class="ok">✔ odobreno</span>':''}
+     <div class="bar"><i style="width:${p.progress.percent}%"></i></div></div>`).join('')||'<p class="mute">Nema projekata.</p>';
+  if(CUR) loadDetail();
+}
+async function select(id){CUR=id;TAB='progress';await loadDetail();refresh()}
+async function loadDetail(){
+  const r=await fetch('/api/project/'+CUR); if(!r.ok)return; DET=await r.json(); renderDetail();
+}
+function renderDetail(){
+  const d=DET,s=d.state,b=s.blocker;
+  let h=`<h2>${esc(s.title)}</h2><div class="mute">${esc(s.id)} · ${s.language} · cilj ${s.target_duration_sec}s · status <b>${esc(s.status)}</b>${d.running?' · radi…':''}</div>
+  <div class="bar" style="margin-top:8px"><i style="width:${d.progress.percent}%"></i></div>
+  <div class="stages">${d.stages.map(x=>`<span class="st ${s.stages[x].status}">${esc(d.stage_labels[x])}</span>`).join('')}</div>`;
+  if(b&&s.status==='waiting'){
+    const est=b.data&&b.data.estimate;
+    h+=`<div class="block"><b>⏸ Čeka tebe:</b> ${esc(b.message)}
+      ${est?`<pre>${esc(JSON.stringify(est,null,1))}</pre>`:''}
+      <div class="row">${b.options.map(o=>optBtn(o)).join('')}</div>
+      ${b.data&&b.data.missing?flowUpload(b.data.missing):''}</div>`;
+  }
+  if(s.status==='failed'&&s.last_error) h+=`<div class="block" style="border-color:var(--red)"><b>Greška u fazi ${esc(s.last_error.stage)}:</b><pre>${esc(s.last_error.error)}</pre><button class="p" onclick="post('/api/continue',{id:CUR}).then(refresh)">Pokušaj ponovo</button></div>`;
+  if(['interrupted','paused'].includes(s.status)) h+=`<div class="block">Produkcija je prekinuta. <button class="p" onclick="post('/api/continue',{id:CUR}).then(refresh)">/glavonja-continue</button></div>`;
+  (s.notices||[]).concat(s.warnings||[]).forEach(n=>h+=`<div class="mute est">• ${esc(n)}</div>`);
+  if(s.export) h+=`<div class="${s.export.status==='exported'?'ok':'est'}" style="margin-top:6px">Izvoz: <b>${esc(s.export.status)}</b> → ${esc(s.export.folder)} ${s.export.reasons?'('+esc(s.export.reasons.join('; '))+')':''}</div>`;
+  const tabs=['progress','script','storyboard','audio','video','thumbnails','seo','report'];
+  h+=`<div class="tabs">${tabs.map(t=>`<button class="${t===TAB?'on':''}" onclick="TAB='${t}';renderDetail()">${t}</button>`).join('')}</div><div id="tab"></div>`;
+  $('detail').innerHTML=h; $('tab').innerHTML=tab(d);
+}
+function optBtn(o){
+  if(o.action==='approve')return `<button class="p" onclick="post('/api/approve',{id:CUR,key:'${o.key}',approved:true}).then(refresh)">${esc(o.label)}</button>`;
+  if(o.action==='decline')return `<button class="r" onclick="post('/api/approve',{id:CUR,key:'${o.key}',approved:false,continue:false}).then(refresh)">${esc(o.label)}</button>`;
+  if(o.action==='continue')return `<button onclick="post('/api/continue',{id:CUR}).then(refresh)">${esc(o.label)}</button>`;
+  if(o.action==='settings')return `<button onclick="openModal('settings')">${esc(o.label)}</button>`;
+  if(o.action==='voice_audition')return `<button onclick="openModal('voice')">${esc(o.label)}</button>`;
+  return '';
+}
+function flowUpload(ids){
+  return `<p>${DET.flow_requests?`<a style="color:var(--blue)" target="_blank" href="${F(DET.flow_requests)}">Otvori FLOW_REQUESTS.md (promptovi)</a>`:''}</p>`+
+   ids.map(i=>`<div class="row"><label>Scena ${i}</label><input type="file" accept="video/*" onchange="upFlow(${i},this)"></div>`).join('');
+}
+async function upFlow(scene,inp){const f=inp.files[0];if(!f)return;const r=await fetch(`/api/upload_flow?id=${CUR}&scene=${scene}&name=${encodeURIComponent(f.name)}`,{method:'POST',body:f});const j=await r.json();toast(j.ok?'Ubačeno: scena '+scene:j.msg)}
+function tab(d){
+  const s=d.state;
+  if(TAB==='progress') return `<pre>${esc(d.log.join('\n'))||'—'}</pre>`;
+  if(TAB==='script') return d.script_text?`${d.script&&d.script.warning?`<div class="block">${esc(d.script.warning)}</div>`:''}
+     <p class="mute">Izmeni tekst (jedna rečenica po redu, # naslov sekcije) pa sačuvaj – storyboard i dalje se prave ponovo.</p>
+     <textarea id="scr">${esc(d.script_text)}</textarea><div class="row"><button class="p" onclick="post('/api/script',{id:CUR,text:$('scr').value}).then(()=>post('/api/continue',{id:CUR})).then(refresh)">Sačuvaj i nastavi</button>
+     <button onclick="post('/api/redo',{id:CUR,stage:'script'}).then(refresh)">Napiši ponovo (AI)</button></div>`:'<p class="mute">Još nema scenarija.</p>';
+  if(TAB==='storyboard'){ if(!d.storyboard)return '<p class="mute">—</p>';
+     return `<div class="grid">${d.storyboard.scenes.map((sc,i)=>{const img=d.scene_images[i];const c=d.clips[sc.id];
+       return `<div>${img?`<img src="${F(img)}">`:''}<div class="mute"><b>#${sc.id}</b> ${sc.duration}s · ${esc(sc.background)} · ${esc(sc.characters[0].action)} ${c?'· <span class="'+(c.source==='google_flow'?'ok':'est')+'">'+esc(c.source)+(c.consistency?' / '+esc(c.consistency):'')+'</span>':''}</div><div style="font-size:13px">${esc(sc.text)}</div></div>`}).join('')}</div>`;}
+  if(TAB==='audio') return d.audio?`<audio controls style="width:100%" src="${F(d.audio)}"></audio><p class="mute">${esc((s.voice_engines||[]).join(', '))}</p>`:'<p class="mute">—</p>';
+  if(TAB==='video') return d.video?`<video controls src="${F(d.video)}"></video><p class="mute">Fajl: ${esc(d.video)}</p>
+     <div class="row"><button class="p" onclick="post('/api/final',{id:CUR,approve:true}).then(refresh)">✔ Odobri finalni video</button><span class="mute">Objavljivanje na YouTube radiš ručno – studio nikad ne objavljuje sam.</span></div>`:'<p class="mute">—</p>';
+  if(TAB==='thumbnails') return d.thumbnails?`<div class="grid">${d.thumbnails.thumbnails.map(t=>`<div><img src="${F(t.file)}"><div class="row"><b>${t.id}</b> <span class="mute">${esc(t.concept)}</span>
+     <button class="${s.chosen_thumbnail===t.id?'p':''}" onclick="post('/api/final',{id:CUR,thumbnail:'${t.id}'}).then(loadDetail)">${s.chosen_thumbnail===t.id?'✔ izabran':'Izaberi'}</button></div></div>`).join('')}</div><p class="mute">Preporuka: ${esc(d.thumbnails.recommended)}</p>`:'<p class="mute">—</p>';
+  if(TAB==='seo'){const m=d.metadata;if(!m)return '<p class="mute">—</p>';
+     return `<p><b>Preporučeni naslov:</b> ${esc(m.recommended_title)}</p><ol>${m.titles.map(t=>`<li>${esc(t)}</li>`).join('')}</ol><h4>Opis</h4><pre>${esc(m.description)}</pre>
+     <p><b>Tagovi:</b> ${esc(m.tags.join(', '))}</p><p><b>Hashtag:</b> ${esc(m.hashtags.join(' '))}</p><p><b>Pinned komentar:</b> ${esc(m.pinned_comment)}</p>`;}
+  if(TAB==='report'){const r=d.report;if(!r)return '<p class="mute">—</p>';
+     return `<table>${r.checks.map(c=>`<tr><td class="${c.ok?'ok':'bad'}">${c.ok?'✔':'✖'}</td><td>${esc(c.check)}</td><td class="mute">${esc(c.detail)}</td></tr>`).join('')}</table>
+     <p class="mute">Izvori klipova: ${esc(JSON.stringify(r.clip_sources))} · Glas: ${esc((r.voice_engines||[]).join(', '))}</p>`;}
+  return '';
+}
+function renderSettings(){
+  const s=OV.settings, f=[['language','Jezik (sr/en)'],['target_duration_sec','Trajanje (s)'],['google.api_key','Gemini API ključ (obavezno)'],
+   ['google.tts_model','Gemini TTS model'],['google.tts_style_prompt','Gemini stil naracije'],['google.flow_mode','Flow režim (fast/quality)'],
+   ['google.auto_approve_under_free_tier','Auto-odobri ako staje u besplatni limit (true/false)'],
+   ['research.youtube_api_key','YouTube Data API ključ (opciono, besplatan)'],['research.competitor_channel_ids','Kanali konkurenata (UC… odvojeno zarezom)'],
+   ['llm.ollama_model','Ollama model'],['llm.allow_claude_cli','Dozvoli Claude CLI za scenarija (troši Claude!)'],
+   ['voice.engine','Glas (gemini = obavezno)'],['audio.music','Muzika (true/false)'],['audio.music_volume_db','Jačina muzike dB'],
+   ['video.fps','FPS'],['video.burn_subtitles','Titlovi u videu (true/false)'],['consistency.max_distance','Prag sličnosti sa kanalom (0-1)']];
+  const g=k=>k.split('.').reduce((o,x)=>o&&o[x],s);
+  $('settingsForm').innerHTML=f.map(([k,l])=>`<div class="row"><label>${esc(l)}</label><input data-k="${k}" value="${esc(Array.isArray(g(k))?g(k).join(','):g(k))}" style="flex:1"></div>`).join('')+
+   '<p class="mute">Ključevi se čuvaju samo lokalno (config/settings.json) i nikad se ne ispisuju u logove.</p>';
+}
+async function saveSettings(){const b={};document.querySelectorAll('#settingsForm input').forEach(i=>b[i.dataset.k]=i.value);await post('/api/settings',b);toast('Sačuvano');closeModal();refresh()}
+function renderStyle(){
+  const st=OV.style;
+  $('styleBox').innerHTML=`<p>Status: <b>${esc(st.status)}</b> · odobren: <b class="${st.verified?'ok':'bad'}">${st.verified}</b> · referentnih kadrova: <b>${OV.references}</b></p>
+   <p class="mute">1) Ubaci 10–20 screenshot-ova ili 1–2 SVOJA videa sa kanala. 2) "Izmeri stil". 3) "Test scena" i uporedi. 4) Odobri.</p>
+   <div class="row"><label>Kadrovi / video kanala</label><input type="file" multiple accept="image/*,video/*" onchange="upRef(this,'frames')"></div>
+   <div class="row"><label>Lik GLAVONJA (isečci)</label><input type="file" multiple accept="image/*" onchange="upRef(this,'character')"></div>
+   <div class="row"><button onclick="post('/api/style',{action:'learn'}).then(()=>toast('Merim…'))">Izmeri stil iz referenci</button>
+   <button onclick="post('/api/style',{action:'test'}).then(()=>toast('Pravim test scenu…'))">Test scena + poređenje</button>
+   <button class="p" onclick="post('/api/style',{action:'approve'}).then(refresh)">✔ Odobri vizuelni identitet</button></div>
+   ${st.measured?`<pre>${esc(JSON.stringify(st.measured,null,1))}</pre>`:''}
+   <img src="/files/docs/style_comparison.png?${Date.now()}" style="width:100%" onerror="this.remove()">
+   <p class="mute">Biblioteka: <a style="color:var(--blue)" target="_blank" href="/files/assets/characters/character_sheet.png">poze</a> · <a style="color:var(--blue)" target="_blank" href="/files/assets/characters/expressions.png">izrazi</a> · <a style="color:var(--blue)" target="_blank" href="/files/assets/backgrounds/library.png">pozadine</a> · <a style="color:var(--blue)" target="_blank" href="/files/assets/props/props_library.png">predmeti</a></p>`;
+}
+async function upRef(inp,kind){for(const f of inp.files){await fetch(`/api/upload_reference?kind=${kind}&name=${encodeURIComponent(f.name)}`,{method:'POST',body:f})}toast(inp.files.length+' fajlova ubačeno');refresh().then(renderStyle)}
+function renderVoice(){
+  const g=OV.settings.google;
+  $('voiceBox').innerHTML=`<p>Gemini spreman: <b class="${OV.gemini_ready?'ok':'bad'}">${OV.gemini_ready}</b> · zaključan glas: <b>${esc(g.tts_voice||'—')}</b> ${g.tts_voice_locked?'🔒':''}</p>
+   <p class="mute">Proba generiše istu rečenicu u 6 glasova (6 Gemini zahteva). Preslušaj i zaključaj onaj koji najviše liči na tvoj kanal – koristi se u SVAKOM videu.</p>
+   <div class="row"><button class="p" onclick="if(confirm('Pokrenuti probu? Troši 6 Gemini TTS zahteva.'))post('/api/voice/audition',{}).then(j=>toast('Proba pokrenuta'))">Proba glasova</button></div>
+   ${OV.audition.map(f=>{const v=f.replace('gemini_','').replace('.wav','');return `<div class="row"><label>${esc(v)}</label><audio controls src="/files/assets/voice_audition/${f}"></audio><button onclick="post('/api/voice/lock',{voice:'${v}'}).then(refresh).then(renderVoice)">🔒 Zaključaj</button></div>`}).join('')}
+   <p class="mute">Lokalni rezervni glasovi: espeak ${OV.voice.espeak?'✔':'✖'} · Piper sr ${OV.voice.piper_sr?'✔':'✖'} · Piper en ${OV.voice.piper_en?'✔':'✖'}</p>`;
+}
+refresh(); setInterval(refresh,4000);
+</script>
+</body>
+</html>

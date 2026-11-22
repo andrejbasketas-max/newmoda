@@ -23,3 +23,5 @@ references/videos/*
 references/signatures.json
 config/settings.json
 *.tmp
+config/style.json
+backups/

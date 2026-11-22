@@ -505,7 +505,7 @@ def background(kind: str, w: int, h: int, style: dict) -> Image.Image:
     """Return a cached RGB background; caller crops/scales for camera moves."""
     if kind not in BACKGROUNDS:
         kind = "white"
-    key = sha({"k": kind, "w": w, "h": h, "pal": style.get("palette"), "bg": style.get("backgrounds"), "v": 4})
+    key = sha({"k": kind, "w": w, "h": h, "pal": style.get("palette"), "bg": style.get("backgrounds"), "v": 6})
     folder = ASSETS_DIR / "backgrounds" / "cache"
     folder.mkdir(parents=True, exist_ok=True)
     p = folder / f"{kind}_{w}x{h}_{key}.png"
@@ -579,9 +579,11 @@ def _render_bg(kind, w, h, style):
             hills(C("#A5D6A7"), 3, 0.06, 0.66)
             ground(C("#81C784"))
             if kind in ("forest", "jungle"):
-                for i in range(7):
-                    tx = (i + 0.5) / 7 * w + rnd.uniform(-40, 40)
-                    (_palm if kind == "jungle" else _tree)(d, tx, gy - h * 0.13, h * rnd.uniform(0.17, 0.24), lw, 0)
+                for tx in (0.03, 0.11, 0.9, 0.98):   # only at the edges so characters and props stay clear
+                    tx = tx * w + rnd.uniform(-20, 20)
+                    far = abs(tx / w - 0.5) < 0.1
+                    sz = h * (0.1 if far else rnd.uniform(0.17, 0.24))
+                    (_palm if kind == "jungle" else _tree)(d, tx, gy - (h * 0.25 if far else h * 0.13), sz, lw, 0)
     elif kind == "night":
         _grad(img, C(pal["sky_night"][0]), C(pal["sky_night"][1]))
         stars()

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom">
+ <title>Example Stickman Channel</title>
+ <entry><yt:videoId>abc123</yt:videoId><title>What If Earth Stopped Spinning</title><published>2026-10-01T10:00:00+00:00</published>
+  <media:group><media:community><media:statistics views="1200000"/></media:community></media:group></entry>
+ <entry><yt:videoId>def456</yt:videoId><title>Surviving 7 Days on an Island</title><published>2026-11-01T10:00:00+00:00</published>
+  <media:group><media:community><media:statistics views="54000"/></media:community></media:group></entry>
+</feed>
