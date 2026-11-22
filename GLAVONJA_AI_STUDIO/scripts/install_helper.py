@@ -108,9 +108,9 @@ def models(yes=False):
             print(f"  Piper {lang}: present")
             continue
         if not yes:
-            a = input(f"  Download Piper {lang} voice (~65 MB, free, MIT/CC)? [y/N] ").strip().lower()
-            if a not in ("y", "yes", "d", "da"):
-                continue
+            print(f"  Piper {lang} fallback voice skipped (optional; Gemini is the main voice). "
+                  f"Later: .venv\\Scripts\\python scripts\\install_helper.py models --yes")
+            continue
         try:
             _download(PIPER + path, f, 0.5)
             _download(PIPER + path + ".json", Path(str(f) + ".json"), 0.1)

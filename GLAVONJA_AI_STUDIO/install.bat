@@ -6,7 +6,6 @@ echo ============================================================
 echo   GLAVONJA AI STUDIO - installation (no admin rights needed)
 echo ============================================================
 echo.
-echo GLAVONJA install %DATE% %TIME% > install_log.txt
 echo [1/9] Checking Windows...
 ver | find "10." >nul || ver | find "11." >nul || echo   WARNING: tested for Windows 10/11 only.
 ver
@@ -55,11 +54,13 @@ set "VPY=%~dp0.venv\Scripts\python.exe"
 
 echo [4/9] Installing Python packages ...
 "%VPY%" -m pip install --disable-pip-version-check -q --upgrade pip
-echo   please wait 1-3 minutes ... (details in install_log.txt)
-"%VPY%" -m pip install --disable-pip-version-check -r requirements.txt >> install_log.txt 2>&1
+echo   please wait 1-3 minutes - you will see the download progress below ...
+"%VPY%" -m pip install --disable-pip-version-check -r requirements.txt
+"%VPY%" -c "import PIL, numpy, espeakng_loader; print('  packages OK')"
 if errorlevel 1 (
-  echo   ERROR: package installation failed. Last lines of install_log.txt:
-  powershell -NoProfile -Command "Get-Content install_log.txt -Tail 15"
+  echo.
+  echo   ERROR: the Python packages were not installed. Check the internet connection,
+  echo   then double-click install.bat again. If it fails again, send a screenshot of this window.
   pause
   exit /b 1
 )
@@ -72,7 +73,7 @@ echo [5/9] Inspecting hardware (saved to docs\hardware_report.json) ...
 echo [6/9] FFmpeg (free, downloaded into tools\ffmpeg) ...
 "%VPY%" scripts\install_helper.py ffmpeg
 
-echo [7/9] Optional Piper voice models (asks first, ~65 MB each) ...
+echo [7/9] Optional Piper voice models (skipped - Gemini is the main voice) ...
 "%VPY%" scripts\install_helper.py models
 
 echo [8/9] Creating folders, database and reference library ...
