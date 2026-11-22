@@ -104,6 +104,8 @@ async function refresh(){
      <span class="mute">${esc(p.status)} · ${esc(p.progress.current_label)}</span>${p.approved?' <span class="ok">✔ odobreno</span>':''}
      <div class="bar"><i style="width:${p.progress.percent}%"></i></div></div>`).join('')||'<p class="mute">Nema projekata.</p>';
   if(CUR) loadDetail();
+  if($('m-voice').style.display==='flex') renderVoice();
+  if($('m-style').style.display==='flex' && OV.jobs.style && OV.jobs.style.running) renderStyle();
 }
 async function select(id){CUR=id;TAB='progress';await loadDetail();refresh()}
 async function loadDetail(){
@@ -197,7 +199,12 @@ function renderVoice(){
   $('voiceBox').innerHTML=`<p>Gemini spreman: <b class="${OV.gemini_ready?'ok':'bad'}">${OV.gemini_ready}</b> · zaključan glas: <b>${esc(g.tts_voice||'—')}</b> ${g.tts_voice_locked?'🔒':''}</p>
    <p class="mute">Proba generiše istu rečenicu u 6 glasova (6 Gemini zahteva). Preslušaj i zaključaj onaj koji najviše liči na tvoj kanal – koristi se u SVAKOM videu.</p>
    <div class="row"><button class="p" onclick="if(confirm('Pokrenuti probu? Troši 6 Gemini TTS zahteva.'))post('/api/voice/audition',{}).then(j=>toast('Proba pokrenuta'))">Proba glasova</button></div>
-   ${OV.audition.map(f=>{const v=f.replace('gemini_','').replace('.wav','');return `<div class="row"><label>${esc(v)}</label><audio controls src="/files/assets/voice_audition/${f}"></audio><button onclick="post('/api/voice/lock',{voice:'${v}'}).then(refresh).then(renderVoice)">🔒 Zaključaj</button></div>`}).join('')}
+   ${(()=>{const j=OV.jobs.audition;if(!j)return '';
+      if(j.running)return '<div class="block">⏳ Pravim probne glasove… (do 1-2 min, Google ograničava broj zahteva u minuti)</div>';
+      if(j.error)return `<div class="block" style="border-color:var(--red)">Greška: ${esc(j.error)}</div>`;
+      const bad=(j.result||[]).filter(r=>!r.ok);
+      return bad.length?`<div class="block">Neki glasovi nisu uspeli: ${bad.map(r=>esc(r.voice)+' – '+esc(r.error)).join('<br>')}</div>`:'';})()}
+   ${OV.audition.filter(f=>f.endsWith('.wav')).map(f=>{const v=f.replace('gemini_','').replace('.wav','');return `<div class="row"><label>${esc(v)}</label><audio controls src="/files/assets/voice_audition/${f}"></audio><button onclick="post('/api/voice/lock',{voice:'${v}'}).then(refresh).then(renderVoice)">🔒 Zaključaj</button></div>`}).join('')}
    <p class="mute">Lokalni rezervni glasovi: espeak ${OV.voice.espeak?'✔':'✖'} · Piper sr ${OV.voice.piper_sr?'✔':'✖'} · Piper en ${OV.voice.piper_en?'✔':'✖'}</p>`;
 }
 refresh(); setInterval(refresh,4000);

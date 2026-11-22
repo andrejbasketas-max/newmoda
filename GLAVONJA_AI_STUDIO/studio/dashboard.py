@@ -76,7 +76,8 @@ def overview():
                                                      "measured": st.get("measured_from_references")},
             "references": len(consistency.reference_files()), "voice": voice_status(s),
             "gemini_ready": google_ai.gemini_available(s), "gemini_voices": google_ai.GEMINI_VOICES,
-            "ideas": latest_ideas(), "projects": list_projects(), "jobs": {k: {kk: v[kk] for kk in ("running", "error")} | {"log": v["log"][-15:]}
+            "ideas": latest_ideas(), "projects": list_projects(), "jobs": {k: {kk: v[kk] for kk in ("running", "error")} | {"log": v["log"][-15:],
+                                                                                              "result": v["result"] if k == "audition" else None}
                                                                          for k, v in JOBS.items()},
             "audition": sorted(f.name for f in (ROOT / "assets" / "voice_audition").glob("*.wav")) if (ROOT / "assets" / "voice_audition").exists() else []}
 
