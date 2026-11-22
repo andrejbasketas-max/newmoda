@@ -25,3 +25,4 @@ config/settings.json
 *.tmp
 config/style.json
 backups/
+assets/voice_audition/

@@ -70,7 +70,8 @@ DEFAULT_SETTINGS = {
     "google": {
         "enabled": True,              # PART 3.1.1 - MANDATORY for every video; each use is estimated + approved
         "api_key": "",                # Gemini API key from https://aistudio.google.com/apikey
-        "tts_model": "gemini-2.5-flash-preview-tts",
+        "tts_model": "gemini-3.8-flash-tts",   # verified available with the user's key (2026-11-22)
+        "tts_chunk_chars": 700,       # several sentences per request -> far fewer requests (free quota)
         "tts_voice": "",              # chosen once via voice audition, then LOCKED
         "tts_voice_locked": False,
         "tts_style_prompt": "Narrate like an energetic, curious YouTube storyteller:",

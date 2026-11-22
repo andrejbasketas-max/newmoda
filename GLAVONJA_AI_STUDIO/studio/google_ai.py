@@ -13,7 +13,10 @@ from __future__ import annotations
 
 import base64
 import json
+import re
 import shutil
+import time
+import urllib.error
 import urllib.request
 import wave
 from pathlib import Path
@@ -97,8 +100,24 @@ def gemini_tts(text: str, out_wav: Path, settings=None, voice: str | None = None
     req = urllib.request.Request(GEMINI_URL.format(model=g.get("tts_model", "gemini-2.5-flash-preview-tts")),
                                  data=json.dumps(body).encode(), method="POST",
                                  headers={"Content-Type": "application/json", "x-goog-api-key": key})
-    with urllib.request.urlopen(req, timeout=180) as r:
-        resp = json.loads(r.read())
+    resp = None
+    for attempt in range(5):
+        try:
+            with urllib.request.urlopen(req, timeout=180) as r:
+                resp = json.loads(r.read())
+            break
+        except urllib.error.HTTPError as e:
+            if e.code != 429:
+                raise
+            body = e.read().decode("utf-8", "replace")
+            if "PerDay" in body or "per day" in body.lower():
+                raise QuotaExhausted("daily Gemini TTS quota used up")
+            m = re.search(r'"retryDelay":\s*"(\d+)', body)
+            wait = min(70, max(10, int(m.group(1)) + 2 if m else 20 * (attempt + 1)))
+            get_logger().info("Gemini rate limit (per minute) - waiting %ss before retry %d", wait, attempt + 1)
+            time.sleep(wait)
+    if resp is None:
+        raise QuotaExhausted("Gemini kept answering 429 (rate limit)")
     try:
         part = resp["candidates"][0]["content"]["parts"][0]["inlineData"]
     except (KeyError, IndexError):
@@ -115,6 +134,10 @@ def gemini_tts(text: str, out_wav: Path, settings=None, voice: str | None = None
         w.setnchannels(1); w.setsampwidth(2); w.setframerate(rate); w.writeframes(pcm)
     record_google_asset(out_wav, "voice", "Gemini TTS", {"voice": voice, "model": g.get("tts_model"), "chars": len(text)})
     return out_wav
+
+
+class QuotaExhausted(Exception):
+    pass
 
 
 class GeminiEngine:

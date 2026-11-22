@@ -80,7 +80,7 @@ def _voice_engine(p: Project, s: dict, texts: list[str]) -> str:
                       "Gemini glas još nije izabran. Pokreni probu glasova, preslušaj i ZAKLJUČAJ jedan - "
                       "on se koristi u svakom budućem videu.",
                       [{"action": "voice_audition", "label": "Proba glasova (6 glasova)"}, fallback_opt])
-    est = google_ai.estimate_tts(texts)
+    est = google_ai.estimate_tts([" ".join(c) for c in texts_chunks(texts, s)])
     if _declined(p, "gemini_tts"):
         raise Blocked("declined", "Odbio si Gemini generisanje za ovaj video. Odobri ga ili odobri lokalni glas.",
                       [{"action": "approve", "key": "gemini_tts", "label": "Ipak odobri Gemini TTS"}, fallback_opt],
@@ -95,6 +95,78 @@ def _voice_engine(p: Project, s: dict, texts: list[str]) -> str:
                           [{"action": "approve", "key": "gemini_tts", "label": "Odobri Gemini TTS"},
                            {"action": "decline", "key": "gemini_tts", "label": "Odbij"}], {"estimate": est})
     return "gemini"
+
+
+def texts_chunks(texts: list[str], s: dict) -> list[list[str]]:
+    """Group sentences into Gemini requests (fewer requests = stays inside the free per-minute/day quota)."""
+    max_chars = int(s["google"].get("tts_chunk_chars", 700))
+    out, cur, n = [], [], 0
+    for t in texts:
+        if cur and n + len(t) > max_chars:
+            out.append(cur)
+            cur, n = [], 0
+        cur.append(t)
+        n += len(t) + 1
+    if cur:
+        out.append(cur)
+    return out
+
+
+def split_by_pauses(wav: Path, texts: list[str]) -> list[tuple[float, float]]:
+    """Cut one narration chunk into sentences at the natural pauses closest to the expected positions."""
+    import re as _re
+    dur = audio.wav_duration(wav)
+    if len(texts) == 1:
+        return [(0.0, dur)]
+    r = run([ffmpeg(), "-hide_banner", "-i", str(wav), "-af", "silencedetect=noise=-38dB:d=0.18", "-f", "null", "-"], check=False)
+    err = r.stderr.decode(errors="replace")
+    starts = [float(x) for x in _re.findall(r"silence_start: ([\d.]+)", err)]
+    ends = [float(x) for x in _re.findall(r"silence_end: ([\d.]+)", err)]
+    mids = [(a + b) / 2 for a, b in zip(starts, ends) if a > 0.1 and b < dur - 0.1]
+    total = sum(len(t) for t in texts)
+    cuts, prev, acc = [], 0.0, 0
+    for k, t in enumerate(texts[:-1]):
+        acc += len(t)
+        exp = dur * acc / total
+        cand = [m for m in mids if m > prev + 0.4 and m not in cuts]
+        c = min(cand, key=lambda m: abs(m - exp)) if cand else exp
+        if abs(c - exp) > max(1.5, dur / len(texts)):  # nearest pause is implausibly far -> use the estimate
+            c = exp
+        cuts.append(c)
+        prev = c
+    bounds = [0.0] + cuts + [dur]
+    return [(bounds[i], bounds[i + 1]) for i in range(len(texts))]
+
+
+def _gemini_chunks(lines, vdir: Path, meta: dict, s: dict, log):
+    g = s["google"]
+    groups, i = [], 0
+    for ch in texts_chunks([l["text"] for l in lines], s):
+        groups.append(lines[i:i + len(ch)])
+        i += len(ch)
+    for gi, grp in enumerate(groups):
+        texts = [l["text"] for l in grp]
+        key = sha([texts, "gemini", g.get("tts_voice"), g.get("tts_model"), g.get("tts_style_prompt")])
+        outs = [vdir / f"line_{l['id']:03d}.wav" for l in grp]
+        if all(o.exists() for o in outs) and all(meta["lines"].get(str(l["id"]), {}).get("key") == key for l in grp):
+            continue
+        raw = vdir / f"chunk_{gi + 1:03d}.gemini.wav"   # original Google audio is kept (never deleted)
+        if not raw.exists() or meta.get("chunks", {}).get(raw.name) != key:
+            google_ai.gemini_tts(" ".join(texts), raw, s)
+            meta.setdefault("chunks", {})[raw.name] = key
+            atomic_write_json(vdir / "lines.json", meta)
+        x, sr = audio.read_wav(raw)
+        for l, out, (a, b) in zip(grp, outs, split_by_pauses(raw, texts)):
+            tmp = out.with_suffix(".cut.wav")
+            audio.write_wav(tmp, x[int(a * sr):int(b * sr)], sr)
+            run([ffmpeg(), "-y", "-loglevel", "error", "-i", str(tmp), "-af",
+                 "silenceremove=start_periods=1:start_threshold=-50dB,areverse,"
+                 "silenceremove=start_periods=1:start_threshold=-50dB,areverse", "-ar", "44100", "-ac", "1", str(out)])
+            tmp.unlink(missing_ok=True)
+            meta["lines"][str(l["id"])] = {"key": key, "engine": f"gemini:{g['tts_voice']}", "duration": audio.wav_duration(out),
+                                           "chunk": raw.name}
+        atomic_write_json(vdir / "lines.json", meta)
+        log(f"  Gemini voice chunk {gi + 1}/{len(groups)} ({len(grp)} sentences)")
 
 
 def stage_voice(p: Project, log):
@@ -114,34 +186,33 @@ def stage_voice(p: Project, log):
         meta = {"lines": {}}
         log(f"  voice engine changed -> previous files kept in {keep.name}/")
     meta["engine_kind"] = engine
-    for ln in lines:
-        out = vdir / f"line_{ln['id']:03d}.wav"
-        key = sha([ln["text"], engine, s["google"].get("tts_voice") if engine == "gemini" else s["voice"]])
-        if out.exists() and meta["lines"].get(str(ln["id"]), {}).get("key") == key:
-            continue
-        try:
-            if engine == "gemini":
-                raw = out.with_suffix(".gem.wav")
-                google_ai.gemini_tts(ln["text"], raw, s)
-                run([ffmpeg(), "-y", "-loglevel", "error", "-i", str(raw), "-af",
-                     "silenceremove=start_periods=1:start_threshold=-50dB,areverse,"
-                     "silenceremove=start_periods=1:start_threshold=-50dB,areverse", "-ar", "44100", "-ac", "1", str(out)])
-                raw.unlink(missing_ok=True)
-                name = f"gemini:{s['google']['tts_voice']}"
-            else:
+    try:
+        if engine == "gemini":
+            _gemini_chunks(lines, vdir, meta, s, log)
+        else:
+            for ln in lines:
+                out = vdir / f"line_{ln['id']:03d}.wav"
+                key = sha([ln["text"], engine, s["voice"]])
+                if out.exists() and meta["lines"].get(str(ln["id"]), {}).get("key") == key:
+                    continue
                 name = audio.synth_line(ln["text"], out, lang, s, None if s["voice"]["engine"] == "gemini" else s["voice"]["engine"])
-        except urllib.error.HTTPError as e:
-            atomic_write_json(vdir / "lines.json", meta)
-            if e.code in (429, 403):
-                raise Blocked("google_credits_exhausted",
-                              f"Gemini je odbio zahtev (HTTP {e.code}: kvota/krediti potrošeni ili ključ bez pristupa). "
-                              "Sačekaj reset kvote (obično sutradan) ili izričito odobri lokalni glas.",
-                              [{"action": "continue", "label": "Pokušaj ponovo (posle reseta kvote)"},
-                               {"action": "approve", "key": "local_voice_fallback", "label": "Odobri lokalni glas"}])
-            raise
-        meta["lines"][str(ln["id"])] = {"key": key, "engine": name, "duration": audio.wav_duration(out)}
-        atomic_write_json(vdir / "lines.json", meta)  # save after EVERY line (resume-safe)
-        log(f"  voice {ln['id']}/{len(lines)} ({name})")
+                meta["lines"][str(ln["id"])] = {"key": key, "engine": name, "duration": audio.wav_duration(out)}
+                atomic_write_json(vdir / "lines.json", meta)  # save after EVERY line (resume-safe)
+                log(f"  voice {ln['id']}/{len(lines)} ({name})")
+    except google_ai.QuotaExhausted as e:
+        atomic_write_json(vdir / "lines.json", meta)
+        raise Blocked("google_credits_exhausted",
+                      f"Gemini kvota je potrošena ({e}). Sačekaj reset kvote (dnevna se resetuje oko 9h po našem vremenu) "
+                      "ili izričito odobri lokalni glas.",
+                      [{"action": "continue", "label": "Pokušaj ponovo (posle reseta kvote)"},
+                       {"action": "approve", "key": "local_voice_fallback", "label": "Odobri lokalni glas"}])
+    except urllib.error.HTTPError as e:
+        atomic_write_json(vdir / "lines.json", meta)
+        if e.code in (401, 403):
+            raise Blocked("gemini_unavailable", f"Gemini je odbio ključ (HTTP {e.code}). Proveri ključ u Settings.",
+                          [{"action": "settings", "label": "Otvori Settings"},
+                           {"action": "approve", "key": "local_voice_fallback", "label": "Odobri lokalni glas"}])
+        raise
     files = [vdir / f"line_{l['id']:03d}.wav" for l in lines]
     audio.normalize_and_concat(files, [GAP] * len(files), vdir / "narration.wav", vdir / "narration.mp3",
                                s["audio"]["voice_lufs"])
