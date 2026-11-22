@@ -324,6 +324,9 @@ def serve():
             p = get_project(pr["id"])
             p.state["status"] = "interrupted"
             p.save()
+    from .autopilot import GLOBAL_INBOX, background_loop
+    GLOBAL_INBOX.mkdir(exist_ok=True)
+    background_loop(300)   # watches FLOW_INBOX every 5 min while the dashboard is open
     if s.get("open_browser", True):
         threading.Timer(1.0, lambda: webbrowser.open(url)).start()
     try:

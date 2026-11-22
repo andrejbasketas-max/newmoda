@@ -60,6 +60,8 @@ echo [8/9] Creating folders, database and reference library ...
 echo [9/9] Self-test ...
 "%VPY%" glavonja.py selftest
 echo.
+set /p AP="Turn on the daily AUTOPILOT (Windows Task Scheduler, no Claude usage)? [Y/n] "
+if /i not "%AP%"=="n" call "%~dp0autopilot_install.bat"
 echo ============================================================
 echo   Done. Start the studio with start.bat
 echo   Next: open Settings and paste your Gemini API key,

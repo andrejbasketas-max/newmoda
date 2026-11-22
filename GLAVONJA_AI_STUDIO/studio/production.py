@@ -328,6 +328,12 @@ def stage_animation(p: Project, log):
     missing, rejected = [], []
     has_refs = consistency.has_references()
     refs = consistency.build_signatures(log=lambda *_: None)["refs"] if has_refs else {}
+    if not fallback:  # clips dropped into the studio-wide FLOW_INBOX folder go to the missing scenes in order
+        from .autopilot import assign_global_inbox
+        done_ids = {int(k) for k, v in info["clips"].items()}
+        need_ids = [sc["id"] for sc in sb["scenes"] if sc["id"] not in done_ids and not google_ai.flow_inbox_clip(p, sc["id"])]
+        if need_ids and assign_global_inbox(p, need_ids):
+            log("  clips taken from FLOW_INBOX")
     for sc in sb["scenes"]:
         out = adir / f"scene_{sc['id']:03d}.mp4"
         key = sha([sc, s["video"]])
@@ -378,7 +384,8 @@ def stage_animation(p: Project, log):
             [f"Flow: čeka se {len(need)} klipova ({len(rejected)} za ponovno generisanje)."]
         raise Blocked("waiting_flow_clips",
                       f"Čeka se {len(need)} Google Flow klipova. Otvori {req.relative_to(ROOT).as_posix()}, generiši klipove u Flow-u "
-                      f"i ubaci ih (dugme Upload ili folder flow/inbox), pa klikni Continue.",
+                      f"redom (scena {need[0]['id']}, pa sledeća...) i samo ih prevuci u folder FLOW_INBOX - "
+                      f"autopilot ih sam raspoređuje i nastavlja (ili Upload po sceni ovde).",
                       [{"action": "upload_flow", "label": "Ubaci Flow klipove"},
                        {"action": "continue", "label": "Continue (proveri inbox)"},
                        {"action": "approve", "key": "flow_fallback_local", "label": "Flow nije dostupan - odobri lokalnu animaciju"}],

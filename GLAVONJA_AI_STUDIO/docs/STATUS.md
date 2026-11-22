@@ -18,6 +18,14 @@ YouTube, Google APIs and HuggingFace were blocked there.
 - Test video: `docs/test_video/` (Serbian, ~35 s, 1080p). It uses the **local fallbacks** (espeak voice,
   procedural animation) because Gemini/Flow were unreachable. Its report correctly says *draft – not exportable*.
 
+## Added after the first build
+- Gemini TTS **tested for real** with the owner's key (model gemini-3.8-flash-tts, Serbian works). The free tier
+  returned HTTP 429 after 5 quick requests -> requests are now chunked (several sentences per request, split
+  at natural pauses) and retried with waiting; daily-quota exhaustion stops and asks.
+- The key has no Veo models, so automatic Flow-equivalent animation via API is not possible with it.
+- Autopilot (Task Scheduler, 0 Claude usage): tested FLOW_INBOX assignment + style rejection + auto-continue.
+  `autopilot_install.bat` (schtasks) not testable here.
+
 ## Written but NOT testable here (first run happens on your PC)
 - `install.bat`, `start.bat`, `update.bat` (cmd.exe not available; ASCII + CRLF, standard commands only).
 - Gemini TTS calls (Google blocked) – follows the documented REST API; first test: `glavonja.py voices --audition`.

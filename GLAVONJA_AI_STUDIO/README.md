@@ -17,6 +17,18 @@ You choose a topic, the studio produces the whole video, and you approve it. It 
 4. Type **`/glavonja-ideas`** → pick an idea → the studio produces it.
 5. To update later, double-click **`update.bat`**. It backs up your settings, style and database and never touches projects or videos.
 
+## AUTOPILOT – every day, no Claude usage
+
+`install.bat` offers to turn it on (or double-click `autopilot_install.bat`; remove with `autopilot_uninstall.bat`).
+Windows Task Scheduler then runs the studio every 30 minutes (and opens the dashboard when you log in). Claude is not involved, so it keeps running for months or years.
+
+1. **Every morning:** 10 fresh ideas + a Windows notification. **You choose the topic** in the dashboard.
+2. The studio writes the script, makes the **Gemini** voice (after your approval) and writes `FLOW_REQUESTS.md`.
+3. Generate the clips in **Google Flow** in scene order and just drag the downloaded files into **`FLOW_INBOX\`**
+   (any file names). The autopilot assigns them to the scenes, style-checks them (off-style clips are re-requested)
+   and finishes the video by itself.
+4. You get a notification "video je gotov" → review → approve. Nothing is ever uploaded automatically.
+
 ## Daily workflow
 
 | Step | Who | What happens |

@@ -95,12 +95,18 @@ def test_full_pipeline(app):
     for f in sorted((p / "scenes").glob("scene_*.png"))[:3]:
         shutil.copy2(f, refs / ("ref_" + f.name))
     # a "Flow clip" in the channel style for scene 1, and an off-style clip for scene 2
-    inbox = p / "flow" / "inbox"
+    # the user drops clips with random download names into FLOW_INBOX, in scene order; autopilot does the rest
+    inbox = app / "FLOW_INBOX"
+    inbox.mkdir(exist_ok=True)
+    good, bad = inbox / "flow_download_8f2a.mp4", inbox / "flow_download_c41d.mp4"
     subprocess.run([ffmpeg(), "-y", "-loglevel", "error", "-loop", "1", "-i", str(p / "scenes" / "scene_001.png"), "-t", "6",
-                    "-vf", "zoompan=z='1+0.002*on':d=1:s=1280x720,format=yuv420p", "-r", "24", str(inbox / "scene_001.mp4")], check=True)
+                    "-vf", "zoompan=z='1+0.002*on':d=1:s=1280x720,format=yuv420p", "-r", "24", str(good)], check=True)
     subprocess.run([ffmpeg(), "-y", "-loglevel", "error", "-f", "lavfi", "-i", "mandelbrot=s=1280x720:r=24", "-t", "5",
-                    "-pix_fmt", "yuv420p", str(inbox / "scene_002.mp4")], check=True)
-    cli(app, "continue")
+                    "-pix_fmt", "yuv420p", str(bad)], check=True)
+    os.utime(good, (1_000_000_000, 1_000_000_000))      # good clip downloaded first
+    os.utime(bad, (1_000_000_100, 1_000_000_100))
+    cli(app, "autopilot", "--no-research")
+    assert not list(inbox.glob("*.mp4"))                  # both clips were taken and assigned
     p, st = state(app)
     clips = json.loads((p / "animations" / "clips.json").read_text(encoding="utf-8"))["clips"]
     assert clips["1"]["source"] == "google_flow" and clips["1"]["consistency"] == "pass"

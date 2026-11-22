@@ -10,6 +10,7 @@
   glavonja approve <key> [project] [--no]          approve/decline Google credit use or a fallback
   glavonja voices [--audition] [--lock NAME]       Gemini voice audition + lock
   glavonja script-edit <project> <file.txt>        replace the script with your own text
+  glavonja autopilot                              daily ideas + FLOW_INBOX import + resume (Task Scheduler)
   glavonja dashboard                              start the local web dashboard
   glavonja selftest                               check the installation
 """
@@ -87,6 +88,7 @@ def main(argv=None):
     a = sub.add_parser("voices"); a.add_argument("--audition", action="store_true"); a.add_argument("--lock")
     a = sub.add_parser("script-edit"); a.add_argument("project"); a.add_argument("file")
     a = sub.add_parser("redo"); a.add_argument("stage", choices=STAGES); a.add_argument("project", nargs="?")
+    a = sub.add_parser("autopilot"); a.add_argument("--no-research", action="store_true")
     sub.add_parser("dashboard")
     sub.add_parser("selftest")
     args = ap.parse_args(argv)
@@ -188,6 +190,9 @@ def main(argv=None):
         reset_stage(p, "storyboard")
         p.mark("script", "done")
         print("Script replaced. Run: glavonja continue")
+    elif args.cmd == "autopilot":
+        from .autopilot import run_once
+        run_once(research=not args.no_research)
     elif args.cmd == "dashboard":
         from .dashboard import serve
         serve()

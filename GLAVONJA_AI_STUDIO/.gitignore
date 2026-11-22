@@ -26,3 +26,6 @@ config/settings.json
 config/style.json
 backups/
 assets/voice_audition/
+FLOW_INBOX/*
+!FLOW_INBOX/README.txt
+database/autopilot.json
